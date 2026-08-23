@@ -1,4 +1,4 @@
-Control software
+💻 Control software
 ====
 This directory contains the control software used by our vehicle to participate in the WRO 2026 Future Engineer competition, developed entirely by our team. It includes all code, trained models, and dependency information required to build and run the robot's autonomous behavior for both the Open Challenge and Obstacle Avoidance rounds.
 
@@ -10,8 +10,8 @@ We chose wall following as our core navigation strategy for a simple reason: wit
 
 Because our entire navigation strategy rests on a single depth signal, most of our engineering effort went into making that signal as clean and responsive as possible — filtering noisy depth readings, using median sampling instead of raw pixel reads, and tuning a PD controller so the robot reacts quickly to error without oscillating. The Jetson handles all sensing, vision, and decision-making; it then sends simple, low-level drive commands to an ESP32 over serial, which is responsible only for actually driving the motors and steering servo.
 
-### Open Challenge
-Challenge Requirements
+### 🏁 Open Challenge
+#### 📋 Challenge Requirements
 
 The Open Challenge requires the robot to autonomously complete 3 laps around the track, staying within track boundaries and avoiding contact with the walls. There are no pillars or fixed obstacles in this round — the only challenge is smooth, accurate navigation and reliable lap counting.
 
@@ -22,7 +22,25 @@ Since the direction of travel (clockwise or counter-clockwise) is only revealed 
 | `clockWise.py` | Left wall | Turns **right** |
 | `counterClockWise.py` | Right wall | Turns **left** |
 
-#### Our Strategy
+##### Navigation Per File
+
+**Left Wall Following (clockWise.py)**
+- Follows the left wall and uses the LEFT ROI to keep a consistent distance.
+- If the robot is too far from the left wall, it steers right toward the wall.
+- If it is too close, it steers left away from the wall.
+- At a corner, it makes a fixed right turn (TURN_STEER = +30°) until the path ahead is clear.
+- If the left wall cannot be detected, it gently steers left to search for it again.
+- Lap checkpoints are detected in the order 90° → 180° → 270° → 0°.
+
+**Right Wall Following (counterClockWise.py)**
+- Follows the right wall and uses the RIGHT ROI to keep a consistent distance.
+- If the robot is too far from the right wall, it steers right toward the wall.
+- If it is too close, it steers left away from the wall.
+- At a corner, it makes a fixed left turn (TURN_STEER = −32°) until the path ahead is clear.
+- If the right wall cannot be detected, it gently steers right to search for it again.
+- Lap checkpoints are detected in the order 270° → 180° → 90° → 0°.
+
+#### 🎯 Our Strategy
 
 1. **Depth camera for navigation, IMU for lap counting.** In the Open Challenge, steering relies entirely on the RealSense D455 depth stream. YOLO and ultrasonic sensors are not used because there are no pillars to detect. The BNO055 IMU runs alongside the camera and is used only to track heading and count laps, not for steering.
 2. **Two regions of interest (ROIs) are read from each depth frame:**
