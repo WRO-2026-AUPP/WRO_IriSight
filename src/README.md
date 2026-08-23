@@ -22,12 +22,14 @@ Since the direction of travel (clockwise or counter-clockwise) is only revealed 
 | `clockWise.py` | Left wall | Turns **right** |
 | `counterClockWise.py` | Right wall | Turns **left** |
 
-##### Our Strategy
+#### Our Strategy
 
-1. Depth camera for navigation, IMU for lap counting. In the Open Challenge, steering is driven purely by the RealSense D455's depth stream — no YOLO or ultrasonic input is used, since there are no pillars to detect in this round. The BNO055 IMU runs alongside it, but only for tracking heading to count laps, not for steering decisions.
-2. Two regions of interest (ROIs) are read from every depth frame:
-- A FRONT ROI, centered in the frame, used to detect an approaching wall or corner.
-- A SIDE ROI (left or right, depending on mode), used to measure how far the robot currently is from the wall it's following.
-3. A PD (proportional–derivative) controller turns the side-wall distance error into a steering angle — the further off-target the robot is, the sharper it steers back; the derivative term smooths this out so the robot doesn't overshoot and oscillate.
-4. When a corner is detected (the front distance drops below a threshold), the robot temporarily ignores the side-wall PD control and instead steers at a fixed angle until the front opens back up — this is more reliable at sharp corners than trying to PD-steer through them.
-5. Lap counting is done independently of vision, using the IMU's heading. This makes lap counting robust even if the camera briefly loses track of the wall.
+1. **Depth camera for navigation, IMU for lap counting.** In the Open Challenge, steering relies entirely on the RealSense D455 depth stream. YOLO and ultrasonic sensors are not used because there are no pillars to detect. The BNO055 IMU runs alongside the camera and is used only to track heading and count laps, not for steering.
+2. **Two regions of interest (ROIs) are read from each depth frame:**
+- **FRONT ROI:** Centered in the frame and used to detect an approaching wall or corner.
+- **SIDE ROI:** Located on the left or right depending on the mode, and used to measure the robot’s distance from the wall it is following.
+3. **PD controller for wall following.** The PD controller converts the side-wall distance error into a steering angle. The further the robot is from the target distance, the stronger it steers back toward the wall. The derivative term helps reduce overshooting and oscillation.
+4. **Fixed steering at corners.** When a corner is detected because the front distance drops below a threshold, the robot temporarily stops using the side-wall PD controller and steers at a fixed angle until the path opens up again. This is more reliable for sharp corners than trying to follow the wall using PD control.
+5. **Heading-based lap counting.** Lap counting is handled independently from vision using the IMU’s heading. This makes lap counting more reliable even if the camera temporarily loses track of the wall.
+
+
