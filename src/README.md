@@ -5,7 +5,7 @@ This directory must contain code for control software which is used by the vehic
 
 All artifacts required to resolve dependencies and build the project must be included in this directory as well.
 
-** Our Approach
+// Our Approach
 
 Our robot navigates using the Intel RealSense D455 depth camera as its primary spatial sensor, supplemented by the BNO055 IMU for heading and, in the obstacle round, ultrasonic sensors for redundant close-range sensing.
 
