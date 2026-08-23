@@ -42,18 +42,18 @@ Since the direction of travel (clockwise or counter-clockwise) is only revealed 
 
 #### 🎯 Our Strategy
 
-1. **Depth camera for navigation, IMU for lap counting**
+1. **Depth camera for navigation, IMU for lap counting** <br>
    In the Open Challenge, steering relies entirely on the RealSense D455 depth stream. YOLO and ultrasonic sensors are not used because there are no pillars to detect. The BNO055 IMU runs
    alongside the camera and is used only to track heading and count laps, not for steering.
-3. **Two regions of interest (ROIs) are read from each depth frame**
+3. **Two regions of interest (ROIs) are read from each depth frame** <br>
 - FRONT ROI: Centered in the frame and used to detect an approaching wall or corner.
 - SIDE ROI: Located on the left or right depending on the mode, and used to measure the robot’s distance from the wall it is following.
-3. **PD controller for wall following**
+3. **PD controller for wall following** <br>
   The PD controller converts the side-wall distance error into a steering angle. The further the robot is from the target distance, the stronger it steers back toward the wall. The  derivative term helps reduce overshooting and oscillation.
-4. **Fixed steering at corners.**
+4. **Fixed steering at corners.** <br>
   When a corner is detected because the front distance drops below a threshold, the robot temporarily stops using the side-wall PD controller and steers at a fixed angle until the path
   opens up again. This is more reliable for sharp corners than trying to follow the wall using PD control.
-5. **Heading-based lap counting.**
+5. **Heading-based lap counting.** <br>
   Lap counting is handled independently from vision using the IMU’s heading. This makes lap counting more reliable even if the camera temporarily loses track of the wall.
 
 
