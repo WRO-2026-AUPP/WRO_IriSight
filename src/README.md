@@ -1,11 +1,6 @@
 Control software
 ====
-
-This directory must contain code for control software which is used by the vehicle to participate in the competition and which was developed by the participants.
-
-All artifacts required to resolve dependencies and build the project must be included in this directory as well.
-###### starting from the text below
-
+This directory contains the control software used by our vehicle to participate in the WRO 2026 Future Engineer competition, developed entirely by our team. It includes all code, trained models, and dependency information required to build and run the robot's autonomous behavior for both the Open Challenge and Obstacle Avoidance rounds.
 
 ## Our Approach
 
