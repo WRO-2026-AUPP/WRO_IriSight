@@ -16,3 +16,8 @@ Challenge Requirements
 The Open Challenge requires the robot to autonomously complete 3 laps around the track, staying within track boundaries and avoiding contact with the walls. There are no pillars or fixed obstacles in this round — the only challenge is smooth, accurate navigation and reliable lap counting.
 
 Since the direction of travel (clockwise or counter-clockwise) is only revealed just before the run starts, our robot needs to be able to run in either direction. We solved this by building two interchangeable driving programs:
+
+| Mode | Wall Followed | Turn at Corners |
+|------|---------------|-----------------|
+| `clockWise.py` | Left wall | Turns **right** |
+| `counterClockWise.py` | Right wall | Turns **left** |
