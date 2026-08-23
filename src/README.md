@@ -2,7 +2,7 @@
 ====
 This directory contains the control software used by our vehicle to participate in the WRO 2026 Future Engineer competition, developed entirely by our team. It includes all code, trained models, and dependency information required to build and run the robot's autonomous behavior for both the Open Challenge and Obstacle Avoidance rounds.
 
-## Our Approach
+## 🧠 Our Approach
 
 Our robot navigates using the Intel RealSense D455 depth camera as its primary spatial sensor, supplemented by the BNO055 IMU for heading and, in the obstacle round, ultrasonic sensors for redundant close-range sensing.
 
@@ -22,7 +22,7 @@ Since the direction of travel (clockwise or counter-clockwise) is only revealed 
 | `clockWise.py` | Left wall | Turns **right** |
 | `counterClockWise.py` | Right wall | Turns **left** |
 
-##### Navigation Per File
+#### 🧭 Navigation Per File
 
 **Left Wall Following (clockWise.py)**
 - Follows the left wall and uses the LEFT ROI to keep a consistent distance.
