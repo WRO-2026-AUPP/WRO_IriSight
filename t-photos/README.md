@@ -73,5 +73,6 @@ Although each member has individual responsibilities, we work together throughou
 * **Presentation** — Preparing and presenting our final project as a team.
 
 ## Teamwork
+![Teamwork](funny-team-pic.png)
 
 Our team's success comes from combining our individual skills and supporting one another. Each member contributes to different parts of the project while collaborating on important decisions and challenges. With the guidance of our coach, we continuously learn, improve, and work toward achieving our common goal.
