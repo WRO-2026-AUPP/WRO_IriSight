@@ -35,6 +35,8 @@ The custom esp32 board features:
 
 # Jetson nano
 
+(./photos/jetson.png)
+
 The Jetson nano board is used for image processing and command generation to the esp32. The esp32 mainly acts as a slave that receive serial commands from the Jetson nano and executes it. The esp32 also occasionally relay the ultrasonic data back to the Jetson nano for further processing and command generation.
 
 The Jetson nano communicates to the esp32 through a USB cable, in which the esp32 break out board has a cp2101 USB to UART converter to convert messages in the USB protocol to the UART protocol.
@@ -42,6 +44,8 @@ The Jetson nano communicates to the esp32 through a USB cable, in which the esp3
 The Jetson nano is also connected to the Intel realsense D455 camera, and the BNO055 IMU.
 
 # Intel realsense D455 camera
+
+(./photos/realsense.png)
 
 The Intel realsense camera is used because, other than its ability to act as a normal visible light camera, it can also run a proprietary stereo 3d or stereoscopy algorithm in order to estimate the distance from the camera to a particular pixel. This is useful for mapping since it is possible to recover the x, y and z coordinate of a particular pixel. Otherwise, it can simply provide additional information in the decision making process on the Jetson nano.
 
