@@ -156,7 +156,7 @@ _This part must be filled by participants with the technical clarifications abou
 | Specification | Final value |
 | --- | --- |
 | Length × width × height | [TODO] |
-| Mass | [TODO] |
+| Mass | 1.38 KG |
 | Wheelbase / track width | [TODO] |
 | Ground clearance | [TODO] |
 | Drive layout | One motor, two gears, one drive shaft, two driven rear wheels |
