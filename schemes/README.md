@@ -62,13 +62,19 @@ The Intel realsense camera is used because, other than its ability to act as a n
 
 ## Geared DC motor with encoders
 
+<img src="./photos/DC_motor.jpg" alt="Geared DC motor" width="300">
+
 The DC geared motors are used to drive the rear axel of the car. The DC motors do come with magnetic encoders, which can be used for odometry, however, we decided not to use them because wheel slip might be an issue, and because we lacked the time to do so.
 
 ## Generic HC-SR04 ultrasonic sensors
 
+<img src="./photos/ultrasonic.jpg" alt="ultrasonic sensors" width="300">
+
 These ultrasonic sensors were used as a solution to the fact that our main decision process relies on the camera data, and because we don't have any mechanisms to retain memory of previous images, the decision process couldn't take walls to the side of the car in to account, and would occasionally run into it while turning. The HC-SR04 ultrasonic sensor are then placed to the side of the car, to provide the algorithm additonal information as to whether there are walls to the side of the car, such that the car can safely turn.
 
 ## LD-1501MG Servo
+
+<img src="./photos/servo.jpg" alt="Servo" width="300">
 
 We used this servo because the generic 9g servos weren't powerful enough.
 
