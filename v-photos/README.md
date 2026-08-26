@@ -9,6 +9,6 @@ Vehicle's photos
 | :---: | :---: |
 | **Left** | **Right** |
 
-| <img src="./robot_photo/front.png" alt="Front photo" width="100%"> | <img src="./robot_photo/rear.png" alt="Rear photo" width="100%"> |
+| <img src="./robot_photo/front.png" alt="Front photo" width="100%"> | <img src="./robot_photo/back.png" alt="Back photo" width="100%"> |
 | :---: | :---: |
 | **Front** | **Back** |
