@@ -11,10 +11,20 @@ The electrical components include:
 - Jetson nano
 - Intel RealSense D455
 - Geared DC motor with encoders (TODO: get the gear ratio)
-- generic HC-SR04 ultrasonic sensors
-- servo
+- Generic HC-SR04 ultrasonic sensors
+- LD-1501MG Servo
 
-# Custom ESP32 board
+For power:
+
+- 2x TCB 1100mAh 3S 25C battery
+- Buck converter at 5V
+- Buck boost converter at 11V
+
+![Electrical wiring block diagram](./photos/WRO_electrical_diagram_2.png)
+
+# Main Components
+
+## Custom ESP32 board
 
 ![custom esp32 board](./photos/custom_esp32_board.png)
 
@@ -33,7 +43,8 @@ The custom esp32 board features:
   - trigger pin at pin 13
   - echo pin at pin 39
 
-# Jetson nano
+
+## Jetson nano
 
 <img src="./photos/jetson.png" alt="Jetson nano" width="300">
 
@@ -43,23 +54,40 @@ The Jetson nano communicates to the esp32 through a USB cable, in which the esp3
 
 The Jetson nano is also connected to the Intel realsense D455 camera, and the BNO055 IMU.
 
-# Intel realsense D455 camera
+## Intel realsense D455 camera
 
 <img src="./photos/realsense.png" alt="Intel realsense D455 camera" width="300">
 
 The Intel realsense camera is used because, other than its ability to act as a normal visible light camera, it can also run a proprietary stereo 3d or stereoscopy algorithm in order to estimate the distance from the camera to a particular pixel. This is useful for mapping since it is possible to recover the x, y and z coordinate of a particular pixel. Otherwise, it can simply provide additional information in the decision making process on the Jetson nano.
 
-# Geared DC motor with encoders
+## Geared DC motor with encoders
 
 The DC geared motors are used to drive the rear axel of the car. The DC motors do come with magnetic encoders, which can be used for odometry, however, we decided not to use them because wheel slip might be an issue, and because we lacked the time to do so.
 
-# Generic HC-SR04 ultrasonic sensors
+## Generic HC-SR04 ultrasonic sensors
 
 These ultrasonic sensors were used as a solution to the fact that our main decision process relies on the camera data, and because we don't have any mechanisms to retain memory of previous images, the decision process couldn't take walls to the side of the car in to account, and would occasionally run into it while turning. The HC-SR04 ultrasonic sensor are then placed to the side of the car, to provide the algorithm additonal information as to whether there are walls to the side of the car, such that the car can safely turn.
 
-# LD-1501MG Servo
+## LD-1501MG Servo
 
 We used this servo because the generic 9g servos weren't powerful enough.
 
+# Power
 
-TODO: draw the rough electrical schematic or similar software
+## TCB 1100mAh 3S 25C battery
+
+These batteries can supply a continuous rated current of 305 W, which is more than enough for this project.
+
+$$
+1.1Ah \times 3 \times 3.7 V \times 25 C = 305 W
+$$
+
+We used two of these batteries, one for the motors, and the other for the Jetson nano.
+
+## Buck converter at 5V
+
+Because the servo requires 5V, we use another buck converter to supply the servo with the necessary power required.
+
+## Buck boost converter at 11V
+
+The buck boost converter keeps the voltage at a steady 11V, which keeps the motor speed predictable when commanded with the same PWM signal.
