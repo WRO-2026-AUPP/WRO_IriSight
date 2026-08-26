@@ -56,9 +56,7 @@ Since the direction of travel (clockwise or counter-clockwise) is only revealed 
 5. **Heading-based lap counting.** <br>
   Lap counting is handled independently from vision using the IMU’s heading. This makes lap counting more reliable even if the camera temporarily loses track of the wall.
 
-### Algorithms Flowchart
-
-## System Workflow
+### System Workflow
 
 ```mermaid
 flowchart TD
