@@ -142,7 +142,7 @@ _This part must be filled by participants with the technical clarifications abou
 ### Final vehicle gallery
 
 | Front | Rear | Left |
-| :---: | :---: | :---: |
+| <img src="./media/robot_photo/front.png" alt="Front photo"> | :---: | :---: |
 | [TODO: Front photo] | [TODO: Rear photo] | [TODO: Left photo] |
 | **Right** | **Top** | **Bottom** |
 | [TODO: Right photo] | [TODO: Top photo] | [TODO: Bottom photo] |
