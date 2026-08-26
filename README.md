@@ -140,15 +140,15 @@ _This part must be filled by participants with the technical clarifications abou
 ## Meet the vehicle
 
 ### Final vehicle gallery
-| <img src="./v-photos/top.png" alt="Top photo" width="100%"> | <img src="./v-photos/bottom.png" alt="Bottom photo" width="100%"> |
+| <img src="./v-photos/robot_photo/top.png" alt="Top photo" width="100%"> | <img src="./v-photos/robot_photo/bottom.png" alt="Bottom photo" width="100%"> |
 | :---: | :---: |
 | **Top** | **Bottom** |
 
-| <img src="./v-photos/left.png" alt="Left photo" width="100%"> | <img src="./v-photos/right.png" alt="Right photo" width="100%"> |
+| <img src="./v-photos/robot_photo/left.png" alt="Left photo" width="100%"> | <img src="./v-photos/robot_photo/right.png" alt="Right photo" width="100%"> |
 | :---: | :---: |
 | **Left** | **Right** |
 
-| <img src="./v-photos/front.png" alt="Front photo" width="100%"> | <img src="./v-photos/back.png" alt="Back photo" width="100%"> |
+| <img src="./v-photos/robot_photo/front.png" alt="Front photo" width="100%"> | <img src="./v-photos/robot_photo/back.png" alt="Back photo" width="100%"> |
 | :---: | :---: |
 | **Front** | **Back** |
 ### Key specifications
