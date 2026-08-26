@@ -5,7 +5,7 @@ Official photographic documentation of Team Baymax Motion from the American Univ
 ## About Our Team
 ![Team Photo](team-photo-ft-coach.png)
 
-We are a team of three members working together with the support of our coach. Each member brings different skills, ideas, and responsibilities to the team. Through collaboration, communication, and problem-solving, we work together to achieve our project goals.
+_Team Photo - From left to right: Kimchour, Panha (Coach), Nita, and Muyleang._
 
 ## Team Members
 
