@@ -56,4 +56,38 @@ Since the direction of travel (clockwise or counter-clockwise) is only revealed 
 5. **Heading-based lap counting.** <br>
   Lap counting is handled independently from vision using the IMU’s heading. This makes lap counting more reliable even if the camera temporarily loses track of the wall.
 
+### Algorithms Flowchart
 
+## System Workflow
+
+```mermaid
+flowchart TD
+    A([START OPEN CHALLENGE]) --> B[Initialize System<br/>• RealSense D455<br/>• BNO055 IMU<br/>• Serial to ESP32<br/>• Flask HUD Server]
+
+    B --> C[Zero IMU Heading<br/>Current direction = 0°<br/>lap_count = 0]
+
+    C --> D[MAIN LOOP]
+
+    D --> E[Capture and align depth and color frames<br/>640×480 @ 30 FPS]
+
+    E --> F[Sample FRONT and SIDE ROIs from depth frame<br/>Median of valid pixels]
+
+    F --> G[Read relative yaw from IMU<br/>Check checkpoint zone<br/>Update lap_count]
+
+    G --> H{In a turn?}
+
+    H -- YES --> I[TURN MODE<br/><br/>steer = fixed TURN_STEER<br/>speed = TURN_SPEED<br/><br/>Exit when front ≥ FRONT_CLEAR]
+
+    H -- NO --> J[WALL-FOLLOW MODE<br/><br/>error = target − actual<br/>steer = Kp × error + Kd × derivative<br/>Clamp to STEER_LIMIT<br/>speed = BASE_SPEED<br/><br/>If side wall not seen:<br/>steer = SEARCH_STEER]
+
+    I --> K[Send DRIVE command<br/>over serial to ESP32]
+    J --> K
+
+    K --> L{lap_count ≥ 3?}
+
+    L -- NO --> D
+
+    L -- YES --> M[Continue driving for<br/>STOP_DELAY_AFTER_LAPS]
+
+    M --> N[Send DRIVE 0 0]
+    N --> O([STOP])
