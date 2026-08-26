@@ -141,11 +141,14 @@ _This part must be filled by participants with the technical clarifications abou
 
 ### Final vehicle gallery
 
-| Front | Rear | Left |
-| <img src="./media/robot_photo/front.png" alt="Front photo"> | :---: | :---: |
-| [TODO: Front photo] | [TODO: Rear photo] | [TODO: Left photo] |
-| **Right** | **Top** | **Bottom** |
-| [TODO: Right photo] | [TODO: Top photo] | [TODO: Bottom photo] |
+| | |
+| :---: | :---: |
+| <img src="./media/robot_photo/top.png" alt="Top photo"> | <img src="./media/robot_photo/bottom.png" alt="Bottom photo"> |
+| **Top** | **Bottom** |
+| <img src="./media/robot_photo/left.png" alt="Left photo"> | <img src="./media/robot_photo/right.png" alt="Right photo"> |
+| **Left** | **Right** |
+| <img src="./media/robot_photo/front.png" alt="Front photo"> | <img src="./media/robot_photo/back.png" alt="back photo"> |
+| **Front** | **Back** |
 
 ### Key specifications
 
