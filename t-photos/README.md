@@ -8,6 +8,7 @@ Official photographic documentation of Team Baymax Motion from the American Univ
 _Team Photo - From left to right: Kimchour, Panha (Coach), Nita, and Muyleang._
 
 ## Team Members
+![Team Members](formal-team-pic.JPG)
 
 ### Member 1 — [Name]
 
