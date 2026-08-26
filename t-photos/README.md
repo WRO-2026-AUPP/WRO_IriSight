@@ -1,6 +1,6 @@
 Team's photos
 ====
-Official photographic documentation of Team Baymax Motion from the American University of Phnom Penh (AUPP).
+Official photographic documentation of Team IriSight from the American University of Phnom Penh (AUPP).
 
 ## About Our Team
 ![Team Photo](team-photo-ft-coach.png)
