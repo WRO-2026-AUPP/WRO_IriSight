@@ -140,8 +140,8 @@ _This part must be filled by participants with the technical clarifications abou
 ## Meet the vehicle
 
 ### Final vehicle gallery
-| :---: | :---: |
 | <img src="./media/robot_photo/top.png" alt="Top photo" width="400"> | <img src="./media/robot_photo/bottom.png" alt="Bottom photo" width="400"> |
+| :---: | :---: |
 | **Top** | **Bottom** |
 | <img src="./media/robot_photo/left.png" alt="Left photo" width="400"> | <img src="./media/robot_photo/right.png" alt="Right photo" width="400"> |
 | **Left** | **Right** |
