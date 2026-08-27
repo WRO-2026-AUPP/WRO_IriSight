@@ -180,8 +180,8 @@ Repository of Team IriSight competing in the CRO 2026, Future Engineers category
 
 | Challenge | Video | 
 | --- | --- | 
-| Open Challenge | https://youtu.be/7jsuhlpw6mA | 
-| Obstacle Challenge | https://youtu.be/TGH4JoCRx5o | 
+| Open Challenge | [Watch on Youtube](https://youtu.be/7jsuhlpw6mA) | 
+| Obstacle Challenge | [Watch on Youtube](https://youtu.be/TGH4JoCRx5o) | 
 
 
 ## How IriSight works
