@@ -140,8 +140,10 @@ Repository of Team IriSight competing in the CRO 2026, Future Engineers category
 </table>
 
 ## Meet the vehicle
-
-<img src="./v-photos/robot_photo/vehicle-360-view.gif" alt="Meet the vehicle" width="600">
+<div>
+  <img src="./v-photos/robot_photo/vehicle-360-view.gif" alt="Meet the vehicle" width="600">
+  <p><em>Vehicle 360º view (GIF)</em></p>
+</div>
 
 ### Final vehicle gallery
 | <img src="./v-photos/robot_photo/top.png" alt="Top photo" width="100%"> | <img src="./v-photos/robot_photo/bottom.png" alt="Bottom photo" width="100%"> |
