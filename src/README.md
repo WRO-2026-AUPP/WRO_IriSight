@@ -164,7 +164,7 @@ As with the Open Challenge, the direction of travel is only revealed just before
 #### 🎯 Our Strategy
 
 1. **Depth camera for navigation and pillar ranging, YOLO for classification, IMU for lap counting.** <br>
-   Steering during normal driving still relies entirely on the RealSense D455 depth stream, exactly as in the Open Challenge. YOLOv8 (`best.pt`) is added purely to classify red vs. green pillars and locate them in the frame; the depth frame is then used to measure how far away each detected pillar actually is and to remove it from the wall-following ROIs.
+   Steering during normal driving still relies entirely on the RealSense D455 depth stream, exactly as in the Open Challenge. YOLOv8 (`best1.pt`) is added purely to classify red vs. green pillars and locate them in the frame; the depth frame is then used to measure how far away each detected pillar actually is and to remove it from the wall-following ROIs.
 2. **Column-based proportional avoidance instead of a fixed swing.** <br>
    Rather than steering a fixed amount whenever a pillar is seen, the controller computes an error between the pillar's current horizontal position and a target column, then steers proportionally — giving a smooth, continuously corrected pass rather than a single hard swerve.
 3. **Independent wall-clearance guards as a safety net.** <br>
