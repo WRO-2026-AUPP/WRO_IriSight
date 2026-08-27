@@ -67,11 +67,11 @@ _Team Photo - From left to right: Kimchour, Panha (Coach), Nita, and Muyleang._
 
 Although each member has individual responsibilities, we work together throughout the project. Our combined contributions include:
 
-* **Planning & Research** — Developing ideas and understanding the project requirements.
-* **Design & Development** — Building and improving the project together.
-* **Testing & Problem Solving** — Identifying issues and working together to find solutions.
-* **Documentation** — Recording our progress, decisions, and results.
-* **Presentation** — Preparing and presenting our final project as a team.
+* **Planning & Research**: Developing ideas and understanding the project requirements.
+* **Design & Development**: Building and improving the project together.
+* **Testing & Problem Solving**: Identifying issues and working together to find solutions.
+* **Documentation**: Recording our progress, decisions, and results.
+
 
 ## Teamwork
 ![Teamwork](funny-team-pic.png)
