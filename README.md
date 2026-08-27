@@ -401,7 +401,6 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 
 [TODO: Wiring, validation, and first-power-on summary and link]
 
-### Software installation
 
 ### Software Installation
 
@@ -446,12 +445,32 @@ python3 -c "import cv2, numpy, pyrealsense2, ultralytics, serial; print('All req
 ```text
 [TODO: Calibration sequence]
 ```
+### Start an Autonomous Run
 
-### Start an autonomous run
+#### Open Challenge — Clockwise
 
 ```bash
-# [TODO: Exact start commands]
+python3 src/clockWise.py
 ```
+
+#### Open Challenge — Counter Clockwise
+
+```bash
+python3 src/counterClockWise.py
+```
+
+#### Obstacle Avoidance Challenge — Clockwise
+
+```bash
+python3 src/obs_clockWise.py
+```
+
+#### Obstacle Avoidance Challenge — Counter Clockwise
+
+```bash
+python3 src/obs_counterclockWise.py
+```
+
 
 ### Pre-flight and acceptance test
 
