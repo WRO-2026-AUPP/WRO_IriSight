@@ -32,39 +32,31 @@ Repository of Team IriSight competing in the CRO 2026, Future Engineers category
 
 <table width="100%">
   <tr>
-    <td width="25%" align="center" valign="top">
-      <a href="src/"><strong>💻 Software</strong></a><br>
+    <td width="33.33%" align="center" valign="top">
+      <a href="src/"><strong>💻 Code</strong></a><br>
       <sub>Jetson and ESP32 control code</sub>
     </td>
-    <td width="25%" align="center" valign="top">
+    <td width="33.33%" align="center" valign="top">
       <a href="schemes/"><strong>🔌 Schematics</strong></a><br>
-      <sub>Wiring, power, and system diagrams</sub>
+      <sub>Wiring, power, and electronics</sub>
     </td>
-    <td width="25%" align="center" valign="top">
-      <a href="models/"><strong>🧩 CAD &amp; Mechanics</strong></a><br>
+    <td width="33.33%" align="center" valign="top">
+      <a href="models/"><strong>🧩 CAD models &amp; Mechanics</strong></a><br>
       <sub>Mechanical design and printable files</sub>
-    </td>
-    <td width="25%" align="center" valign="top">
-      <a href="other/"><strong>📊 Engineering Journal</strong></a><br>
-      <sub>Tests, calibration, and decisions</sub>
     </td>
   </tr>
   <tr>
-    <td width="25%" align="center" valign="top">
+    <td width="33.33%" align="center" valign="top">
       <a href="v-photos/"><strong>🚗 Vehicle Photos</strong></a><br>
       <sub>Required views of the final robot</sub>
     </td>
-    <td width="25%" align="center" valign="top">
+    <td width="33.33%" align="center" valign="top">
       <a href="t-photos/"><strong>👥 Team Photos</strong></a><br>
       <sub>Official and informal team photos</sub>
     </td>
-    <td width="25%" align="center" valign="top">
+    <td width="33.33%" align="center" valign="top">
       <a href="video/video.md"><strong>🎥 Videos</strong></a><br>
       <sub>Autonomous challenge demonstrations</sub>
-    </td>
-    <td width="25%" align="center" valign="top">
-      <a href="plan.md"><strong>✅ Documentation Plan</strong></a><br>
-      <sub>Evidence and submission checklist</sub>
     </td>
   </tr>
 </table>
