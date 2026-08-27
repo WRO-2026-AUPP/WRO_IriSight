@@ -165,7 +165,7 @@ Repository of Team IriSight competing in the CRO 2026, Future Engineers category
 | Mass | 1.38 KG |
 | Wheelbase / track width | [TODO] |
 | Ground clearance | [TODO] |
-| Drive layout | One motor, two gears, one drive shaft, two driven rear wheels |
+| Drive layout | One motor, two gears, one drive shaft, two driven back wheels |
 | Steering layout | LEGO-based parallel front steering system|
 | Main computer | NVIDIA Jetson Orin Nano, Ubuntu 22.04 LTS |
 | Microcontroller | ESP32 |
@@ -173,7 +173,7 @@ Repository of Team IriSight competing in the CRO 2026, Future Engineers category
 | IMU | BNO055 breakout |
 | Additional sensors | Two side ultrasonic sensors |
 | Front wheels | LEGO SPIKE blue wheels, part `39367` |
-| Rear wheels | [TODO: Exact model-car wheels] |
+| Back wheels | RC Car Tires Wheels |
 | Batteries | Separate Jetson and motor/actuator batteries |
 
 ## Performance videos
@@ -444,7 +444,7 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 | [`schemes/`](schemes/) | Wiring, power, sensor-placement, and system diagrams |
 | [`models/`](models/) | Mechanical documentation, CAD, and printable files |
 | [`other/`](other/) | Engineering Journal, tests, calibration, risks, and decision records |
-| [`v-photos/`](v-photos/) | Front, rear, left, right, top, and bottom vehicle photographs |
+| [`v-photos/`](v-photos/) | Front, back, left, right, top, and bottom vehicle photographs |
 | [`t-photos/`](t-photos/) | Official and informal team photographs |
 | [`video/`](video/) | Challenge and project video links |
 
