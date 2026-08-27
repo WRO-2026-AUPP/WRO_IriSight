@@ -7,8 +7,8 @@ This section provides video demonstrations of our autonomous vehicle during the 
 
 | Challenge Type | YouTube Link |
 |---|---|
-| **Open Challenge** | [Watch on YouTube]https://youtu.be/7jsuhlpw6mA |
-| **Obstacle Challenge** | [Watch on YouTube]https://youtu.be/TGH4JoCRx5o |
+| **Open Challenge** | [Watch on YouTube](https://youtu.be/7jsuhlpw6mA) |
+| **Obstacle Challenge** | [Watch on YouTube](https://youtu.be/TGH4JoCRx5o) |
 
 ### Open Challenge
 
