@@ -135,29 +135,32 @@ As with the Open Challenge, the direction of travel is only revealed just before
 | `clockWise_obstacle.py` | Left wall | Turns **right** | Green → **left**, Red → **right** |
 | `counterClockWise_obstacle.py` | Right wall | Turns **left** | Red → **left**, Green → **right** |
 
-#### 🧭 Navigation Per File
+### 🧭 Navigation Per File
 
-**Left Wall Following + Obstacle Avoidance (clockWise_obstacle.py)**
-- Follows the left wall using the LEFT ROI and a PD controller, same as the Open Challenge baseline, with the raw wall reading rate-limited so a single noisy depth frame can't saturate steering.
-- At a corner, makes a fixed right turn (TURN_STEER = +30°) that eases off automatically as the inner wall gets close, until the path ahead clears past FRONT_CLEAR.
-- YOLO (`best1.pt`) detects green/red pillars each frame; detected boxes are masked out of the depth image so a pillar sitting inside the wall ROI is never mistaken for the wall itself.
-- A green pillar close ahead steers the robot left (toward the outer/followed wall); a red pillar steers it right (toward the inner wall), using a proportional column controller whose target column shifts depending on which third of the frame the pillar currently sits in.
-- Two independent safety guards clamp any rightward or leftward steering command — regardless of which mode produced it — so normal wall-follow, the corner turn, and pillar avoidance can never be driven into the inner or outer wall.
-- Left/right ultrasonic readings from the ESP32 back up both guards as a second, independent check; whichever sensor reports the closer distance wins.
-- A corner-lock mechanism hands priority to pillar avoidance if a pillar appears while the robot is mid-turn, instead of alternating between turning and avoiding every frame; a matching same-colour handover lets the robot switch smoothly between two close pillars of the same colour.
-- If the front wall or an actively-avoided pillar gets dangerously close mid-avoidance, the robot performs a brief stop-then-reverse recovery before resuming.
-- Lap checkpoints are detected in the order 90° → 180° → 270° → 0°, identical to the Open Challenge.
+**Left Wall Following + Obstacle Avoidance (`clockWise_obstacle.py`)**
+- Follows the **left wall** using a PD controller.
+- Makes a fixed **right turn** at corners and slows the turn as it gets close to the inner wall.
+- Uses **YOLO (`best1.pt`)** to detect red and green pillars.
+- Removes detected pillars from the depth data so they are not confused with the wall.
+- **Green pillars: steers left. Red pillars: steers right.
+- Uses steering limits and ultrasonic sensors to prevent hitting the walls.
+- Uses a corner-lock system so pillar avoidance has priority during turns.
+- Stops and reverses briefly if a wall or pillar becomes dangerously close.
+- Counts laps using the 90° → 180° → 270° → 0° checkpoints.
 
-**Right Wall Following + Obstacle Avoidance (counterClockWise_obstacle.py)**
-- Follows the right wall using the RIGHT ROI and a PD controller with a deadband and smoothed derivative term to suppress steering flicker from sensor noise.
-- Always corners in a fixed direction at a blocked front (rather than choosing per-corner based on which side looks more open), which proved more reliable than a "head toward open space" strategy when the depth reading is momentarily unreliable.
-- YOLO (`best.pt`) detects and identity-locks onto pillars frame-to-frame, so a same-coloured pillar that has already been passed can't take over tracking from a new, farther pillar at a handoff point.
-- Red pillars are passed by steering left and hugging the right wall; green pillars are passed by steering right and hugging the left wall, both using per-colour gains and per-ROI-zone target columns tuned independently.
-- A predictive front-wall bias nudges steering earlier based on how fast the front distance is closing, ahead of the hard corner trigger.
-- Ultrasonic sensors provide an independent hard safety clamp with their own faster steering response, plus a slow, running auto-calibration against the depth camera so the offset between the two sensors stays accurate over a run.
-- A corner-lock, mirroring the left-wall version, hands priority to pillar avoidance if a pillar shows up while the robot is turning.
-- Lap counting uses cumulative unwrapped IMU yaw rather than checkpoint zones, so it stays reliable regardless of which physical direction each corner turns.
-  
+**Right Wall Following + Obstacle Avoidance (`counterClockWise_obstacle.py`)**
+- Follows the right wall using a PD controller.
+- Uses a fixed turning direction at corners for more reliable navigation.
+- Uses YOLO (`best.pt`) to detect and track pillars.
+- Red pillars: steers left and follows the right wall.  
+  Green pillars: steers right and follows the left wall.
+- Adjusts steering based on the pillar's position and distance.
+- Uses predictive steering to react before reaching a corner.
+- Uses ultrasonic sensors as an additional safety system.
+- Automatically calibrates the ultrasonic readings with the depth camera.
+- Uses a corner-lock system to prioritize pillar avoidance during turns.
+- Counts laps using IMU yaw instead of checkpoint zones.
+- 
 #### 🎯 Our Strategy
 
 1. **Depth camera for navigation and pillar ranging, YOLO for classification, IMU for lap counting.** <br>
