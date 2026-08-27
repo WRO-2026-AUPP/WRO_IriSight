@@ -391,8 +391,42 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 
 ### Software installation
 
+### Software Installation
+
+The robot's control software runs on the NVIDIA Jetson Orin Nano. The required software and Python packages must be installed before running the vehicle.
+
+#### 1. Clone the repository
+
 ```bash
-# [TODO: Exact clean-install commands]
+git clone https://github.com/WRO-2026-AUPP/WRO_IriSight.git
+```
+
+#### 2. Navigate to the project directory
+
+```bash
+cd WRO_IriSight
+```
+
+#### 3. Install the required Python packages 
+```bash
+pip install numpy
+```
+```bash
+pip install opencv-python
+```
+```bash
+pip install pyrealsense2
+```
+```bash
+pip install ultralytics
+```
+```bash
+pip install pyserial
+```
+#### 4. Verify the installation
+
+```bash
+python3 -c "import cv2, numpy, pyrealsense2, ultralytics, serial; print('All required packages installed successfully.')"
 ```
 
 ### Calibration
