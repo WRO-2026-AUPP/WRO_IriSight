@@ -261,19 +261,21 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 
 ### Component and interface map
 
-| Component | Exact model | Power | Interface | Purpose |
-| --- | --- | --- | --- | --- |
-| Jetson | NVIDIA Jetson Orin Nano | [TODO] | [TODO] | Main processing |
-| ESP32 | [TODO: Board] | [TODO] | Serial | Actuator control |
-| Motor driver | [TODO] | [TODO] | [TODO] | Drive-motor control |
-| Steering servo | [TODO] | [TODO] | [TODO] | Front steering |
-| D455 | Intel RealSense D455 | [TODO] | USB | Depth perception |
-| IMU | [TODO: Exact BNO055 board] | [TODO] | I²C | Relative yaw |
-| Left ultrasonic | [TODO] | [TODO] | [TODO] | [TODO] |
-| Right ultrasonic | [TODO] | [TODO] | [TODO] | [TODO] |
-| Jetson battery | [TODO] | [TODO] | — | Logic power |
-| Motor battery | [TODO] | [TODO] | — | Actuator power |
-| Regulator | [TODO] | [TODO] | — | Voltage regulation |
+| Component | Exact model | Power | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- | --- |
+| Jetson | NVIDIA Jetson Orin Nano | [TODO] | [TODO] | Main processing | [LINK](https://www.amazon.com/dp/B0BZJTQ5YP) |
+| Custom ESP32 Boad | ESP32 WROOM Chip  | [TODO] | Serial | Actuator control |[LINK](https://www.amazon.com/DORHEA-ESP-WROOM-32D-Bluetooth-integrates-ESP32-D0WD/dp/B08XXH9RMT?th=1)  |
+| Motor driver | TB6612FNG | [TODO] | [TODO] | Drive-motor control |[LINK](https://www.amazon.com/Sparkfun-PID-14451-Motor-Driver/dp/B01MF67DX6)  |
+| Steering servo | LD-1501MG Servo | [TODO] | [TODO] | Front steering |[LINK](https://www.ebay.com/itm/362680017196)  |
+| D455 | Intel RealSense D455 | [TODO] | USB | Depth perception |[LINK](https://www.amazon.com/dp/B08KJCRCGG?)  |
+| IMU | BNO055 | [TODO] | I²C | Relative yaw | [LINK](https://bdelectronics.xyz/product/bno055-intelligent-9axis-attitude-sensor-module) |
+| Left ultrasonic | Generic HC-SR04 ultrasonic sensors | [TODO] | [TODO] | [TODO] |[LINK](https://www.amazon.com/MTDELE-HC-SR04-Ultrasonic-Mounting-Bracket/dp/B0G6ZDBTWR?)  |
+| Right ultrasonic | Generic HC-SR04 ultrasonic sensors | [TODO] | [TODO] | [TODO] |[LINK](https://www.amazon.com/MTDELE-HC-SR04-Ultrasonic-Mounting-Bracket/dp/B0G6ZDBTWR?)  |
+| Jetson battery | TCB 1100mAh 3S 25C battery | [TODO] | — | Logic power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
+| Motor battery | TCB 1100mAh 3S 25C battery | [TODO] | — | Actuator power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
+| Converter | Buck converter at 5V | [TODO] | — | Actuator power | [LINK]() |
+| Converter | Buck boost converter at 11V | [TODO] | — | Actuator power | [LINK]() |
+| Regulator | [TODO] | [TODO] | — | Voltage regulation |  |
 
 ### Sensor placement and calibration
 
