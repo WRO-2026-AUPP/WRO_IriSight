@@ -18,8 +18,8 @@ While the Open Challenge relies purely on depth-based wall following, the Obstac
 
 | Class | Detect Object | Robot Action |
 |-------|---------------|--------------|
-| 0 | Green Obstacle Pillar (`greenbox`) | Robot turns/passes to the **right** |
-| 1 | Red Obstacle Pillar (`redbox`) | Robot turns/passes to the **left** |
+| 0 | Green Obstacle Pillar (`greenbox`) | Robot turns/passes to the **left** |
+| 1 | Red Obstacle Pillar (`redbox`) | Robot turns/passes to the **right** |
 
 #### 🏋️ Training details
 
@@ -28,7 +28,7 @@ While the Open Challenge relies purely on depth-based wall following, the Obstac
 - **Epochs:** 100 (batch size 8, auto optimizer, lr0 = 0.01)
 - **Dataset:** Custom-labeled images of the competition field's red/green pillars and the parking marker, captured under varied lighting and distances.
 - **Validation performance:** precision ≈ 0.997, recall ≈ 0.985, mAP@50 ≈ 0.995, mAP@50-95 ≈ 0.928.
-- **Weights file:** `best1.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
+- **Weights file:** `best.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
 
 #### ⚙️ How it fits into the pipeline
 
@@ -132,7 +132,7 @@ As with the Open Challenge, the direction of travel is only revealed just before
 | Mode | Wall Followed | Turn at Corners | Pillar Pass Direction |
 |------|---------------|------------------|------------------------|
 | `obs_closewise.py` | Left wall | Turns **right** | Green → **left**, Red → **right** |
-| `obs_counterclockwise.py` | Right wall | Turns **left** | Red → **left**, Green → **right** |
+| `obs_counterclockwise.py` | Right wall | Turns **left** | Red → **right**, Green → **left** |
 
 ### 🧭 Navigation Per File
 
