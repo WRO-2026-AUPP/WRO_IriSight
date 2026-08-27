@@ -293,16 +293,14 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 
 ### Architecture and communication
 
-[TODO: Software state machine/data-flow diagram]
-
 The current Open Challenge system runs on the Jetson. It reads the RealSense D455 and BNO055, calculates steering and speed, and sends `DRIVE <steerDeg> <speed>` commands to the ESP32 through a 115200-baud serial connection. The ESP32-side firmware that converts these commands into motor-driver and steering-servo signals still needs to be added to the repository.
 
-| Module | Responsibility | Inputs | Outputs |
-| --- | --- | --- | --- |
-| [`src/clockWise.py`](src/clockWise.py) | Left-wall depth following with counter-clockwise yaw checkpoints | D455 depth/color, BNO055 yaw | ESP32 drive command, web diagnostics |
-| [`src/counterClockWise.py`](src/counterClockWise.py) | Right-wall depth following with clockwise yaw checkpoints | D455 depth/color, BNO055 yaw | ESP32 drive command, web diagnostics |
-| `src/bno055_yaw.py` | [TODO] | BNO055 | Relative yaw and calibration status |
-| ESP32 firmware | [TODO] | Jetson serial command | Motor-driver and servo control |
+| **Module** | **Responsibility** | **Inputs** | **Outputs** |
+|---|---|---|---|
+| [`src/clockWise.py`](https://github.com/WRO-2026-AUPP/WRO_IriSight/blob/main/src/clockWise.py) | Left-wall depth following with counter-clockwise yaw checkpoints | D455 depth/color, BNO055 yaw | ESP32 drive command, web diagnostics |
+| [`src/counterClockWise.py`](https://github.com/WRO-2026-AUPP/WRO_IriSight/blob/main/src/counterClockWise.py) | Right-wall depth following with clockwise yaw checkpoints | D455 depth/color, BNO055 yaw | ESP32 drive command, web diagnostics |
+| `src/bno055_yaw.py` | BNO055 yaw reading, calibration, and relative-heading tracking | BNO055 | Relative yaw and calibration status |
+| ESP32 firmware | Receives Jetson drive commands and controls the motors and steering servo | Jetson serial command | Motor-driver and servo control |
 
 ### Open Challenge
 
