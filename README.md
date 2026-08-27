@@ -89,7 +89,7 @@ Repository of Team IriSight competing in the CRO 2026, Future Engineers category
 
 <div align="center">
   <img src="./t-photos/team-photo-ft-coach.png" width="700" alt="Meet the team">
-  <p><em>_Team Photo - From left to right: Kimchour, Panha (Coach), Nita, and Muyleang._</em></p>
+  <p><em>Team Photo - From left to right: Kimchour, Panha (Coach), Nita, and Muyleang.</em></p>
 </div>
 
 <table width="100%">
