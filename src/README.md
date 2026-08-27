@@ -1,6 +1,6 @@
 💻 Control software
 ====
-This directory contains the control software used by our vehicle to participate in the WRO 2026 Future Engineer competition, developed entirely by our team. It includes all code, trained models, and dependency information required to build and run the robot's autonomous behavior for both the Open Challenge and Obstacle Avoidance rounds.
+This directory contains the control software used by our vehicle to participate in the **WRO 2026 Future Engineers** competition, developed entirely by our team. It includes all code, trained models, and dependency information required to build and run the robot's autonomous behavior for both the Open Challenge and Obstacle Avoidance rounds.
 
 ## 🧠 Our Approach
 
@@ -12,7 +12,7 @@ Because our entire navigation strategy rests on a single depth signal, most of o
 
 ## 🤖 AI Model
 
-While the Open Challenge relies purely on depth-based wall following, the Obstacle Avoidance round additionally requires the robot to recognize and react to colored pillars and the parking signal. For this, we use a custom-trained **YOLOv8** object detection model, which is the primary way our robot perceives obstacles.
+While the Open Challenge relies purely on depth-based wall following, the Obstacle Avoidance round additionally requires the robot to recognize and react to colored pillars and the parking signal. For this, we use a custom-trained **YOLOv8n** object detection model, which is the primary way our robot perceives obstacles.
 
 #### 🎯 What it detects
 
@@ -29,7 +29,7 @@ While the Open Challenge relies purely on depth-based wall following, the Obstac
 - **Epochs:** 100 (batch size 8, auto optimizer, lr0 = 0.01)
 - **Dataset:** Custom-labeled images of the competition field's red/green pillars and the parking marker, captured under varied lighting and distances.
 - **Validation performance:** precision ≈ 0.997, recall ≈ 0.985, mAP@50 ≈ 0.995, mAP@50-95 ≈ 0.928.
-- **Weights file:** `best.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
+- **Weights file:** `best1.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
 
 #### ⚙️ How it fits into the pipeline
 
@@ -133,14 +133,14 @@ As with the Open Challenge, the direction of travel is only revealed just before
 | Mode | Wall Followed | Turn at Corners | Pillar Pass Direction |
 |------|---------------|------------------|------------------------|
 | `obs_closewise.py` | Left wall | Turns **right** | Green → **left**, Red → **right** |
-| `obs_counterclockwise.py` | Right wall | Turns **left** | Red → **right**, Green → **left** |
+| `obs_counterclockwise.py` | Right wall | Turns **left** | Green → **left**, Red → **right** |
 
 ### 🧭 Navigation Per File
 
-**Left Wall Following + Obstacle Avoidance (`clockWise_obstacle.py`)**
+**Left Wall Following + Obstacle Avoidance (`obs_clockwise.py`)**
 - Follows the **left wall** using a PD controller.
 - Makes a fixed **right turn** at corners and slows the turn as it gets close to the inner wall.
-- Uses **YOLO (`best.pt`)** to detect red and green pillars.
+- Uses YOLO (`best1.pt`) to detect red and green pillars.
 - Removes detected pillars from the depth data so they are not confused with the wall.
 - Green pillars: steers left. Red pillars: steers right.
 - Uses steering limits and ultrasonic sensors to prevent hitting the walls.
@@ -148,10 +148,10 @@ As with the Open Challenge, the direction of travel is only revealed just before
 - Stops and reverses briefly if a wall or pillar becomes dangerously close.
 - Counts laps using the 90° → 180° → 270° → 0° checkpoints.
 
-**Right Wall Following + Obstacle Avoidance (`counterClockWise_obstacle.py`)**
+**Right Wall Following + Obstacle Avoidance (`obs_counterclockwise.py`)**
 - Follows the right wall using a PD controller.
 - Uses a fixed turning direction at corners for more reliable navigation.
-- Uses YOLO (`best.pt`) to detect and track pillars.
+- Uses YOLO (`best1.pt`) to detect and track pillars.
 - Red pillars: steers left and follows the right wall.  
   Green pillars: steers right and follows the left wall.
 - Adjusts steering based on the pillar's position and distance.
