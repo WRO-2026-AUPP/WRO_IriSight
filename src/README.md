@@ -49,8 +49,8 @@ Since the direction of travel (clockwise or counter-clockwise) is only revealed 
 
 | Mode | Wall Followed | Turn at Corners |
 |------|---------------|-----------------|
-| `obs_clockwise.py` | Left wall | Turns **right** |
-| `obs_counterclockWise.py` | Right wall | Turns **left** |
+| `clockWise.py` | Left wall | Turns **right** |
+| `counterClockWise.py` | Right wall | Turns **left** |
 
 #### 🧭 Navigation Per File
 
@@ -131,8 +131,8 @@ As with the Open Challenge, the direction of travel is only revealed just before
 
 | Mode | Wall Followed | Turn at Corners | Pillar Pass Direction |
 |------|---------------|------------------|------------------------|
-| `clockWise_obstacle.py` | Left wall | Turns **right** | Green → **left**, Red → **right** |
-| `counterClockWise_obstacle.py` | Right wall | Turns **left** | Red → **left**, Green → **right** |
+| `obs_closewise.py` | Left wall | Turns **right** | Green → **left**, Red → **right** |
+| `obs_counterclockwise.py` | Right wall | Turns **left** | Red → **left**, Green → **right** |
 
 ### 🧭 Navigation Per File
 
