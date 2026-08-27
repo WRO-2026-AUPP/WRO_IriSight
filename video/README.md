@@ -5,7 +5,7 @@ This section provides video demonstrations of our autonomous vehicle during the 
 
 ### Open Challenge
 
-The Open Challenge demonstrates the robot operating autonomously on the competition field, navigating the course while detecting and avoiding obstacles and maintaining its intended path.
+The Open Challenge demonstrates the robot's autonomous navigation on the competition field without obstacles. The robot follows the course, maintains its position relative to the wall, performs corner turns, and completes the course autonomously.
 
 ### Obstacle Challenge
 
