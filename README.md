@@ -457,6 +457,8 @@ bno055_calibration.json
 
 ### Start an Autonomous Run
 
+Select the appropriate control program based on the competition challenge and driving direction. Ensure that the Jetson Orin Nano, D455, BNO055, and ESP32 are connected and ready before starting the autonomous run.
+
 #### 1. Open Challenge — Clockwise
 
 ```bash
@@ -480,7 +482,6 @@ python3 src/obs_clockWise.py
 ```bash
 python3 src/obs_counterclockWise.py
 ```
-
 
 ### Pre-flight and acceptance test
 
