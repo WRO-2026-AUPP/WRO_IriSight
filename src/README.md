@@ -16,11 +16,11 @@ While the Open Challenge relies purely on depth-based wall following, the Obstac
 
 #### 🎯 What it detects
 
-| Class ID | Label | Meaning | Robot Behavior |
-|----------|-------|---------|-----------------|
-| `0` | `greenbox` | Green obstacle pillar | Pass on the **left** side |
-| `1` | `redbox` | Red obstacle pillar | Pass on the **right** side |
-| `2` | `xparking` | Parking lot marker | Align and execute the parking maneuver |
+| Class | Detect Object | Robot Action |
+|-------|---------------|--------------|
+| 0 | **Green Obstacle Pillar** (`greenbox`) | Robot turns/passes to the **left** |
+| 1 | **Red Obstacle Pillar** (`redbox`) | Robot turns/passes to the **right** |
+| 2 | **Parking Marker** (`xparking`) | Robot detects and aligns with the **parking space** |
 
 #### 🏋️ Training details
 
