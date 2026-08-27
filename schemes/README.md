@@ -82,6 +82,8 @@ We used this servo because the generic 9g servos weren't powerful enough.
 
 ## TCB 1100mAh 3S 25C battery
 
+<img src="./photos/battery.jpg" alt="25C battery" width="300">
+
 These batteries can supply a continuous rated current of 305 W, which is more than enough for this project.
 
 $$
@@ -91,6 +93,8 @@ $$
 We used two of these batteries, one for the motors, and the other for the Jetson nano.
 
 ## Buck converter at 5V
+
+<img src="./photos/converter.jpg" alt="Buck converter" width="300">
 
 Because the servo requires 5V, we use another buck converter to supply the servo with the necessary power required.
 
