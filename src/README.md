@@ -156,7 +156,9 @@ As with the Open Challenge, the direction of travel is only revealed just before
 - A predictive front-wall bias nudges steering earlier based on how fast the front distance is closing, ahead of the hard corner trigger.
 - Ultrasonic sensors provide an independent hard safety clamp with their own faster steering response, plus a slow, running auto-calibration against the depth camera so the offset between the two sensors stays accurate over a run.
 - A corner-lock, mirroring the left-wall version, hands priority to pillar avoidance if a pillar shows up while the robot is turning.
-- Lap counting uses cumulative unwrapped IMU yaw rather than checkpoint zones, so it stays reliable regardless of which physical direction each corner turns.#### 🎯 Our Strategy
+- Lap counting uses cumulative unwrapped IMU yaw rather than checkpoint zones, so it stays reliable regardless of which physical direction each corner turns.
+  
+#### 🎯 Our Strategy
 
 1. **Depth camera for navigation and pillar ranging, YOLO for classification, IMU for lap counting.** <br>
    Steering during normal driving still relies entirely on the RealSense D455 depth stream, exactly as in the Open Challenge. YOLOv8 (`best1.pt` / `best.pt`) is added purely to classify red vs. green pillars and locate them in the frame; the depth frame is then used to measure how far away each detected pillar actually is and to remove it from the wall-following ROIs.
