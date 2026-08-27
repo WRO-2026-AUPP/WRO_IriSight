@@ -500,7 +500,7 @@ python3 -c "import cv2, numpy, pyrealsense2, ultralytics, serial; print('All req
 #### Open Challenge — Clockwise
 
 ```bash
-python3 src/ClockWise.py
+python3 src/clockWise.py
 ```
 
 #### Open Challenge — Counter Clockwise
