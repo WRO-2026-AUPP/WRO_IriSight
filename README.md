@@ -442,9 +442,18 @@ python3 -c "import cv2, numpy, pyrealsense2, ultralytics, serial; print('All req
 
 ### Calibration
 
+### Calibration
+
+Before starting an autonomous run, calibrate the BNO055 and ensure that the saved calibration data is available.
+
+#### 1. Check the calibration file
+
+The saved BNO055 calibration values are stored in:
+
 ```text
-[TODO: Calibration sequence]
+bno055_calibration.json
 ```
+
 ### Start an Autonomous Run
 
 #### Open Challenge — Clockwise
