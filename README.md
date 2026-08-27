@@ -419,6 +419,9 @@ cd WRO_IriSight
 ```
 
 #### 3. Install the required Python packages 
+
+The following packages are required for numerical processing, computer vision, RealSense D455 depth sensing, YOLOv8 object detection, and Jetson-to-ESP32 serial communication.
+
 ```bash
 pip install numpy
 ```
@@ -442,11 +445,9 @@ python3 -c "import cv2, numpy, pyrealsense2, ultralytics, serial; print('All req
 
 ### Calibration
 
-### Calibration
-
 Before starting an autonomous run, calibrate the BNO055 and ensure that the saved calibration data is available.
 
-#### 1. Check the calibration file
+#### Check the calibration file
 
 The saved BNO055 calibration values are stored in:
 
@@ -456,25 +457,25 @@ bno055_calibration.json
 
 ### Start an Autonomous Run
 
-#### Open Challenge — Clockwise
+#### 1. Open Challenge — Clockwise
 
 ```bash
 python3 src/clockWise.py
 ```
 
-#### Open Challenge — Counter Clockwise
+#### 2. Open Challenge — Counter Clockwise
 
 ```bash
 python3 src/counterClockWise.py
 ```
 
-#### Obstacle Avoidance Challenge — Clockwise
+#### 3. Obstacle Avoidance Challenge — Clockwise
 
 ```bash
 python3 src/obs_clockWise.py
 ```
 
-#### Obstacle Avoidance Challenge — Counter Clockwise
+#### 4. Obstacle Avoidance Challenge — Counter Clockwise
 
 ```bash
 python3 src/obs_counterclockWise.py
