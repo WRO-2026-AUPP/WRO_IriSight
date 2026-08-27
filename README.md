@@ -284,10 +284,10 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 
 | Sensor | Placement | Selection reason | Calibration | Limitation and mitigation |
 | --- | --- | --- | --- | --- |
-| D455 | [TODO] | [TODO] | [TODO] | [TODO] |
-| BNO055 | [TODO] | [TODO] | [TODO] | [TODO] |
-| Left ultrasonic | [TODO] | [TODO] | [TODO] | [TODO] |
-| Right ultrasonic | [TODO] | [TODO] | [TODO] | [TODO] |
+| D455 | Front of the robot, mounted facing forward | Provides both RGB and depth information for wall following, obstacle distance measurement, and depth-based navigation | Camera is mounted securely and aligned horizontally; depth readings are checked at known distances and invalid/noisy readings are filtered | Depth can be noisy, especially on reflective, dark, or very close surfaces. This is mitigated using ROI-based distance measurements, depth filtering, and fallback control logic |
+| BNO055 | Near the center of the robot chassis, away from motors and high-current wires | Provides orientation and heading information while minimizing the effect of rotation and vibration | Calibrated by keeping the robot level and performing the required movement/calibration procedure before operation | Magnetic interference and vibration can affect heading accuracy. It is placed away from motors and power cables, and its readings are used with filtering/validation |
+| Left ultrasonic | Left side of the robot, facing outward | Detects objects or walls that may be outside the camera's reliable field of view and provides an additional safety distance check | Tested against objects at known distances and the avoidance threshold is adjusted accordingly | Ultrasonic readings can be affected by angled, soft, or irregular surfaces. Readings are validated and used as an additional safety sensor rather than the only navigation source |
+| Right ultrasonic | Right side of the robot, facing outward | Provides additional distance sensing and safety checking on the right side, especially for close obstacles or walls | Tested against objects at known distances and the avoidance threshold is adjusted accordingly | Ultrasonic readings can be noisy or unreliable on angled surfaces. Multiple readings and threshold-based filtering help reduce false detections |
 
 The D455 is the primary distance sensor used by the current Open Challenge programs. Its depth frame supplies a front region and one side-wall region. The BNO055 supplies relative yaw for ordered heading checkpoints and lap counting. The two ultrasonic sensors are additional left/right sensors, but their final role is not yet implemented in the current Open Challenge files.
 
