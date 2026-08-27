@@ -1,6 +1,6 @@
 💻 Control software
 ====
-This directory contains the control software used by our vehicle to participate in the WRO 2026 Future Engineer competition, developed entirely by our team. It includes all code, trained models, and dependency information required to build and run the robot's autonomous behavior for both the Open Challenge and Obstacle Avoidance rounds.
+This directory contains the control software used by our vehicle to participate in the **WRO 2026 Future Engineers** competition, developed entirely by our team. It includes all code, trained models, and dependency information required to build and run the robot's autonomous behavior for both the Open Challenge and Obstacle Avoidance rounds.
 
 ## 🧠 Our Approach
 
@@ -12,14 +12,15 @@ Because our entire navigation strategy rests on a single depth signal, most of o
 
 ## 🤖 AI Model
 
-While the Open Challenge relies purely on depth-based wall following, the Obstacle Avoidance round additionally requires the robot to recognize and react to colored pillars and the parking signal. For this, we use a custom-trained **YOLOv8** object detection model, which is the primary way our robot perceives obstacles.
+While the Open Challenge relies purely on depth-based wall following, the Obstacle Avoidance round additionally requires the robot to recognize and react to colored pillars and the parking signal. For this, we use a custom-trained **YOLOv8n** object detection model, which is the primary way our robot perceives obstacles.
 
 #### 🎯 What it detects
 
 | Class | Detect Object | Robot Action |
 |-------|---------------|--------------|
-| 0 | Green Obstacle Pillar (`greenbox`) | Robot turns/passes to the **right** |
-| 1 | Red Obstacle Pillar (`redbox`) | Robot turns/passes to the **left** |
+| 0 | **Green Obstacle Pillar** (`greenbox`) | Robot turns/passes to the **left** |
+| 1 | **Red Obstacle Pillar** (`redbox`) | Robot turns/passes to the **right** |
+| 2 | **Parking Marker** (`xparking`) | Robot detects and aligns with the **parking space** |
 
 #### 🏋️ Training details
 
@@ -49,8 +50,8 @@ Since the direction of travel (clockwise or counter-clockwise) is only revealed 
 
 | Mode | Wall Followed | Turn at Corners |
 |------|---------------|-----------------|
-| `obs_clockwise.py` | Left wall | Turns **right** |
-| `obs_counterclockWise.py` | Right wall | Turns **left** |
+| `clockWise.py` | Left wall | Turns **right** |
+| `counterClockWise.py` | Right wall | Turns **left** |
 
 #### 🧭 Navigation Per File
 
@@ -131,15 +132,15 @@ As with the Open Challenge, the direction of travel is only revealed just before
 
 | Mode | Wall Followed | Turn at Corners | Pillar Pass Direction |
 |------|---------------|------------------|------------------------|
-| `clockWise_obstacle.py` | Left wall | Turns **right** | Green → **left**, Red → **right** |
-| `counterClockWise_obstacle.py` | Right wall | Turns **left** | Red → **left**, Green → **right** |
+| `obs_closewise.py` | Left wall | Turns **right** | Green → **left**, Red → **right** |
+| `obs_counterclockwise.py` | Right wall | Turns **left** | Green → **left**, Red → **right** |
 
 ### 🧭 Navigation Per File
 
-**Left Wall Following + Obstacle Avoidance (`clockWise_obstacle.py`)**
+**Left Wall Following + Obstacle Avoidance (`obs_clockwise.py`)**
 - Follows the **left wall** using a PD controller.
 - Makes a fixed **right turn** at corners and slows the turn as it gets close to the inner wall.
-- Uses **YOLO (`best1.pt`)** to detect red and green pillars.
+- Uses YOLO (`best1.pt`) to detect red and green pillars.
 - Removes detected pillars from the depth data so they are not confused with the wall.
 - Green pillars: steers left. Red pillars: steers right.
 - Uses steering limits and ultrasonic sensors to prevent hitting the walls.
@@ -147,10 +148,10 @@ As with the Open Challenge, the direction of travel is only revealed just before
 - Stops and reverses briefly if a wall or pillar becomes dangerously close.
 - Counts laps using the 90° → 180° → 270° → 0° checkpoints.
 
-**Right Wall Following + Obstacle Avoidance (`counterClockWise_obstacle.py`)**
+**Right Wall Following + Obstacle Avoidance (`obs_counterclockwise.py`)**
 - Follows the right wall using a PD controller.
 - Uses a fixed turning direction at corners for more reliable navigation.
-- Uses YOLO (`best.pt`) to detect and track pillars.
+- Uses YOLO (`best1.pt`) to detect and track pillars.
 - Red pillars: steers left and follows the right wall.  
   Green pillars: steers right and follows the left wall.
 - Adjusts steering based on the pillar's position and distance.
@@ -163,7 +164,7 @@ As with the Open Challenge, the direction of travel is only revealed just before
 #### 🎯 Our Strategy
 
 1. **Depth camera for navigation and pillar ranging, YOLO for classification, IMU for lap counting.** <br>
-   Steering during normal driving still relies entirely on the RealSense D455 depth stream, exactly as in the Open Challenge. YOLOv8 (`best.pt`) is added purely to classify red vs. green pillars and locate them in the frame; the depth frame is then used to measure how far away each detected pillar actually is and to remove it from the wall-following ROIs.
+   Steering during normal driving still relies entirely on the RealSense D455 depth stream, exactly as in the Open Challenge. YOLOv8 (`best1.pt`) is added purely to classify red vs. green pillars and locate them in the frame; the depth frame is then used to measure how far away each detected pillar actually is and to remove it from the wall-following ROIs.
 2. **Column-based proportional avoidance instead of a fixed swing.** <br>
    Rather than steering a fixed amount whenever a pillar is seen, the controller computes an error between the pillar's current horizontal position and a target column, then steers proportionally — giving a smooth, continuously corrected pass rather than a single hard swerve.
 3. **Independent wall-clearance guards as a safety net.** <br>
@@ -201,4 +202,27 @@ flowchart TD
 
     J -- NO --> L{In a corner turn?}
 
+    L -- YES --> M[TURN MODE<br/><br/>steer = fixed TURN_STEER<br/>speed = TURN_SPEED<br/><br/>Exit when front ≥ FRONT_CLEAR]
+
+    L -- NO --> N[WALL-FOLLOW MODE<br/><br/>error = target − actual<br/>steer = Kp × error + Kd × derivative<br/>speed = BASE_SPEED]
+
+    K --> O[Inner/Outer wall guards<br/>clamp steer using depth + ultrasonic]
+    M --> O
+    N --> O
+
+    O --> P{Front wall or pillar<br/>critically close?}
+
+    P -- YES --> Q[RECOVERY<br/>Stop, then reverse<br/>with small steer bias]
+    P -- NO --> R[Send DRIVE command<br/>over serial to ESP32]
+    Q --> R
+
+    R --> S{lap_count ≥ 3?}
+
+    S -- NO --> D
+
+    S -- YES --> T[Continue driving for<br/>STOP_DELAY_AFTER_LAPS]
+
+    T --> U[Send DRIVE 0 0]
+    U --> V([STOP])
+```
 

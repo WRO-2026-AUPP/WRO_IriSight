@@ -140,6 +140,10 @@ Repository of Team IriSight competing in the CRO 2026, Future Engineers category
 </table>
 
 ## Meet the vehicle
+<div>
+  <img src="./v-photos/robot_photo/vehicle-360-view.gif" alt="Meet the vehicle" width="600">
+  <p><em>Vehicle 360º view (GIF)</em></p>
+</div>
 
 ### Final vehicle gallery
 | <img src="./v-photos/robot_photo/top.png" alt="Top photo" width="100%"> | <img src="./v-photos/robot_photo/bottom.png" alt="Bottom photo" width="100%"> |
@@ -161,7 +165,7 @@ Repository of Team IriSight competing in the CRO 2026, Future Engineers category
 | Mass | 1.38 KG |
 | Wheelbase / track width | [TODO] |
 | Ground clearance | [TODO] |
-| Drive layout | One motor, two gears, one drive shaft, two driven rear wheels |
+| Drive layout | One motor, two gears, one drive shaft, two driven back wheels |
 | Steering layout | LEGO-based parallel front steering system|
 | Main computer | NVIDIA Jetson Orin Nano, Ubuntu 22.04 LTS |
 | Microcontroller | ESP32 |
@@ -169,17 +173,16 @@ Repository of Team IriSight competing in the CRO 2026, Future Engineers category
 | IMU | BNO055 breakout |
 | Additional sensors | Two side ultrasonic sensors |
 | Front wheels | LEGO SPIKE blue wheels, part `39367` |
-| Rear wheels | [TODO: Exact model-car wheels] |
+| Back wheels | RC Car Tires Wheels |
 | Batteries | Separate Jetson and motor/actuator batteries |
 
 ## Performance videos
 
-| Challenge | Video | Robot version | Result |
-| --- | --- | --- | --- |
-| Open Challenge | [TODO: YouTube link] | [TODO] | [TODO] |
-| Obstacle Challenge | [TODO: YouTube link] | [TODO] | [TODO] |
-| Parking | [TODO: Video/timestamp] | [TODO] | [TODO] |
-| Project overview | [TODO: Optional summary video] | [TODO] | [TODO] |
+| Challenge | Video | 
+| --- | --- | 
+| Open Challenge | [Watch on Youtube](https://youtu.be/7jsuhlpw6mA) | 
+| Obstacle Challenge | [Watch on Youtube](https://youtu.be/TGH4JoCRx5o) | 
+
 
 ## How IriSight works
 
@@ -279,16 +282,12 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 
 ### Sensor placement and calibration
 
-[TODO: Sensor-placement diagram]
-
 | Sensor | Placement | Selection reason | Calibration | Limitation and mitigation |
 | --- | --- | --- | --- | --- |
-| D455 | [TODO] | [TODO] | [TODO] | [TODO] |
-| BNO055 | [TODO] | [TODO] | [TODO] | [TODO] |
-| Left ultrasonic | [TODO] | [TODO] | [TODO] | [TODO] |
-| Right ultrasonic | [TODO] | [TODO] | [TODO] | [TODO] |
-
-The D455 is the primary distance sensor used by the current Open Challenge programs. Its depth frame supplies a front region and one side-wall region. The BNO055 supplies relative yaw for ordered heading checkpoints and lap counting. The two ultrasonic sensors are additional left/right sensors, but their final role is not yet implemented in the current Open Challenge files.
+| D455 | Mounted at the front/top of the robot, facing forward with a clear view of the track | Provides RGB and depth data for obstacle detection, pillar detection, wall following, and distance measurement | Mounted level and securely; depth readings are tested at known distances and filtered | Depth can be noisy on reflective, dark, or very close surfaces. ROI averaging/filtering and fallback control logic are used |
+| BNO055 | Mounted on the upper section of the robot chassis, near the center and away from motors and power wiring as much as possible | Provides orientation and heading data for more stable navigation and turning | Calibrated according to the sensor's required motion/orientation procedure before operation | Magnetic interference and vibration can affect accuracy. The sensor is mounted securely, kept away from high-current components where possible, and readings are validated |
+| Left ultrasonic | Mounted on the left side of the robot chassis, facing outward toward the left | Provides additional close-range obstacle and wall detection on the left side | Tested using objects at known distances; the detection threshold is adjusted based on test results | Can give inaccurate readings on angled, soft, or irregular surfaces. Used as an additional safety sensor with threshold-based filtering |
+| Right ultrasonic | Mounted on the right side of the robot chassis, facing outward toward the right | Provides additional close-range obstacle and wall detection on the right side | Tested using objects at known distances; the detection threshold is adjusted based on test results | Can give inaccurate readings on angled, soft, or irregular surfaces. Used as an additional safety sensor with threshold-based filtering |
 
 **Detailed evidence:** [electrical architecture, wiring, power budget, sensor placement, calibration, and safety](schemes/)
 
@@ -296,16 +295,15 @@ The D455 is the primary distance sensor used by the current Open Challenge progr
 
 ### Architecture and communication
 
-[TODO: Software state machine/data-flow diagram]
-
 The current Open Challenge system runs on the Jetson. It reads the RealSense D455 and BNO055, calculates steering and speed, and sends `DRIVE <steerDeg> <speed>` commands to the ESP32 through a 115200-baud serial connection. The ESP32-side firmware that converts these commands into motor-driver and steering-servo signals still needs to be added to the repository.
 
-| Module | Responsibility | Inputs | Outputs |
-| --- | --- | --- | --- |
-| [`src/clockWise.py`](src/clockWise.py) | Left-wall depth following with counter-clockwise yaw checkpoints | D455 depth/color, BNO055 yaw | ESP32 drive command, web diagnostics |
-| [`src/counterClockWise.py`](src/counterClockWise.py) | Right-wall depth following with clockwise yaw checkpoints | D455 depth/color, BNO055 yaw | ESP32 drive command, web diagnostics |
-| `src/bno055_yaw.py` | [TODO] | BNO055 | Relative yaw and calibration status |
-| ESP32 firmware | [TODO] | Jetson serial command | Motor-driver and servo control |
+| **Module** | **Responsibility** | **Inputs** | **Outputs** |
+|---|---|---|---|
+| [`src/clockWise.py`](https://github.com/WRO-2026-AUPP/WRO_IriSight/blob/main/src/clockWise.py) | Left-wall depth following with counter-clockwise yaw checkpoints | D455 depth/color, BNO055 yaw | ESP32 drive command, web diagnostics |
+| [`src/counterClockWise.py`](https://github.com/WRO-2026-AUPP/WRO_IriSight/blob/main/src/counterClockWise.py) | Right-wall depth following with clockwise yaw checkpoints | D455 depth/color, BNO055 yaw | ESP32 drive command, web diagnostics |
+| `src/bno055_yaw.py` | BNO055 yaw reading, calibration, and relative-heading tracking | BNO055, `bno055_calibration.json` | Relative yaw and calibration status |
+| `bno055_calibration.json` | Stores the saved BNO055 calibration offsets used to restore sensor calibration | Saved calibration values | Calibration data for `bno055_yaw.py` |
+| ESP32 firmware | Receives Jetson drive commands and controls the motors and steering servo | Jetson serial command | Motor-driver and servo control |
 
 ### Open Challenge
 
@@ -343,12 +341,6 @@ The BNO055 heading is zeroed at startup. Each program accepts the next expected 
 **Status:** In development.
 
 [TODO: Obstacle strategy, state machine, tuning, edge cases, and results]
-
-### Parking
-
-**Status:** In development.
-
-[TODO: Parking strategy, state machine, tuning, edge cases, and results]
 
 **Detailed evidence:** [software architecture, algorithms, tuning, installation, configuration, and tests](src/)
 
@@ -431,9 +423,17 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 
 | Limitation | Current effect | Planned improvement | Validation target |
 | --- | --- | --- | --- |
-| Obstacle Challenge incomplete | [TODO] | [TODO] | [TODO] |
-| Parking incomplete | [TODO] | [TODO] | [TODO] |
-| [TODO] | [TODO] | [TODO] | [TODO] |
+| Depth sensing limitations | The RealSense D455 does not provide complete visibility from every position and angle. Some areas of the track or obstacles may fall outside the camera's effective field of view or produce unreliable depth measurements. | Improve camera placement and ROI selection, and combine depth sensing with ultrasonic measurements where appropriate. | Maintain reliable wall and obstacle distance measurements throughout the track. |
+| Vision sensitivity | YOLOv8 detection performance can be affected by lighting, shadows, reflections, and changes in object appearance. | Expand and improve the training dataset and tune the detection model and confidence thresholds. | Reliably detect the required colored obstacles and parking signal under different lighting conditions. |
+| Reaction distance | Obstacles detected too close to the robot may not leave enough distance for safe avoidance. | Improve detection range and trigger avoidance earlier using depth and vision information. | Consistently avoid obstacles without collision during repeated test runs. |
+| BNO055 calibration | Accurate yaw-based navigation depends on proper sensor calibration and saved calibration data. | Improve the calibration procedure and maintain reliable saved calibration values. | Achieve consistent yaw readings and checkpoint detection across repeated runs. |
+| Heading error | BNO055 yaw measurements may contain small errors or drift, which can affect turn timing and checkpoint detection. | Add heading correction and further tune yaw-based turning thresholds. | Keep heading error within the required navigation tolerance. |
+| Controller tuning | Wall-following and obstacle-avoidance performance depends on manually tuned steering gains, target distances, and detection thresholds. | Further tune PD control parameters and navigation thresholds through track testing. | Achieve stable wall following and repeatable obstacle avoidance across multiple runs. |
+| Processing load | Running YOLO inference, depth processing, and navigation simultaneously can increase Jetson CPU/GPU usage and introduce latency. | Optimize image/depth processing and reduce unnecessary computation. | Maintain real-time control without noticeable processing delays. |
+| Serial communication | The robot depends on reliable communication between the Jetson and ESP32 for timely motor and steering commands. | Improve serial communication handling and add robust error handling. | Maintain reliable command transmission throughout a complete run. |
+| Ultrasonic sensing | Ultrasonic readings can be affected by obstacle angle, surface characteristics, interference, and sensor placement. | Improve sensor placement and combine ultrasonic readings with depth information. | Obtain stable distance readings for close-range obstacle detection. |
+| Steering geometry | The current prototype uses parallel steering, which can reduce turning accuracy and stability during sharp turns. | Replace the current mechanism with Ackermann steering. | Achieve more accurate and stable cornering with reduced path deviation. |
+| Wheel friction | Differences in friction between the wheels and track surface can cause the robot to deviate from its intended path. Changes in surface conditions can also affect turning, acceleration, and stopping performance. | Improve wheel alignment, weight distribution, and mechanical design, and tune control parameters for different track conditions. | Reduce path deviation and achieve consistent movement across repeated runs. |
 
 ## Repository structure
 
@@ -443,7 +443,7 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 | [`schemes/`](schemes/) | Wiring, power, sensor-placement, and system diagrams |
 | [`models/`](models/) | Mechanical documentation, CAD, and printable files |
 | [`other/`](other/) | Engineering Journal, tests, calibration, risks, and decision records |
-| [`v-photos/`](v-photos/) | Front, rear, left, right, top, and bottom vehicle photographs |
+| [`v-photos/`](v-photos/) | Front, back, left, right, top, and bottom vehicle photographs |
 | [`t-photos/`](t-photos/) | Official and informal team photographs |
 | [`video/`](video/) | Challenge and project video links |
 
