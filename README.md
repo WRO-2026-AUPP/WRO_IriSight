@@ -178,12 +178,11 @@ Repository of Team IriSight competing in the CRO 2026, Future Engineers category
 
 ## Performance videos
 
-| Challenge | Video | Robot version | Result |
-| --- | --- | --- | --- |
-| Open Challenge | [TODO: YouTube link] | [TODO] | [TODO] |
-| Obstacle Challenge | [TODO: YouTube link] | [TODO] | [TODO] |
-| Parking | [TODO: Video/timestamp] | [TODO] | [TODO] |
-| Project overview | [TODO: Optional summary video] | [TODO] | [TODO] |
+| Challenge | Video | 
+| --- | --- | 
+| Open Challenge | https://youtu.be/7jsuhlpw6mA | 
+| Obstacle Challenge | https://youtu.be/TGH4JoCRx5o | 
+
 
 ## How IriSight works
 
