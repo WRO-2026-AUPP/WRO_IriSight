@@ -139,7 +139,7 @@ As with the Open Challenge, the direction of travel is only revealed just before
 **Left Wall Following + Obstacle Avoidance (`clockWise_obstacle.py`)**
 - Follows the **left wall** using a PD controller.
 - Makes a fixed **right turn** at corners and slows the turn as it gets close to the inner wall.
-- Uses **YOLO (`best1.pt`)** to detect red and green pillars.
+- Uses **YOLO (`best.pt`)** to detect red and green pillars.
 - Removes detected pillars from the depth data so they are not confused with the wall.
 - Green pillars: steers left. Red pillars: steers right.
 - Uses steering limits and ultrasonic sensors to prevent hitting the walls.
@@ -201,4 +201,27 @@ flowchart TD
 
     J -- NO --> L{In a corner turn?}
 
+    L -- YES --> M[TURN MODE<br/><br/>steer = fixed TURN_STEER<br/>speed = TURN_SPEED<br/><br/>Exit when front ≥ FRONT_CLEAR]
+
+    L -- NO --> N[WALL-FOLLOW MODE<br/><br/>error = target − actual<br/>steer = Kp × error + Kd × derivative<br/>speed = BASE_SPEED]
+
+    K --> O[Inner/Outer wall guards<br/>clamp steer using depth + ultrasonic]
+    M --> O
+    N --> O
+
+    O --> P{Front wall or pillar<br/>critically close?}
+
+    P -- YES --> Q[RECOVERY<br/>Stop, then reverse<br/>with small steer bias]
+    P -- NO --> R[Send DRIVE command<br/>over serial to ESP32]
+    Q --> R
+
+    R --> S{lap_count ≥ 3?}
+
+    S -- NO --> D
+
+    S -- YES --> T[Continue driving for<br/>STOP_DELAY_AFTER_LAPS]
+
+    T --> U[Send DRIVE 0 0]
+    U --> V([STOP])
+```
 
