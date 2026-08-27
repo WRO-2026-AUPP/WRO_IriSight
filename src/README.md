@@ -120,3 +120,107 @@ flowchart TD
 
     M --> N[Send DRIVE 0 0]
     N --> O([STOP])
+
+
+
+### 🧱 Obstacle Avoidance
+#### 📋 Challenge Requirements
+
+The Obstacle Avoidance round requires the robot to complete 3 laps around the track while additionally detecting and correctly passing colored pillars placed along the path — green pillars must be passed on one side, red pillars on the other — without touching them or the track walls, and finally parking in a marked bay once the laps are complete.
+
+As with the Open Challenge, the direction of travel is only revealed just before the run, so we again built two interchangeable driving programs, this time layering AI-based pillar detection and ultrasonic backup sensing on top of the same wall-following foundation:
+
+| Mode | Wall Followed | Turn at Corners | Pillar Pass Direction |
+|------|---------------|------------------|------------------------|
+| `clockWise_obstacle.py` | Left wall | Turns **right** | Green → **left**, Red → **right** |
+| `counterClockWise_obstacle.py` | Right wall | Turns **left** | Red → **left**, Green → **right** |
+
+#### 🧭 Navigation Per File
+
+**Left Wall Following + Obstacle Avoidance (clockWise_obstacle.py)**
+- Follows the left wall using the LEFT ROI and a PD controller, same as the Open Challenge baseline, with the raw wall reading rate-limited so a single noisy depth frame can't saturate steering.
+- At a corner, makes a fixed right turn (TURN_STEER = +30°) that eases off automatically as the inner wall gets close, until the path ahead clears past FRONT_CLEAR.
+- YOLO (`best1.pt`) detects green/red pillars each frame; detected boxes are masked out of the depth image so a pillar sitting inside the wall ROI is never mistaken for the wall itself.
+- A green pillar close ahead steers the robot left (toward the outer/followed wall); a red pillar steers it right (toward the inner wall), using a proportional column controller whose target column shifts depending on which third of the frame the pillar currently sits in.
+- Two independent safety guards clamp any rightward or leftward steering command — regardless of which mode produced it — so normal wall-follow, the corner turn, and pillar avoidance can never be driven into the inner or outer wall.
+- Left/right ultrasonic readings from the ESP32 back up both guards as a second, independent check; whichever sensor reports the closer distance wins.
+- A corner-lock mechanism hands priority to pillar avoidance if a pillar appears while the robot is mid-turn, instead of alternating between turning and avoiding every frame; a matching same-colour handover lets the robot switch smoothly between two close pillars of the same colour.
+- If the front wall or an actively-avoided pillar gets dangerously close mid-avoidance, the robot performs a brief stop-then-reverse recovery before resuming.
+- Lap checkpoints are detected in the order 90° → 180° → 270° → 0°, identical to the Open Challenge.
+
+**Right Wall Following + Obstacle Avoidance (counterClockWise_obstacle.py)**
+- Follows the right wall using the RIGHT ROI and a PD controller with a deadband and smoothed derivative term to suppress steering flicker from sensor noise.
+- Always corners in a fixed direction at a blocked front (rather than choosing per-corner based on which side looks more open), which proved more reliable than a "head toward open space" strategy when the depth reading is momentarily unreliable.
+- YOLO (`best.pt`) detects and identity-locks onto pillars frame-to-frame, so a same-coloured pillar that has already been passed can't take over tracking from a new, farther pillar at a handoff point.
+- Red pillars are passed by steering left and hugging the right wall; green pillars are passed by steering right and hugging the left wall, both using per-colour gains and per-ROI-zone target columns tuned independently.
+- A predictive front-wall bias nudges steering earlier based on how fast the front distance is closing, ahead of the hard corner trigger.
+- Ultrasonic sensors provide an independent hard safety clamp with their own faster steering response, plus a slow, running auto-calibration against the depth camera so the offset between the two sensors stays accurate over a run.
+- A corner-lock, mirroring the left-wall version, hands priority to pillar avoidance if a pillar shows up while the robot is turning.
+- Lap counting uses cumulative unwrapped IMU yaw rather than checkpoint zones, so it stays reliable regardless of which physical direction each corner turns.
+
+#### 🎯 Our Strategy
+
+1. **Depth camera for navigation and pillar ranging, YOLO for classification, IMU for lap counting.** <br>
+   Steering during normal driving still relies entirely on the RealSense D455 depth stream, exactly as in the Open Challenge. YOLOv8 (`best1.pt` / `best.pt`) is added purely to classify red vs. green pillars and locate them in the frame; the depth frame is then used to measure how far away each detected pillar actually is and to remove it from the wall-following ROIs.
+2. **Column-based proportional avoidance instead of a fixed swing.** <br>
+   Rather than steering a fixed amount whenever a pillar is seen, the controller computes an error between the pillar's current horizontal position and a target column, then steers proportionally — giving a smooth, continuously corrected pass rather than a single hard swerve.
+3. **Independent wall-clearance guards as a safety net.** <br>
+   Because wall-following, corner turns, and pillar avoidance can all issue a steering command in the same direction as a nearby wall, both directions of steering pass through dedicated inner-wall and outer-wall clearance guards before being sent to the motors — these only ever pull a dangerous steer back toward safe, never push it further into a wall.
+4. **Ultrasonic sensors as a second, independent sensing layer.** <br>
+   The RealSense depth ROIs and the ESP32's ultrasonic readings are treated as two independent measurements of the same wall; whichever one reports the more restrictive (closer) distance at any instant is the one that's obeyed, so a blind spot or dropout in one sensor doesn't remove the safety margin.
+5. **Corner-lock and recovery for edge cases.** <br>
+   A pillar appearing mid-turn cancels the turn and locks in pillar avoidance instead of fighting between the two behaviours every frame, and a stop-then-reverse recovery manoeuvre is triggered as a last resort if the front wall or a pillar gets dangerously close before the robot has fully cleared it.
+6. **Heading-based lap counting, unchanged from the Open Challenge.** <br>
+   Lap counting again runs independently of the vision pipeline using the IMU's heading, so it stays reliable even during active pillar avoidance, when the camera's attention is on the obstacle rather than the wall.
+
+#### 📉 System Workflow
+
+```mermaid
+flowchart TD
+    A([START OBSTACLE AVOIDANCE]) --> B[Initialize System<br/>• RealSense D455<br/>• BNO055 IMU<br/>• YOLOv8 model<br/>• Serial to ESP32<br/>• Flask HUD Server]
+
+    B --> C[Zero IMU Heading<br/>Current direction = 0°<br/>lap_count = 0]
+
+    C --> D[MAIN LOOP]
+
+    D --> E[Capture and align depth and color frames<br/>640×480 @ 30 FPS]
+
+    E --> F[Run YOLO on color frame<br/>Detect red/green pillars<br/>Mask boxes out of depth image]
+
+    F --> G[Sample FRONT / LEFT / RIGHT ROIs<br/>from pillar-masked depth frame]
+
+    G --> H[Read relative yaw from IMU<br/>Update lap_count]
+
+    H --> I[Read left/right ultrasonic<br/>from ESP32]
+
+    I --> J{Pillar within<br/>engage distance?}
+
+    J -- YES --> K[PILLAR AVOID MODE<br/><br/>error = pillar cx − target column<br/>steer = Kp × error<br/>speed = AVOID_SPEED<br/><br/>Corner-lock cancels any active turn]
+
+    J -- NO --> L{In a corner turn?}
+
+    L -- YES --> M[TURN MODE<br/><br/>steer = fixed TURN_STEER<br/>speed = TURN_SPEED<br/><br/>Exit when front ≥ FRONT_CLEAR]
+
+    L -- NO --> N[WALL-FOLLOW MODE<br/><br/>error = target − actual<br/>steer = Kp × error + Kd × derivative<br/>speed = BASE_SPEED]
+
+    K --> O[Inner/Outer wall guards<br/>clamp steer using depth + ultrasonic]
+    M --> O
+    N --> O
+
+    O --> P{Front wall or pillar<br/>critically close?}
+
+    P -- YES --> Q[RECOVERY<br/>Stop, then reverse<br/>with small steer bias]
+    P -- NO --> R[Send DRIVE command<br/>over serial to ESP32]
+    Q --> R
+
+    R --> S{lap_count ≥ 3?}
+
+    S -- NO --> D
+
+    S -- YES --> T[Continue driving for<br/>STOP_DELAY_AFTER_LAPS]
+
+    T --> U[Send DRIVE 0 0]
+    U --> V([STOP])
+```
+
+
