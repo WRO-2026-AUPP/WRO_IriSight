@@ -340,12 +340,6 @@ The BNO055 heading is zeroed at startup. Each program accepts the next expected 
 
 [TODO: Obstacle strategy, state machine, tuning, edge cases, and results]
 
-### Parking
-
-**Status:** In development.
-
-[TODO: Parking strategy, state machine, tuning, edge cases, and results]
-
 **Detailed evidence:** [software architecture, algorithms, tuning, installation, configuration, and tests](src/)
 
 ## System integration, testing, and risk
