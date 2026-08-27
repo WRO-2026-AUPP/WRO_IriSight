@@ -10,6 +10,37 @@ We chose wall following as our core navigation strategy for a simple reason: wit
 
 Because our entire navigation strategy rests on a single depth signal, most of our engineering effort went into making that signal as clean and responsive as possible — filtering noisy depth readings, using median sampling instead of raw pixel reads, and tuning a PD controller so the robot reacts quickly to error without oscillating. The Jetson handles all sensing, vision, and decision-making; it then sends simple, low-level drive commands to an ESP32 over serial, which is responsible only for actually driving the motors and steering servo.
 
+## 🤖 AI Model
+
+While the Open Challenge relies purely on depth-based wall following, the Obstacle Avoidance round additionally requires the robot to recognize and react to colored pillars and the parking signal. For this, we use a custom-trained **YOLOv8** object detection model, which is the primary way our robot perceives obstacles.
+
+#### 🎯 What it detects
+
+| Class | Label | Purpose |
+|-------|-------|---------|
+| 0 | `greenbox` | Green obstacle pillar — robot must pass on the **right** side |
+| 1 | `redbox` | Red obstacle pillar — robot must pass on the **left** side |
+| 2 | `xparking` | Parking lot marker — used to detect and align with the parking space for the final maneuver |
+
+#### 🏋️ Training details
+
+- **Base architecture:** YOLOv8n (nano) — chosen for its speed/accuracy tradeoff, so it can run in real time on the Jetson alongside the depth-processing pipeline.
+- **Input size:** 640×640
+- **Epochs:** 100 (batch size 8, auto optimizer, lr0 = 0.01)
+- **Dataset:** Custom-labeled images of the competition field's red/green pillars and the parking marker, captured under varied lighting and distances.
+- **Validation performance:** precision ≈ 0.997, recall ≈ 0.985, mAP@50 ≈ 0.995, mAP@50-95 ≈ 0.928.
+- **Weights file:** `best1.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
+
+#### ⚙️ How it fits into the pipeline
+
+1. **Color frame → YOLO inference.** Each color frame from the RealSense D455 is passed through the YOLOv8 model to detect and classify `greenbox`, `redbox`, and `xparking` instances, returning bounding boxes and confidence scores.
+2. **Depth fusion.** The pixel location of each detected box is cross-referenced with the aligned depth frame to estimate the obstacle's real-world distance and lateral offset, not just its position in the 2D image.
+3. **Decision logic.** Based on the detected class, the robot computes a steering offset to pass green pillars on the right and red pillars on the left, while the underlying wall-following PD controller continues to handle smooth trajectory correction.
+4. **Parking maneuver.** Once `xparking` is detected and the robot has completed the required laps, detections of this class are used to align the robot with the parking space and trigger the final parking sequence.
+5. **Ultrasonic backup.** Ultrasonic sensors provide redundant close-range confirmation so a missed or late detection doesn't result in a collision.
+
+Because object detection only needs to run during the Obstacle Avoidance round, YOLO inference is disabled entirely during the Open Challenge to save compute and keep the depth-based control loop running at full speed.
+
 ### 🏁 Open Challenge
 #### 📋 Challenge Requirements
 
