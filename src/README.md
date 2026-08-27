@@ -142,7 +142,7 @@ As with the Open Challenge, the direction of travel is only revealed just before
 - Makes a fixed **right turn** at corners and slows the turn as it gets close to the inner wall.
 - Uses **YOLO (`best1.pt`)** to detect red and green pillars.
 - Removes detected pillars from the depth data so they are not confused with the wall.
-- **Green pillars: steers left. Red pillars: steers right.
+- Green pillars: steers left. Red pillars: steers right.
 - Uses steering limits and ultrasonic sensors to prevent hitting the walls.
 - Uses a corner-lock system so pillar avoidance has priority during turns.
 - Stops and reverses briefly if a wall or pillar becomes dangerously close.
@@ -160,7 +160,7 @@ As with the Open Challenge, the direction of travel is only revealed just before
 - Automatically calibrates the ultrasonic readings with the depth camera.
 - Uses a corner-lock system to prioritize pillar avoidance during turns.
 - Counts laps using IMU yaw instead of checkpoint zones.
-- 
+  
 #### 🎯 Our Strategy
 
 1. **Depth camera for navigation and pillar ranging, YOLO for classification, IMU for lap counting.** <br>
