@@ -20,7 +20,6 @@ While the Open Challenge relies purely on depth-based wall following, the Obstac
 |-------|---------------|--------------|
 | 0 | Green Obstacle Pillar (`greenbox`) | Robot turns/passes to the **right** |
 | 1 | Red Obstacle Pillar (`redbox`) | Robot turns/passes to the **left** |
-| 2 | Parking Marker (`xparking`) | Robot detects and aligns with the **parking space** |
 
 #### 🏋️ Training details
 
@@ -50,8 +49,8 @@ Since the direction of travel (clockwise or counter-clockwise) is only revealed 
 
 | Mode | Wall Followed | Turn at Corners |
 |------|---------------|-----------------|
-| `clockWise.py` | Left wall | Turns **right** |
-| `counterClockWise.py` | Right wall | Turns **left** |
+| `obs_clockwise.py` | Left wall | Turns **right** |
+| `obs_counterclockWise.py` | Right wall | Turns **left** |
 
 #### 🧭 Navigation Per File
 
