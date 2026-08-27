@@ -21,6 +21,8 @@ _This part must be filled by participants with the technical clarifications abou
 
 # IriSight — WRO Future Engineers 2026
 
+Repository of Team IriSight competing in the CRO 2026, Future Engineers category.
+
 <div align="center">
   <img src="other/TODO-banner" width="850" alt="IriSight project banner">
   <p><em>[TODO: Project tagline]</em></p>
