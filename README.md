@@ -256,20 +256,82 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 
 ### Component and interface map
 
+### Jetson
+
 | Component | Exact model | Interface | Purpose | Details |
 | --- | --- | --- | --- | --- |
 | <p align="center"><img src="./schemes/photos/jetson.png" width="130"><br><strong>Jetson</strong></p> | NVIDIA Jetson Orin Nano | [TODO] | Main processing | [LINK](https://www.amazon.com/dp/B0BZJTQ5YP) |
+
+### Custom ESP32 Board
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><img src="./schemes/photos/custom_esp32_board.png" width="130"><br><strong>Custom ESP32 Board</strong></p> | ESP32 WROOM Chip | Serial | Actuator control | [LINK](https://www.amazon.com/DORHEA-ESP-WROOM-32D-Bluetooth-integrates-ESP32-D0WD/dp/B08XXH9RMT?th=1) |
+
+### Motor Driver
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><img src="./schemes/photos/tb6612.png" width="130"><br><strong>Motor Driver</strong></p> | TB6612FNG | [TODO] | Drive-motor control | [LINK](https://www.amazon.com/Sparkfun-PID-14451-Motor-Driver/dp/B01MF67DX6) |
+
+### Steering Servo
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><img src="./schemes/photos/servo.jpg" width="130"><br><strong>Steering Servo</strong></p> | LD-1501MG Servo | [TODO] | Front steering | [LINK](https://www.ebay.com/itm/362680017196) |
+
+### D455
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><img src="./schemes/photos/realsense.png" width="130"><br><strong>D455</strong></p> | Intel RealSense D455 | USB | Depth perception | [LINK](https://www.amazon.com/dp/B08KJCRCGG?) |
+
+### IMU
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><img src="./schemes/photos/bno055.png" width="130"><br><strong>IMU</strong></p> | BNO055 | I²C | Relative yaw | [LINK](https://bdelectronics.xyz/product/bno055-intelligent-9axis-attitude-sensor-module) |
+
+### Left Ultrasonic
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><img src="./schemes/photos/ultrasonic.jpg" width="130"><br><strong>Left Ultrasonic</strong></p> | Generic HC-SR04 ultrasonic sensors | [TODO] | [TODO] | [LINK](https://www.amazon.com/MTDELE-HC-SR04-Ultrasonic-Mounting-Bracket/dp/B0G6ZDBTWR?) |
+
+### Right Ultrasonic
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><img src="./schemes/photos/ultrasonic.jpg" width="130"><br><strong>Right Ultrasonic</strong></p> | Generic HC-SR04 ultrasonic sensors | [TODO] | [TODO] | [LINK](https://www.amazon.com/MTDELE-HC-SR04-Ultrasonic-Mounting-Bracket/dp/B0G6ZDBTWR?) |
+
+### Jetson Battery
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><img src="./schemes/photos/battery.jpg" width="130"><br><strong>Jetson Battery</strong></p> | TCB 1100mAh 3S 25C battery | — | Logic power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
+
+### Motor Battery
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><img src="./schemes/photos/battery.jpg" width="130"><br><strong>Motor Battery</strong></p> | TCB 1100mAh 3S 25C battery | — | Actuator power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
+
+### Buck Converter
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><strong>Converter</strong></p> | Buck converter at 5V | — | Actuator power | [LINK]() |
+
+### Buck Boost Converter
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><strong>Converter</strong></p> | Buck boost converter at 11V | — | Actuator power | [LINK]() |
+
+### Regulator
+
+| Component | Exact model | Interface | Purpose | Details |
+| --- | --- | --- | --- | --- |
 | <p align="center"><strong>Regulator</strong></p> | [TODO] | — | Voltage regulation |  |
 
 ### Sensor placement and calibration
