@@ -78,6 +78,36 @@ _Repository of Team IriSight competing in the CRO 2026, Future Engineers categor
 - [Repository structure](#repository-structure)
 - [Version history](#version-history)
 
+## Repository Structure
+
+This repository is organized as follows:
+
+```
+📦 WRO_IriSight
+├── 📁 media                    # Images and media assets
+│
+├── 📁 models                   # Contains 3D design files for the robot's components
+│
+├── 📁 other                    # 
+│
+├── 📁 schemes                  # Schematics and electrical documentation
+│   └── 📁 photos               # Photos related to the schematics
+│
+├── 📁 src                      # Main source code for the robot
+│   ├── 📁 ai_model             # AI model and detection code
+│   ├── 📁 esp32_code           # ESP32 control and communication code
+│   ├── 📁 obs_challenge        # Obstacle challenge code
+│   └── 📁 open_challenge       # Open challenge code
+│
+├── 📁 t-photos                 # Team photos
+│
+├── 📁 v-photos                 # Visual documentation
+│   ├── 📁 robot_photo          # Photos of the robot
+│   └── 📁 video                # Recorded robot testing videos
+│              
+└── 📄 README.md                # Main documentation for the project
+```
+
 ## Meet the team
 
 <div align="center">
