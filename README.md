@@ -218,11 +218,11 @@ This repository is organized as follows:
 
 | Flow | Summary |
 | --- | --- |
-| Power | [TODO] |
-| Perception | [TODO] |
-| Decision | [TODO] |
-| Actuation | [TODO] |
-| Feedback and safety | [TODO] |
+| Power | Two isolated LiPo domains (TCB 1100mAh 3S 25C each): one for Jetson/logic, one for motor/actuators, each stepped down through a dedicated buck converter to protect the electronics from motor-driver noise and voltage sag. |
+| Perception | RealSense D455 provides 640×480 depth+color at 30 FPS for wall distance, corner detection, and (planned) obstacle/pillar recognition via YOLOv8; BNO055 provides relative yaw for heading and lap-checkpoint tracking; two HC-SR04 ultrasonics give side-facing close-range backup detection. |
+| Decision | Jetson runs a PD controller holding a 0.60 m side-wall target from depth ROIs, switches into a fixed-steering corner state using front-distance hysteresis (0.60 m entry / 0.80 m exit), and tracks laps via 90°±10° yaw checkpoints. Obstacle Challenge logic (YOLOv8-based) is in development. |
+| Actuation | Jetson sends DRIVE <steerDeg> <speed> over serial to the ESP32, which (once firmware is added) converts this into TB6612FNG motor-driver signals for the rear DC motor and PWM for the LD-1501MG steering servo, limited to ±35°. |
+| Feedback and safety | Depth readings outside 0.15–4.00 m or below a minimum valid-pixel count are rejected to avoid noisy control input; corner-state hysteresis prevents mode flapping near threshold; a Flask diagnostic stream on port 5000 gives live visibility into control state for tuning and fault-spotting. |
 
 ## Our engineering journey
 
