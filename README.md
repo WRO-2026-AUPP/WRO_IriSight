@@ -538,6 +538,12 @@ The saved BNO055 calibration values are stored in:
 bno055_calibration.json
 ```
 
+The calibration data is automatically loaded by ```bno055_yaw.py``` when the BNO055 is initialized.
+
+The system also provides a calibration-status check for the system, gyroscope, accelerometer, and magnetometer.
+
+If the calibration file is missing or invalid, the program will display a warning and continue without the saved calibration.
+
 ### Start an Autonomous Run
 
 Select the appropriate control program based on the competition challenge and driving direction. Ensure that the Jetson Orin Nano, D455, BNO055, and ESP32 are connected and ready before starting the autonomous run.
