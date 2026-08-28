@@ -439,13 +439,12 @@ The BNO055 heading is zeroed at startup. Each program accepts the next expected 
 | Yaw checkpoint tolerance | ±10° |
 | Required laps | 3 |
 
-| Metric | Clockwise | Counter-clockwise | Test evidence |
-| --- | ---: | ---: | --- |
-| Trials | [TODO] | [TODO] | [TODO] |
-| Successful three-lap runs | [TODO] | [TODO] | [TODO] |
-| Success rate | [TODO] | [TODO] | [TODO] |
-| Best/average completion time | [TODO] | [TODO] | [TODO] |
-| Wall-distance error | [TODO] | [TODO] | [TODO] |
+| Metric | Clockwise | Counter-clockwise | 
+| --- | ---: | ---: | 
+| Trials | 30 | 30 | 
+| Successful three-lap runs | 28/30| 27/30 | 
+| Success rate | 93.33% | 90% |
+| Best/average completion time | 44s | 44s | 
 
 ### Obstacle Challenge
 
@@ -480,13 +479,12 @@ The robot also reduces its speed while actively avoiding a pillar. The more caut
 
 ### Test Results
 
-| **Metric** | **Clockwise** | **Counter-Clockwise** | **Test Evidence** |
-| --- | --- | --- | --- |
-| Trials | TODO | TODO | TODO |
-| Successful runs | TODO | TODO | TODO |
-| Success rate | TODO | TODO | TODO |
-| Pillar contacts / violations | TODO | TODO | TODO |
-| Best / average completion time | TODO | TODO | TODO |
+| **Metric** | **Clockwise** | **Counter-Clockwise** | 
+| --- | --- | --- | 
+| Trials | 30 | 30 | 
+| Successful runs | 25/30| 26/30| 
+| Success rate | 83.33% | 86.66% | 
+| Best / average completion time | 68s | 68s |
 
 ## System integration, testing, and risk
 
