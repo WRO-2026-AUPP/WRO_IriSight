@@ -20,7 +20,7 @@ For power:
 - Buck converter at 5V
 - Buck boost converter at 11V
 
-![Electrical wiring block diagram](./photos/system_architecture.drawio.png)
+![Electrical wiring block diagram](./photos/system_architecture.jpg)
 
 # Main Components
 
