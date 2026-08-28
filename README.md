@@ -302,7 +302,9 @@ The two front LEGO SPIKE `39367` wheels are steered by a larger servo through a 
   </tr>
 </table>
 
-The full print → test-fit → fix history for every part is in the
+The full print → test-fit → fix history for every part is in the [Our engineering journey](#our-engineering-journey) table and in [`models/README.md`](models/README.md). The single largest lesson from that history came from the Motor Mount: V2's vertical-axis LEGO arms looked correct in CAD but, once test-fit on the real robot, misaligned with the front-wheel/steering assembly and affected turning. Reorienting the arms' axis in V3 (not just resizing them) is what actually fixed it — a reminder that a directional/alignment problem needs a geometry change, not a dimensional tweak. That is also why every structural part in this project is physically printed and test-fit on the robot before being called final, rather than approved from the CAD viewport alone.
+
+**Detailed evidence:** [mechanical design, calculations, CAD, assembly, and validation](models/)
 
 ## Power and sensor architecture
 
