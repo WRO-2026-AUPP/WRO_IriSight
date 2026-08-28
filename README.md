@@ -214,7 +214,9 @@ This repository is organized as follows:
 
 ### System architecture
 
-[TODO: System block diagram]
+<div align="center">
+<img src="./schemes/photos/WRO_electrical_diagram_2.png" width="700" alt="System architecture">
+</div>
 
 | Flow | Summary |
 | --- | --- |
