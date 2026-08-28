@@ -426,7 +426,9 @@ When the median front distance reaches 0.60 m, the controller enters a fixed-ste
 
 The BNO055 heading is zeroed at startup. Each program accepts the next expected 90-degree checkpoint within a ±10-degree zone, counts a lap only after all four checkpoints arrive in order, and stops after three laps plus a 0.5-second delay. A Flask diagnostic stream on port 5000 overlays the active mode, depth regions, steering, speed, yaw, lap count, and next checkpoint.
 
-| Current control value | Value |
+#### Current Control Value
+
+| **Control value** | **Value** |
 | --- | ---: |
 | Side-wall target | 0.60 m |
 | Front corner entry | 0.60 m |
@@ -439,7 +441,9 @@ The BNO055 heading is zeroed at startup. Each program accepts the next expected 
 | Yaw checkpoint tolerance | ±10° |
 | Required laps | 3 |
 
-| Metric | Clockwise | Counter-clockwise | 
+#### Test Results
+
+| **Metric** | **Clockwise** | **Counter-clockwise** | 
 | --- | ---: | ---: | 
 | Trials | 30 | 30 | 
 | Successful three-lap runs | 28/30| 27/30 | 
@@ -462,9 +466,9 @@ Independent wall-clearance guards are applied after the pillar-avoidance steerin
 
 The robot also reduces its speed while actively avoiding a pillar. The more cautious program can additionally perform a slow stop-and-reverse maneuver if the front wall or pillar becomes dangerously close before the pass is complete.
 
-### Current Control Values
+#### Current Control Values
 
-| **Control Value** | **Current Value / Range** |
+| **Control Value** | **Current Value** |
 | --- | --- |
 | Detector | `best1.pt`, `imgsz=416`, confidence 0.35–0.70 |
 | Pillar engage distance | 1.6–2.2 m, colour-dependent |
@@ -477,7 +481,7 @@ The robot also reduces its speed while actively avoiding a pillar. The more caut
 | Ultrasonic backup clearance (soft / hard) | 20–25 cm / 15 cm |
 | D455 stream | 640×480 @ 30 FPS |
 
-### Test Results
+#### Test Results
 
 | **Metric** | **Clockwise** | **Counter-Clockwise** | 
 | --- | --- | --- | 
