@@ -10,58 +10,61 @@ _Team Photo - From left to right: Kimchour, Panha (Coach), Nita, and Muyleang._
 ## Team Members
 ![Team Members](formal-team-pic.JPG)
 
-### Member 1 — [Name]
+### Member 1 — Ponlork Ponita
 
-**Role:** [Role]
+**Role:** 3D Design & Mechanical Engineer
 
 **Introduction:**
-[Name] is responsible for [main responsibilities]. They contribute to the team through their skills in [skills/area] and help ensure that [specific contribution].
+
+Focused on the vehicle’s mechanical structure, CAD design, and 3D-printed components.
 
 **Individual Contribution:**
 
-* [Contribution 1]
-* [Contribution 2]
-* [Contribution 3]
+* Led CAD design and 3D modeling of the Jetson, battery, motor, and camera mounts.
+* Iterated through print-and-test fits to create a secure LEGO-compatible chassis.
+* Created detailed blueprints documenting dimensions and materials.
 
-### Member 2 — [Name]
+### Member 2 — Taing Muyleang
 
-**Role:** [Role]
+**Role:** Electrical & Sensor Engineer
 
 **Introduction:**
-[Name] focuses on [main responsibilities]. They contribute their knowledge of [skills/area] and work closely with the team to [specific contribution].
+
+Responsible for the vehicle’s electrical system, power distribution, and sensor integration.
 
 **Individual Contribution:**
 
-* [Contribution 1]
-* [Contribution 2]
-* [Contribution 3]
+* Developed the ESP32 firmware and Jetson control software.
+* Implemented communication between microcontrollers and compute modules.
+* Maintained the codebase and ensured reliable system integration.
 
-### Member 3 — [Name]
+### Member 3 — Luy Kimchour 
 
-**Role:** [Role]
+**Role:** Embedded & Software Engineer
 
 **Introduction:**
-[Name] is responsible for [main responsibilities]. Their main strengths include [skills/area], which support the team in [specific contribution].
+
+Focused on system programming, communication between hardware, and overall software integration.
 
 **Individual Contribution:**
 
-* [Contribution 1]
-* [Contribution 2]
-* [Contribution 3]
+* Provided technical guidance in mechanical, electrical, and software development.
+* Mentored the team through testing, documentation, and integration.
+* Advised on CAD optimization and autonomous vehicle control.
 
 ## Coach
 
-### Coach — [Coach's Name]
+### Coach — Chamroeun Vireakpanha
 
 **Introduction:**
-[Coach's Name] is our team coach and provides guidance, advice, and support throughout the project. They help us improve our ideas, solve challenges, and stay focused on our goals.
+
+Guided the team with technical expertise, testing strategies, and competition-focused problem solving.
 
 **Contribution:**
 
-* Provides technical and strategic guidance
-* Reviews our progress and gives feedback
-* Helps the team solve problems and make decisions
-* Encourages teamwork and continuous improvement
+* Provided technical guidance in mechanical, electrical, and software development.
+* Mentored the team through testing, documentation, and integration.
+* Advised on CAD optimization and autonomous vehicle control.
 
 ## Team Contribution
 
