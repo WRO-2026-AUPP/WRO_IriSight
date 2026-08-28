@@ -210,7 +210,7 @@ This repository is organized as follows:
 
 ## How IriSight works
 
-[TODO: System overview]
+IriSight is a self-driving LEGO/3D-printed chassis robot built for WRO Future Engineers 2026. An NVIDIA Jetson Orin Nano runs the main perception and decision loop, reading depth/color from an Intel RealSense D455 and heading from a BNO055 IMU over I2C (plus two HC-SR04 ultrasonics wired to the ESP32 for close-range backup). The Jetson computes a steering angle and speed command and sends it over USB (power + serial) to an ESP32, which drives the rear motor through a TB6612FNG driver and turns the front wheels via a parallel-linkage steering servo. A Flask web stream exposes live diagnostics (mode, depth ROIs, steering, yaw, lap count) for tuning and debugging.
 
 ### System architecture
 
@@ -220,11 +220,11 @@ This repository is organized as follows:
 
 | Flow | Summary |
 | --- | --- |
-| Power | Two isolated LiPo domains (TCB 1100mAh 3S 25C each): one for Jetson/logic, one for motor/actuators, each stepped down through a dedicated buck converter to protect the electronics from motor-driver noise and voltage sag. |
-| Perception | RealSense D455 provides 640×480 depth+color at 30 FPS for wall distance, corner detection, and (planned) obstacle/pillar recognition via YOLOv8; BNO055 provides relative yaw for heading and lap-checkpoint tracking; two HC-SR04 ultrasonics give side-facing close-range backup detection. |
-| Decision | Jetson runs a PD controller holding a 0.60 m side-wall target from depth ROIs, switches into a fixed-steering corner state using front-distance hysteresis (0.60 m entry / 0.80 m exit), and tracks laps via 90°±10° yaw checkpoints. Obstacle Challenge logic (YOLOv8-based) is in development. |
-| Actuation | Jetson sends DRIVE <steerDeg> <speed> over serial to the ESP32, which (once firmware is added) converts this into TB6612FNG motor-driver signals for the rear DC motor and PWM for the LD-1501MG steering servo, limited to ±35°. |
-| Feedback and safety | Depth readings outside 0.15–4.00 m or below a minimum valid-pixel count are rejected to avoid noisy control input; corner-state hysteresis prevents mode flapping near threshold; a Flask diagnostic stream on port 5000 gives live visibility into control state for tuning and fault-spotting. |
+| Power | Two isolated LiPo domains (TCB 1100mAh 3S each). One battery powers the Jetson directly. Its 9–20V DC input accepts raw 3S voltage with no regulation needed. The second battery splits into a 5V buck converter (servo power, TB6612 logic) and an 11V buck-boost converter (TB6612 motor supply), keeping motor-driver noise off the Jetson's rail. |
+| Perception | RealSense D455 feeds 640×480 depth+color at 30 FPS to the Jetson over USB for wall distance, corner detection, and (planned) obstacle/pillar recognition via YOLOv8. BNO055 reports relative yaw to the Jetson over I2C for heading and lap-checkpoint tracking. Two HC-SR04 ultrasonics report to the ESP32 for side-facing close-range backup. |
+| Decision | The Jetson runs a PD controller holding a 0.60 m side-wall target from depth ROIs, switches into a fixed-steering corner state using front-distance hysteresis (0.60 m entry / 0.80 m exit), and tracks laps via 90°±10° yaw checkpoints. Obstacle Challenge logic (YOLOv8-based) is in development. |
+| Actuation | JThe Jetson sends DRIVE <steerDeg> <speed> over USB serial to the ESP32. The ESP32 converts this into PWM/enable signals for the TB6612FNG (driving the rear DC motor) and PWM for the LD-1501MG steering servo, limited to ±35°. |
+| Feedback and safety | Depth readings outside 0.15–4.00 m or below a minimum valid-pixel count are rejected to avoid noisy control input. Corner-state hysteresis prevents mode flapping near threshold. A Flask diagnostic stream on port 5000 gives live visibility into control state for tuning and fault-spotting. |
 
 ## Our engineering journey
 
