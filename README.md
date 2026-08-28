@@ -557,13 +557,13 @@ python3 src/counterClockWise.py
 #### 3. Obstacle Avoidance Challenge — Clockwise
 
 ```bash
-python3 src/obs_clockWise.py
+python3 src/obs_clockwise.py
 ```
 
 #### 4. Obstacle Avoidance Challenge — Counter Clockwise
 
 ```bash
-python3 src/obs_counterclockWise.py
+python3 src/obs_counterclockwise.py
 ```
 
 ### Pre-flight and acceptance test
