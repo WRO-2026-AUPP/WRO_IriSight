@@ -23,10 +23,10 @@ This document currently covers all of our 3D-printed structural parts:
 
 | # | Component | Status |
 | --- | --- | --- |
-| 1 | [Jetson & Battery Container](#component-1) | ✅ Finalized (V3) |
-| 2 | [Rear Motor Mount](#component-2) | ✅ Finalized (V4) |
-| 3 | [RealSense Camera Mount](#component-3) | ✅ Finalized (V2) |
-| 4 | [Print Settings](#print-settings) | ✅ Finalized (V1) |
+| 1 | [Jetson & Battery Container](#component-1) | Finalized (V3) |
+| 2 | [Rear Motor Mount](#component-2) | Finalized (V4) |
+| 3 | [RealSense Camera Mount](#component-3) | Finalized (V2) |
+| 4 | [Print Settings](#print-settings) | Finalized (V1) |
 
 ---
 
