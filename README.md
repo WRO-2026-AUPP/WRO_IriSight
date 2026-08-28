@@ -210,30 +210,66 @@ This repository is organized as follows:
 
 ## How IriSight works
 
-[TODO: System overview]
+IriSight is a self-driving LEGO/3D-printed chassis robot built for WRO Future Engineers 2026. An NVIDIA Jetson Orin Nano runs the main perception and decision loop, reading depth/color from an Intel RealSense D455 and heading from a BNO055 IMU over I2C (plus two HC-SR04 ultrasonics wired to the ESP32 for close-range backup). The Jetson computes a steering angle and speed command and sends it over USB (power + serial) to an ESP32, which drives the rear motor through a TB6612FNG driver and turns the front wheels via a parallel-linkage steering servo. A Flask web stream exposes live diagnostics (mode, depth ROIs, steering, yaw, lap count) for tuning and debugging.
 
 ### System architecture
 
-[TODO: System block diagram]
+<div align="center">
+<img src="./schemes/photos/WRO_electrical_diagram_2.png" width="700" alt="System architecture">
+</div>
 
 | Flow | Summary |
 | --- | --- |
-| Power | Two isolated LiPo domains (TCB 1100mAh 3S 25C each): one for Jetson/logic, one for motor/actuators, each stepped down through a dedicated buck converter to protect the electronics from motor-driver noise and voltage sag. |
-| Perception | RealSense D455 provides 640×480 depth+color at 30 FPS for wall distance, corner detection, and (planned) obstacle/pillar recognition via YOLOv8; BNO055 provides relative yaw for heading and lap-checkpoint tracking; two HC-SR04 ultrasonics give side-facing close-range backup detection. |
-| Decision | Jetson runs a PD controller holding a 0.60 m side-wall target from depth ROIs, switches into a fixed-steering corner state using front-distance hysteresis (0.60 m entry / 0.80 m exit), and tracks laps via 90°±10° yaw checkpoints. Obstacle Challenge logic (YOLOv8-based) is in development. |
-| Actuation | Jetson sends DRIVE <steerDeg> <speed> over serial to the ESP32, which (once firmware is added) converts this into TB6612FNG motor-driver signals for the rear DC motor and PWM for the LD-1501MG steering servo, limited to ±35°. |
-| Feedback and safety | Depth readings outside 0.15–4.00 m or below a minimum valid-pixel count are rejected to avoid noisy control input; corner-state hysteresis prevents mode flapping near threshold; a Flask diagnostic stream on port 5000 gives live visibility into control state for tuning and fault-spotting. |
+| Power | Two isolated LiPo domains (TCB 1100mAh 3S each). One battery powers the Jetson directly. Its 9–20V DC input accepts raw 3S voltage with no regulation needed. The second battery splits into a 5V buck converter (servo power, TB6612 logic) and an 11V buck-boost converter (TB6612 motor supply), keeping motor-driver noise off the Jetson's rail. |
+| Perception | RealSense D455 feeds 640×480 depth+color at 30 FPS to the Jetson over USB for wall distance, corner detection, and (planned) obstacle/pillar recognition via YOLOv8. BNO055 reports relative yaw to the Jetson over I2C for heading and lap-checkpoint tracking. Two HC-SR04 ultrasonics report to the ESP32 for side-facing close-range backup. |
+| Decision | The Jetson runs a PD controller holding a 0.60 m side-wall target from depth ROIs, switches into a fixed-steering corner state using front-distance hysteresis (0.60 m entry / 0.80 m exit), and tracks laps via 90°±10° yaw checkpoints. Obstacle Challenge logic (YOLOv8-based) is in development. |
+| Actuation | JThe Jetson sends DRIVE <steerDeg> <speed> over USB serial to the ESP32. The ESP32 converts this into PWM/enable signals for the TB6612FNG (driving the rear DC motor) and PWM for the LD-1501MG steering servo, limited to ±35°. |
+| Feedback and safety | Depth readings outside 0.15–4.00 m or below a minimum valid-pixel count are rejected to avoid noisy control input. Corner-state hysteresis prevents mode flapping near threshold. A Flask diagnostic stream on port 5000 gives live visibility into control state for tuning and fault-spotting. |
 
 ## Our engineering journey
 
-[TODO: Development story]
+The mechanical layout was decided first: a LEGO-based chassis so geometry and mounting points could change without machining a new frame each time, driven by a DC motor at the rear and steered at the front. We attempted a LEGO Ackermann steering linkage, but couldn't get a working mechanism built in the available time, so parallel steering was selected for the current vehicle (see [Mobility and mechanical design](#mobility-and-mechanical-design)).
+
+<div align="center">
+  <img src="./media/initialrobot.JPG" width="500" alt="First rolling prototype of IriSight">
+  <p><em>The very first rolling prototype — LEGO Technic chassis, steering servo, rear DC motor, and the rough-draft V1 Jetson &amp; battery container before it had any LEGO-native mounting.</em></p>
+</div>
+
+Once the chassis, steering, and drivetrain could be assembled and rolled by hand, the rest of the build became a sequence of small, testable 3D-printed parts rather than one big redesign. Each part went through its own print → test-fit → fix cycle, documented in full (renders, STL/STEP files, and final blueprints) in [`models/`](models/). The table below is the condensed version of that history:
 
 | Version/date | Problem or goal | Change | Evidence | Result and next decision |
 | --- | --- | --- | --- | --- |
-| Concept | Ackermann steering | [TODO] | [TODO] | Parallel steering selected |
-| Prototype 1 | [TODO] | [TODO] | [TODO] | [TODO] |
-| Prototype 2 | [TODO] | [TODO] | [TODO] | [TODO] |
-| Final | [TODO] | [TODO] | [TODO] | [TODO] |
+| Concept | Steering mechanism | Attempted a LEGO Ackermann steering linkage | A working Ackermann mechanism could not be completed within the available build time | Parallel steering selected for the current vehicle |
+| 2026-May-26 | Rear motor had no chassis mount | Designed Motor Mount V1 — a basic block cradle for the motor body, no LEGO connection yet | Established the core motor-holding shape | Chassis-attachment method still needed to be designed |
+| 2026-May-27 | Jetson + battery had no housing | Designed Jetson & Battery Container V1, then printed a small test cut (P1) of it before committing to a full print | P1 came back with a small dimensional error against the real components | Adjust V1's compartment dimensions before the next full print (see photo above — V1 mounted on the first rolling prototype) |
+| 2026-May-29 | Motor mount couldn't connect to the LEGO chassis | Redesigned to Motor Mount V2 with two LEGO Technic arms on a vertical axis, inspired by the LEGO Angle Beam | Printed and test-fit on the real robot: the vertical-axis arms misaligned with the front wheel/steering assembly and affected turning | Reorient the arms — a dimensional tweak alone would not fix a directional alignment problem |
+| 2026-Jun-02 | Container had no LEGO-native mount | Redesigned to Jetson & Battery Container V2 with LEGO-pin-spaced holes, inspired by the LEGO Beam Frame | Container could now pin directly onto the chassis like any other LEGO part | Round over the exposed edges and add more mounting points |
+| 2026-Jun-03 | Sharp edges and a mount that needed to be more rigid | Refined to Container V3: rounded corners/edges, extra LEGO-pin holes | Cleaner prints, more mounting points | Jetson & Battery Container finalized (V3) |
+| 2026-Jun-05 | Camera needed a chassis mount | Designed RealSense Camera Mount V1: three LEGO pin arms, hole direction matching the camera's facing direction | Baseline design to compare against an alternative hole orientation | Print a second orientation and compare |
+| 2026-Jun-09 | Compare mounting-hole orientations | Designed Camera Mount V2 with the pin holes rotated to face each other instead | Printed and tested both V1 and V2 on the robot: V2 mounted more easily and held more robustly | RealSense Camera Mount finalized (V2) |
+| 2026-Jun-12 | Motor mount still misaligned with the front wheel | Reoriented Motor Mount V3's LEGO arms away from the vertical axis used in V2 | Fixed the front-wheel misalignment found with V2; arms also became easier to mount in general | Add a place to mount the rear electronics |
+| 2026-Jun-14 | Rear electronics (ESP32, buck converter) had no mount | Finalized Motor Mount V4: reworked LEGO mounting plus a flat top plate as an electronics shelf | Motor cradle, LEGO mounting, and electronics shelf all fit together on one part | Motor Mount finalized (V4) and selected for the final robot |
+
+### Final engineering blueprints
+
+Each finalized 3D-printed part has a full blueprint sheet (orthographic views, dimensions, material, volume, and mass), generated from the final CAD model:
+
+<div align="center">
+  <img src="./models/png/JetsonAndBattery_blueprint.png" width="700" alt="Jetson and Battery Container engineering blueprint">
+  <p><em>Jetson &amp; Battery Container — final blueprint (V3)</em></p>
+</div>
+
+<div align="center">
+  <img src="./models/png/MotorMount_blueprint.png" width="700" alt="Motor Mount engineering blueprint">
+  <p><em>Rear Motor Mount — final blueprint (V4)</em></p>
+</div>
+
+<div align="center">
+  <img src="./models/png/RealSense_blueprint.png" width="700" alt="RealSense Camera Mount engineering blueprint">
+  <p><em>RealSense Camera Mount — final blueprint (V2)</em></p>
+</div>
+
+**Full detail for every version above** — renders, STL/STEP files, and final engineering blueprints with dimensions and material properties — is in [`models/README.md`](models/README.md).
 
 ## Mobility and mechanical design
 
@@ -437,14 +473,14 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 
 ### Final regression results
 
-| Test | Configuration/commit | Trials | Acceptance target | Result | Evidence |
-| --- | --- | ---: | --- | --- | --- |
-| Open clockwise | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
-| Open counter-clockwise | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
-| Obstacle Challenge | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
-| Parking | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
-| Runtime/power | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
-| Emergency/fault response | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
+| Test | Configuration / Commit | Trials | Acceptance Target | Result | Evidence |
+|---|---|---:|---|---|---|
+| Open Challenge - clockwise | Final `clockWise.py` configuration | TODO | Complete 3 laps without navigation failure | TODO | TODO |
+| Open Challenge - Counterclockwise | Final `counterClockWise.py` configuration | TODO | Complete 3 laps without navigation failure | TODO | TODO |
+| Obstacle Challenge - Clockwise| Final `obs_clockwise.py` configuration | N/A | Complete obstacle avoidance and navigation | TODO | TODO |
+| Obstacle Challenge - Counterclockwise | Final `obs_counterclockwise.py` configuration | N/A | Complete obstacle avoidance and navigation | TODO | TODO |
+| Runtime / power | Final battery and power configuration | TODO | Complete the required run without power-related failure | TODO | TODO |
+| Emergency / fault response | Final safety configuration | TODO | Stop or enter a safe state when a critical fault occurs | TODO | TODO |
 
 ### Key decisions
 
@@ -536,6 +572,12 @@ The saved BNO055 calibration values are stored in:
 bno055_calibration.json
 ```
 
+The calibration data is automatically loaded by ```bno055_yaw.py``` when the BNO055 is initialized.
+
+The system also provides a calibration-status check for the system, gyroscope, accelerometer, and magnetometer.
+
+If the calibration file is missing or invalid, the program will display a warning and continue without the saved calibration.
+
 ### Start an Autonomous Run
 
 Select the appropriate control program based on the competition challenge and driving direction. Ensure that the Jetson Orin Nano, D455, BNO055, and ESP32 are connected and ready before starting the autonomous run.
@@ -555,13 +597,13 @@ python3 src/counterClockWise.py
 #### 3. Obstacle Avoidance Challenge — Clockwise
 
 ```bash
-python3 src/obs_clockWise.py
+python3 src/obs_clockwise.py
 ```
 
 #### 4. Obstacle Avoidance Challenge — Counter Clockwise
 
 ```bash
-python3 src/obs_counterclockWise.py
+python3 src/obs_counterclockwise.py
 ```
 
 ### Pre-flight and acceptance test
