@@ -275,7 +275,7 @@ IriSight uses a LEGO-based chassis so the team can change the geometry and compo
 
 One DC motor drives two rear wheels. Its output passes through a two-gear transmission to a drive shaft connecting the rear wheels. The motor and rear-wheel models are carried over from the previous vehicle, but their exact identifiers, gear tooth counts, ratio, mounting, and measured performance remain to be documented for the 2026 build.
 
-### Parallel steering system
+### Parallel steering 
 
 <img src="./schemes/photos/steering.gif" alt="Parallel steering" width="600">
 
@@ -317,81 +317,76 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 ### Component and interface map
 ### Jetson
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/jetson.png" width="130"></p> | NVIDIA Jetson Orin Nano | [TODO] | Main processing | [LINK](https://www.amazon.com/dp/B0BZJTQ5YP) |
 
 ### Custom ESP32 Board
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/custom_esp32_board.png" width="130"></p> | ESP32 WROOM Chip | Serial | Actuator control | [LINK](https://www.amazon.com/DORHEA-ESP-WROOM-32D-Bluetooth-integrates-ESP32-D0WD/dp/B08XXH9RMT?th=1) |
 
 ### Motor Driver
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/TB6612FNG.png" width="130"></p> | TB6612FNG | [TODO] | Drive-motor control | [LINK](https://www.amazon.com/Sparkfun-PID-14451-Motor-Driver/dp/B01MF67DX6) |
 
 ### Steering Servo
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/servo.jpg" width="130"></p> | LD-1501MG Servo | [TODO] | Front steering | [LINK](https://www.ebay.com/itm/362680017196) |
 
 ### D455
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/realsense.png" width="130"></p> | Intel RealSense D455 | USB | Depth perception | [LINK](https://www.amazon.com/dp/B08KJCRCGG?) |
 
 ### IMU
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/IMU.png" width="130"></p> | BNO055 | I²C | Relative yaw | [LINK](https://bdelectronics.xyz/product/bno055-intelligent-9axis-attitude-sensor-module) |
 
 ### Left Ultrasonic
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/ultrasonic.jpg" width="130"></p> | Generic HC-SR04 ultrasonic sensors | [TODO] | [TODO] | [LINK](https://www.amazon.com/MTDELE-HC-SR04-Ultrasonic-Mounting-Bracket/dp/B0G6ZDBTWR?) |
 
 ### Right Ultrasonic
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/ultrasonic.jpg" width="130"></p> | Generic HC-SR04 ultrasonic sensors | [TODO] | [TODO] | [LINK](https://www.amazon.com/MTDELE-HC-SR04-Ultrasonic-Mounting-Bracket/dp/B0G6ZDBTWR?) |
 
 ### Jetson Battery
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/battery.jpg" width="130"></p> | TCB 1100mAh 3S 25C battery | — | Logic power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
 
 ### Motor Battery
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/battery.jpg" width="130"></p> | TCB 1100mAh 3S 25C battery | — | Actuator power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
 
-### Buck Converter
+### Buck-Boost Converter at 11V
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
-| <p align="center"></p> | Buck converter at 5V | — | Actuator power | [LINK]() |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
+| <p align="center"><img src="./schemes/photos/converter_11V.jpg" width="130"></p> | XL4016 300W buck-boost converter | — | Actuator power | [LINK](https://ampere-electronics.com/product/xl4016-dc-dc-step-down-converter-module-12a-300w/) |
 
-### Buck Boost Converter
+### Buck Converter at 5V
 
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
-| <p align="center"></p> | Buck boost converter at 11V | — | Actuator power | [LINK]() |
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
+| <p align="center"><img src="./schemes/photos/converter_5V.jpg" width="130"></p> | XL4015 50W buck converter | — | Actuator power | [LINK](https://www.jacobsparts.com/items/DCMOD-B) |
 
-### Regulator
-
-| Component | Exact model | Interface | Purpose | Details |
-| --- | --- | --- | --- | --- |
-| <p align="center"></p> | [TODO] | — | Voltage regulation |  |
 
 ### Sensor placement and calibration
 
