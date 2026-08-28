@@ -167,9 +167,6 @@ The motors contain integrated gearboxes. The gearbox reduces the rotational spee
 
 The additional torque is important because the motors need to provide enough force to accelerate and move the vehicle reliably.
 
-> [!NOTE]
-> The exact gear ratio of the motors still needs to be confirmed and will be added once the motor specifications have been verified.
-
 ### Magnetic Encoders
 
 The motors also include magnetic encoders. These encoders can theoretically be used to determine:
