@@ -281,18 +281,6 @@ One DC motor drives two rear wheels. Its output passes through a two-gear transm
 
 The two front LEGO SPIKE `39367` wheels are steered by a larger servo through a LEGO parallel linkage. Ackermann steering was the original plan, but a suitable LEGO mechanism could not be completed within the available development time. The parallel mechanism was selected for the current vehicle; the final documentation will compare its geometry, steering play, turning radius, build complexity, and tire scrub with the attempted Ackermann design.
 
-### Torque and speed summary
-
-| Result | Final value | Evidence |
-| --- | ---: | --- |
-| Gear ratio | [TODO] | [TODO] |
-| Calculated no-load speed | [TODO] | [TODO] |
-| Measured vehicle speed | [TODO] | [TODO] |
-| Required wheel torque | [TODO] | [TODO] |
-| Available wheel torque | [TODO] | [TODO] |
-| Torque margin | [TODO] | [TODO] |
-| Stopping distance | [TODO] | [TODO] |
-
 ### Mechanical iterations
 
 <table width="100%">
