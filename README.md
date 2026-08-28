@@ -118,7 +118,7 @@ This repository is organized as follows:
 <table width="100%">
   <tr>
     <td width="50%" align="center" valign="top">
-      <img src="t-photos/panha.svg" width="170" alt="Team member 1"><br>
+      <img src="t-photos/nita.png" width="170" alt="Team member 1"><br>
       <strong>[TODO: Member 1 name]</strong><br><br>
       <p align="left">
         <strong>Role:</strong> [TODO]<br><br>
@@ -128,7 +128,7 @@ This repository is organized as follows:
       </p>
     </td>
     <td width="50%" align="center" valign="top">
-      <img src="t-photos/panha.svg" width="170" alt="Team member 2"><br>
+      <img src="t-photos/muyleang.png" width="170" alt="Team member 2"><br>
       <strong>[TODO: Member 2 name]</strong><br><br>
       <p align="left">
         <strong>Role:</strong> [TODO]<br><br>
@@ -140,7 +140,7 @@ This repository is organized as follows:
   </tr>
   <tr>
     <td width="50%" align="center" valign="top">
-      <img src="t-photos/panha.svg" width="170" alt="Team member 3"><br>
+      <img src="t-photos/kimchour.png" width="170" alt="Team member 3"><br>
       <strong>[TODO: Member 3 name]</strong><br><br>
       <p align="left">
         <strong>Role:</strong> [TODO]<br><br>
@@ -150,7 +150,7 @@ This repository is organized as follows:
       </p>
     </td>
     <td width="50%" align="center" valign="top">
-      <img src="t-photos/panha.svg" width="170" alt="Team coach"><br>
+      <img src="t-photos/panha(coach).png" width="170" alt="Team coach"><br>
       <strong>[TODO: Coach name]</strong><br><br>
       <p align="left">
         <strong>Role:</strong> Team Coach<br><br>
