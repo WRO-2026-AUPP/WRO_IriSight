@@ -43,19 +43,59 @@ _Repository of Team IriSight competing in the CRO 2026, Future Engineers categor
 
 ## Contents
 
+- [Repository Structure](#repository-structure)
 - [Meet the team](#meet-the-team)
 - [Meet the vehicle](#meet-the-vehicle)
+  - [Final vehicle gallery](#final-vehicle-gallery)
+  - [Key specifications](#key-specifications)
 - [Performance videos](#performance-videos)
 - [How IriSight works](#how-irisight-works)
+  - [System architecture](#system-architecture)
 - [Our engineering journey](#our-engineering-journey)
+  - [Final engineering blueprints](#final-engineering-blueprints)
 - [Mobility and mechanical design](#mobility-and-mechanical-design)
+  - [Chassis and component mounting](#chassis-and-component-mounting)
+  - [Rear drive system](#rear-drive-system)
+  - [Parallel steering](#parallel-steering)
+  - [Mechanical iterations](#mechanical-iterations)
 - [Power and sensor architecture](#power-and-sensor-architecture)
+  - [Power architecture](#power-architecture)
+  - [Component and interface map](#component-and-interface-map)
+    - [Jetson](#jetson)
+    - [Custom ESP32 Board](#custom-esp32-board)
+    - [Motor Driver](#motor-driver)
+    - [Steering Servo](#steering-servo)
+    - [D455](#d455)
+    - [IMU](#imu)
+    - [Left/Right Ultrasonic](#leftright-ultrasonic)
+    - [Jetson Battery](#jetson-battery)
+    - [Motor Battery](#motor-battery)
+    - [Buck-Boost Converter at 11V](#buck-boost-converter-at-11v)
+    - [Buck Converter at 5V](#buck-converter-at-5v)
+  - [Sensor placement and calibration](#sensor-placement-and-calibration)
 - [Software and challenge strategy](#software-and-challenge-strategy)
+  - [Architecture and communication](#architecture-and-communication)
+  - [Open Challenge](#open-challenge)
+    - [Current Control Value](#current-control-value)
+    - [Test Results](#test-results)
+  - [Obstacle Challenge](#obstacle-challenge)
+    - [Current Control Values](#current-control-values)
+    - [Test Results](#test-results-1)
 - [System integration, testing, and risk](#system-integration-testing-and-risk)
+  - [Subsystem interaction](#subsystem-interaction)
+  - [Final regression results](#final-regression-results)
+  - [Key decisions](#key-decisions)
+  - [Risk register](#risk-register)
 - [Reproducing IriSight](#reproducing-irisight)
+  - [Required files and tools](#required-files-and-tools)
+  - [Mechanical assembly](#mechanical-assembly)
+  - [Wiring and power-on](#wiring-and-power-on)
+  - [Software Installation](#software-installation)
+  - [Calibration](#calibration)
+  - [Start an Autonomous Run](#start-an-autonomous-run)
+  - [Pre-flight and acceptance test](#pre-flight-and-acceptance-test)
 - [Current limitations and next improvements](#current-limitations-and-next-improvements)
-- [Repository structure](#repository-structure)
-- [Version history](#version-history)
+- [MIT License](#mit-license)
 
 ## Repository Structure
 
@@ -104,7 +144,7 @@ This repository is organized as follows:
       <strong>Role:</strong> 3D Design & Mechanical Engineer (CAD, Mounts, Blueprints)<br><br>
       <strong>Origin:</strong> Phnom Penh<br><br>
       <strong>Email:</strong> 2024352ponlork@aupp.edu.kh<br><br>
-      <strong>Bio:</strong> A junior student at the American University of Phnom Penh (AUPP), she led the CAD design of the team's 3D-printed structural parts—including the Jetson & Battery Container, the rear Motor Mount, and the RealSense Camera Mount. She carried each component through multiple print-and-test-fit iterations to achieve a LEGO-compatible, chassis-mounted final version, meticulously documenting dimensions and material properties in her blueprint sheets.
+      <strong>Bio:</strong> A junior student at the American University of Phnom Penh (AUPP), she led the CAD design of the team's 3D-printed structural parts. Including the Jetson & Battery Container, the rear Motor Mount, and the RealSense Camera Mount. She carried each component through multiple print-and-test-fit iterations to achieve a LEGO-compatible, chassis-mounted final version, meticulously documenting dimensions and material properties in her blueprint sheets.
     </td>
   </tr>
 </table>
@@ -364,8 +404,6 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 | :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/ultrasonic.jpg" width="130"></p> | Generic HC-SR04 ultrasonic sensors | GPIO | Detect Wall | [LINK](https://www.amazon.com/MTDELE-HC-SR04-Ultrasonic-Mounting-Bracket/dp/B0G6ZDBTWR?) |
 
-### Right Ultrasonic
-
 ### Jetson Battery
 
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
@@ -507,12 +545,12 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 
 ### Key decisions
 
-| Decision | Alternatives | Evidence | Trade-off |
-| --- | --- | --- | --- |
-| Parallel steering | Ackermann steering | [TODO] | [TODO] |
-| LEGO chassis with printed Jetson enclosure | [TODO] | [TODO] | [TODO] |
-| D455 depth wall following | [TODO] | [TODO] | [TODO] |
-| Separate power sources | [TODO] | [TODO] | [TODO] |
+| Decision | Alternatives | Trade-off |
+| --- | --- | --- |
+| Parallel steering | Ackermann steering | Parallel steering is mechanically simpler (fewer linkage points, single servo drives both wheels at equal angle) and easier to build reliably with LEGO Technic parts, but it causes tire scrub in tight turns since both wheels follow arcs of the same radius instead of geometrically correct ones, costing a bit of grip/precision at the sharp corners on the WRO track. |
+| LEGO chassis with printed Jetson enclosure | Fully custom 3D-printed chassis / fully LEGO (no custom parts) | Hybrid gives fast, tool-free iteration on the drivetrain/mounting layout (LEGO's modularity) while the printed enclosure protects and rigidly seats the Jetson and its heatsink/fan. But it adds weight and two build systems to keep aligned (LEGO tolerances vs printed tolerances), and the enclosure locks in dimensions once printed. |
+| D455 depth wall following | Ultrasonic (HC-SR04 array) | One D455 gives dense depth + RGB across a wide FOV, so wall distance and pillar/obstacle color detection come from a single sensor with clean data. But it's heavier, pricier, and needs meaningfully more compute (USB3 bandwidth + depth processing) than a handful of cheap, lightweight ultrasonic sensors that update faster with near-zero CPU cost. |
+| Separate power sources | Single shared 3S battery/single converter feeding both servo and motors | Running two batteries and two converters (buck for servo, buck-boost for motors) adds weight, cost, and wiring/BOM complexity versus one shared source. But it buys electrical isolation (motor noise/current draw can't disturb steering) and, crucially, the buck-boost keeps motor voltage nearly constant across the battery's discharge curve, so PWM-to-speed mapping stays predictable instead of degrading as the pack drains, which matters for consistent and repeatable driving behavior over a full run. | 
 
 ### Risk register
 
@@ -642,7 +680,32 @@ python3 src/obs_counterclockwise.py
 
 ### Pre-flight and acceptance test
 
-[TODO: Pre-flight and acceptance-test summary]
+Before any competition run or timed trial, the following checklist is completed in order:
+
+**Mechanical checks**
+- [x] All three 3D-printed mounts (Jetson & Battery Container V3, Motor Mount V4, RealSense Camera Mount V2) are pinned securely with no play
+- [x] Front wheels turn freely through the full ±35° steering range with no binding
+- [x] Rear wheels and drive shaft spin freely with the motor disconnected (no mechanical drag)
+- [x] Vehicle is on a stand with wheels off the ground before any powered test
+
+**Power and connectivity checks**
+- [x] Jetson battery connected first; Jetson boots and D455 + BNO055 both enumerate
+- [x] ESP32 flashed and powered independently; prints `ESP32 ready` over serial with motor battery disconnected
+- [x] Motor/actuator battery connected last, only after the above two checks pass
+- [x] TB6612FNG and servo wiring re-checked against pinout (IN1=D26, IN2=D25, PWM=D33, servo=D17)
+
+**Sensor and calibration checks**
+- [x] BNO055 calibration status checked (`get_calibration_status()`); saved offsets loaded from `bno055_calibration.json`
+- [x] Left/right ultrasonic sensors tested against a known-distance object
+- [x] D455 depth stream confirmed at 640×480 @ 30 FPS with no dropped frames
+
+**Software checks**
+- [x] Correct challenge/direction script confirmed before start (`clockWise.py`, `counterClockWise.py`, `obs_clockwise.py`, or `obs_counterclockwise.py`)
+- [x] Flask diagnostic stream (port 5000) reachable and showing live mode, steering, yaw, and lap count
+
+**Acceptance criteria**
+
+A build is considered competition-ready only if it meets the targets already demonstrated in [Final regression results](#final-regression-results): 3/3 successful trials for both directions of the Open Challenge, and 3/3 successful trials for both directions of the Obstacle Challenge, each with no navigation failure or collision.
 
 ## Current limitations and next improvements
 
@@ -660,6 +723,26 @@ python3 src/obs_counterclockwise.py
 | Steering geometry | The current prototype uses parallel steering, which can reduce turning accuracy and stability during sharp turns. | Replace the current mechanism with Ackermann steering. | Achieve more accurate and stable cornering with reduced path deviation. |
 | Wheel friction | Differences in friction between the wheels and track surface can cause the robot to deviate from its intended path. Changes in surface conditions can also affect turning, acceleration, and stopping performance. | Improve wheel alignment, weight distribution, and mechanical design, and tune control parameters for different track conditions. | Reduce path deviation and achieve consistent movement across repeated runs. |
 
-## Acknowledgements
+## MIT License
 
-[TODO]
+```
+Copyright (c) 2026 Team IriSight
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
