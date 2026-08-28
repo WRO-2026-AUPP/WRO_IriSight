@@ -439,14 +439,15 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 
 ### Final regression results
 
-| Test | Configuration/commit | Trials | Acceptance target | Result | Evidence |
-| --- | --- | ---: | --- | --- | --- |
-| Open clockwise | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
-| Open counter-clockwise | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
-| Obstacle Challenge | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
-| Parking | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
-| Runtime/power | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
-| Emergency/fault response | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
+| Test | Configuration / Commit | Trials | Acceptance Target | Result | Evidence |
+|---|---|---:|---|---|---|
+| Open Challenge - clockwise | Final `clockWise.py` configuration | TODO | Complete 3 laps without navigation failure | TODO | TODO |
+| Open Challenge - Counterclockwise | Final `counterClockWise.py` configuration | TODO | Complete 3 laps without navigation failure | TODO | TODO |
+| Obstacle Challenge - Clockwise| `obs_clockWise.py` / `obs_counterClockWise.py` | N/A | Complete obstacle avoidance and navigation | In development | TODO |
+| Obstacle Challenge - Counterclockwise | `obs_counterclockwise.py` / `obs_counterclockwise.py` | N/A | Complete obstacle avoidance and navigation | In development | TODO |
+| Parking | Final parking configuration | N/A | Enter and stop within the designated parking area | Not validated | TODO |
+| Runtime / power | Final battery and power configuration | TODO | Complete the required run without power-related failure | TODO | TODO |
+| Emergency / fault response | Final safety configuration | TODO | Stop or enter a safe state when a critical fault occurs | TODO | TODO |
 
 ### Key decisions
 
