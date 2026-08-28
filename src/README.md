@@ -135,7 +135,7 @@ As with the Open Challenge, the direction of travel is only revealed just before
 | `obs_closewise.py` | Left wall | Turns **right** | Green → **left**, Red → **right** |
 | `obs_counterclockwise.py` | Right wall | Turns **left** | Green → **left**, Red → **right** |
 
-### 🧭 Navigation Per File
+#### 🧭 Navigation Per File
 
 **Left Wall Following + Obstacle Avoidance (`obs_clockwise.py`)**
 - Follows the **left wall** using a PD controller.
