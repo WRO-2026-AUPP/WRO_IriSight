@@ -446,11 +446,44 @@ The BNO055 heading is zeroed at startup. Each program accepts the next expected 
 
 ### Obstacle Challenge
 
-**Status:** In development.
+**Status:** Implemented for both directions.
 
-[TODO: Obstacle strategy, state machine, tuning, edge cases, and results]
+Both programs run a YOLO detector (`best1.pt`) on the color frame to detect red and green pillars. Detection uses a confidence threshold of **0.35–0.70** and an inference size of **416 px**.
 
-**Detailed evidence:** [software architecture, algorithms, tuning, installation, configuration, and tests](src/)
+Detected bounding boxes are masked out of the depth image before the front and side wall ROIs are calculated. This prevents a pillar from being mistaken for the wall behind it. Each pillar's distance is calculated using the median depth from the center region of its bounding box.
+
+Once a pillar is closer than its configured **engage distance**, the program begins tracking it and calculates steering from the pillar's horizontal position relative to a target column. The target position changes depending on the pillar colour and which third of the frame contains the pillar. Green-pillar targets steer the robot left past the pillar, while red-pillar targets steer it right. The steering correction is scaled using a proportional gain.
+
+If a pillar is detected while the robot is performing a corner turn, the corner turn is cancelled and pillar avoidance takes priority for a short **lock window**. This prevents the controller from rapidly switching between corner-turning and pillar avoidance.
+
+Independent wall-clearance guards are applied after the pillar-avoidance steering is calculated. These guards can reduce or override the avoidance steering as the relevant side-wall distance becomes too small. Ultrasonic sensors provide a second clearance check.
+
+The robot also reduces its speed while actively avoiding a pillar. The more cautious program can additionally perform a slow stop-and-reverse maneuver if the front wall or pillar becomes dangerously close before the pass is complete.
+
+### Current Control Values
+
+| **Control Value** | **Current Value / Range** |
+| --- | --- |
+| Detector | `best1.pt`, `imgsz=416`, confidence 0.35–0.70 |
+| Pillar engage distance | 1.6–2.2 m, colour-dependent |
+| Pillar pass distance | 0.25–0.70 m |
+| Steering gain (pillar column error) | 35–100 deg/unit, colour-dependent |
+| Target column (front zone) | Green: ~0.75–0.80 / Red: ~0.08–0.42 |
+| Avoid speed command | 110–160 |
+| Corner-lock window on pillar-during-turn | 0–0.5 s |
+| Wall guard clearance (soft / hard) | ~0.45–0.55 m / ~0.15–0.22 m |
+| Ultrasonic backup clearance (soft / hard) | 20–25 cm / 15 cm |
+| D455 stream | 640×480 @ 30 FPS |
+
+### Test Results
+
+| **Metric** | **Clockwise** | **Counter-Clockwise** | **Test Evidence** |
+| --- | --- | --- | --- |
+| Trials | TODO | TODO | TODO |
+| Successful runs | TODO | TODO | TODO |
+| Success rate | TODO | TODO | TODO |
+| Pillar contacts / violations | TODO | TODO | TODO |
+| Best / average completion time | TODO | TODO | TODO |
 
 ## System integration, testing, and risk
 
