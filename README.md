@@ -272,7 +272,7 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 
 | Component | Exact model | Interface | Purpose | Details |
 | --- | --- | --- | --- | --- |
-| <p align="center"><img src="./schemes/photos/tb6612.png" width="130"></p> | TB6612FNG | [TODO] | Drive-motor control | [LINK](https://www.amazon.com/Sparkfun-PID-14451-Motor-Driver/dp/B01MF67DX6) |
+| <p align="center"><img src="./schemes/photos/TB6612FNG.png" width="130"></p> | TB6612FNG | [TODO] | Drive-motor control | [LINK](https://www.amazon.com/Sparkfun-PID-14451-Motor-Driver/dp/B01MF67DX6) |
 
 ### Steering Servo
 
@@ -333,6 +333,7 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 | Component | Exact model | Interface | Purpose | Details |
 | --- | --- | --- | --- | --- |
 | <p align="center"></p> | [TODO] | — | Voltage regulation |  |
+
 ### Sensor placement and calibration
 
 | Sensor | Placement | Selection reason | Calibration | Limitation and mitigation |
