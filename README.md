@@ -295,11 +295,14 @@ The two front LEGO SPIKE `39367` wheels are steered by a larger servo through a 
 
 ### Mechanical iterations
 
-[TODO: Best mechanical comparison image]
+<table width="100%">
+  <tr>
+    <td width="50%" align="center"><img src="./models/png/MotorMountV2.png" width="100%"><br><sub>Motor Mount V2 — vertical-axis LEGO arms (failed fit test)</sub></td>
+    <td width="50%" align="center"><img src="./models/png/MotorMountV4.png" width="100%"><br><sub>Motor Mount V4 — reoriented arms + electronics shelf (final)</sub></td>
+  </tr>
+</table>
 
-[TODO: Mechanical iteration summary]
-
-**Detailed evidence:** [mechanical design, calculations, CAD, assembly, and validation](models/)
+The full print → test-fit → fix history for every part is in the
 
 ## Power and sensor architecture
 
