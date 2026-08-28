@@ -305,7 +305,7 @@ The two front LEGO SPIKE `39367` wheels are steered by a larger servo through a 
 
 ### Power architecture
 
-[TODO: Wiring and power-tree diagram]
+<img src="./schemes/photos/PCB_Schematics.png" alt="Power architecture" width="800">
 
 The vehicle uses two battery domains: one battery supplies the Jetson and its logic/sensing system, while a second battery supplies the motor-driver side. A regulator provides the required stable voltage. Exact battery, regulator, motor-driver, connector, protection, and current ratings are still being identified and will be verified against measured typical and peak current.
 
@@ -319,7 +319,7 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
-| <p align="center"><img src="./schemes/photos/jetson.png" width="130"></p> | NVIDIA Jetson Orin Nano | [TODO] | Main processing | [LINK](https://www.amazon.com/dp/B0BZJTQ5YP) |
+| <p align="center"><img src="./schemes/photos/jetson.png" width="130"></p> | NVIDIA Jetson Orin Nano | NaN | Main processing | [LINK](https://www.amazon.com/dp/B0BZJTQ5YP) |
 
 ### Custom ESP32 Board
 
@@ -331,13 +331,13 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
-| <p align="center"><img src="./schemes/photos/TB6612FNG.png" width="130"></p> | TB6612FNG | [TODO] | Drive-motor control | [LINK](https://www.amazon.com/Sparkfun-PID-14451-Motor-Driver/dp/B01MF67DX6) |
+| <p align="center"><img src="./schemes/photos/TB6612FNG.png" width="130"></p> | TB6612FNG | PWM | Drive-motor control | [LINK](https://www.amazon.com/Sparkfun-PID-14451-Motor-Driver/dp/B01MF67DX6) |
 
 ### Steering Servo
 
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
-| <p align="center"><img src="./schemes/photos/servo.jpg" width="130"></p> | LD-1501MG Servo | [TODO] | Front steering | [LINK](https://www.ebay.com/itm/362680017196) |
+| <p align="center"><img src="./schemes/photos/servo.jpg" width="130"></p> | LD-1501MG Servo | PWM | Front steering | [LINK](https://www.ebay.com/itm/362680017196) |
 
 ### D455
 
@@ -351,41 +351,37 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 | :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/IMU.png" width="130"></p> | BNO055 | I²C | Relative yaw | [LINK](https://bdelectronics.xyz/product/bno055-intelligent-9axis-attitude-sensor-module) |
 
-### Left Ultrasonic
+### Left/Right Ultrasonic
 
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
-| <p align="center"><img src="./schemes/photos/ultrasonic.jpg" width="130"></p> | Generic HC-SR04 ultrasonic sensors | [TODO] | [TODO] | [LINK](https://www.amazon.com/MTDELE-HC-SR04-Ultrasonic-Mounting-Bracket/dp/B0G6ZDBTWR?) |
+| <p align="center"><img src="./schemes/photos/ultrasonic.jpg" width="130"></p> | Generic HC-SR04 ultrasonic sensors | GPIO | Detect Wall | [LINK](https://www.amazon.com/MTDELE-HC-SR04-Ultrasonic-Mounting-Bracket/dp/B0G6ZDBTWR?) |
 
 ### Right Ultrasonic
-
-| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
-| :--- | :--- | :--- | :--- | :--- |
-| <p align="center"><img src="./schemes/photos/ultrasonic.jpg" width="130"></p> | Generic HC-SR04 ultrasonic sensors | [TODO] | [TODO] | [LINK](https://www.amazon.com/MTDELE-HC-SR04-Ultrasonic-Mounting-Bracket/dp/B0G6ZDBTWR?) |
 
 ### Jetson Battery
 
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
-| <p align="center"><img src="./schemes/photos/battery.jpg" width="130"></p> | TCB 1100mAh 3S 25C battery | — | Logic power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
+| <p align="center"><img src="./schemes/photos/battery.jpg" width="130"></p> | TCB 1100mAh 3S 25C battery | Power | Logic power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
 
 ### Motor Battery
 
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
-| <p align="center"><img src="./schemes/photos/battery.jpg" width="130"></p> | TCB 1100mAh 3S 25C battery | — | Actuator power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
+| <p align="center"><img src="./schemes/photos/battery.jpg" width="130"></p> | TCB 1100mAh 3S 25C battery | Power | Actuator power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
 
 ### Buck-Boost Converter at 11V
 
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
-| <p align="center"><img src="./schemes/photos/converter_11V.jpg" width="130"></p> | XL4016 300W buck-boost converter | — | Actuator power | [LINK](https://ampere-electronics.com/product/xl4016-dc-dc-step-down-converter-module-12a-300w/) |
+| <p align="center"><img src="./schemes/photos/converter_11V.jpg" width="130"></p> | XL4016 300W buck-boost converter | Power | Actuator power | [LINK](https://ampere-electronics.com/product/xl4016-dc-dc-step-down-converter-module-12a-300w/) |
 
 ### Buck Converter at 5V
 
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
-| <p align="center"><img src="./schemes/photos/converter_5V.jpg" width="130"></p> | XL4015 50W buck converter | — | Actuator power | [LINK](https://www.jacobsparts.com/items/DCMOD-B) |
+| <p align="center"><img src="./schemes/photos/converter_5V.jpg" width="130"></p> | XL4015 50W buck converter | Power | Actuator power | [LINK](https://www.jacobsparts.com/items/DCMOD-B) |
 
 
 ### Sensor placement and calibration
