@@ -195,6 +195,7 @@ This repository is organized as follows:
 | Primary camera | Intel RealSense D455 |
 | IMU | BNO055 breakout |
 | Additional sensors | Two side ultrasonic sensors |
+| Chassis Type | Custom chassis |
 | Front wheels | LEGO SPIKE blue wheels, part `39367` |
 | Back wheels | RC Car Tires Wheels |
 | Batteries | Separate Jetson and motor/actuator batteries |
