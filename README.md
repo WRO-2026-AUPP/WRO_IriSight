@@ -154,10 +154,10 @@ _Repository of Team IriSight competing in the CRO 2026, Future Engineers categor
 
 | Specification | Final value |
 | --- | --- |
-| Length × width × height | [TODO] |
+| Length × width × height | 26.3 x 15.2 x 21.2 (cm) |
 | Mass | 1.38 KG |
-| Wheelbase / track width | [TODO] |
-| Ground clearance | [TODO] |
+| Wheelbase / track width | 15.3 cm |
+| Ground clearance | 2.8 cm |
 | Drive layout | One motor, two gears, one drive shaft, two driven back wheels |
 | Steering layout | LEGO-based parallel front steering system|
 | Main computer | NVIDIA Jetson Orin Nano, Ubuntu 22.04 LTS |
