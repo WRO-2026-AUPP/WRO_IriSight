@@ -290,7 +290,7 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 
 | Component | Exact model | Interface | Purpose | Details |
 | --- | --- | --- | --- | --- |
-| <p align="center"><img src="./schemes/photos/bno055.png" width="130"></p> | BNO055 | I²C | Relative yaw | [LINK](https://bdelectronics.xyz/product/bno055-intelligent-9axis-attitude-sensor-module) |
+| <p align="center"><img src="./schemes/photos/IMU.png" width="130"></p> | BNO055 | I²C | Relative yaw | [LINK](https://bdelectronics.xyz/product/bno055-intelligent-9axis-attitude-sensor-module) |
 
 ### Left Ultrasonic
 
