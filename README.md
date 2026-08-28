@@ -503,7 +503,7 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 | Open Challenge - clockwise | Final `clockWise.py` configuration | 3 | Complete 3 laps without navigation failure | 3 | 
 | Open Challenge - Counterclockwise | Final `counterClockWise.py` configuration | 3 | Complete 3 laps without navigation failure | 3 |
 | Obstacle Challenge - Clockwise| Final `obs_clockwise.py` configuration | 3 | Complete obstacle avoidance and navigation | 3 | 
-| Obstacle Challenge - Counterclockwise | Final `obs_counterclockwise.py` configuration | N/A | Complete obstacle avoidance and navigation | 3 | 
+| Obstacle Challenge - Counterclockwise | Final `obs_counterclockwise.py` configuration | 3 | Complete obstacle avoidance and navigation | 3 | 
 
 ### Key decisions
 
