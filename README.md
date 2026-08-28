@@ -446,9 +446,9 @@ The BNO055 heading is zeroed at startup. Each program accepts the next expected 
 | **Metric** | **Clockwise** | **Counter-clockwise** | 
 | --- | ---: | ---: | 
 | Trials | 30 | 30 | 
-| Successful three-lap runs | 28/30| 27/30 | 
-| Success rate | 93.33% | 90% |
-| Best/average completion time | 44s | 44s | 
+| Successful three-lap runs | 28/30| 27/30| 
+| Success rate | 93.33% | 90%|
+| Best/average completion time | 44s| 44s| 
 
 ### Obstacle Challenge
 
@@ -498,14 +498,12 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 
 ### Final regression results
 
-| Test | Configuration / Commit | Trials | Acceptance Target | Result | Evidence |
+| Test | Configuration / Commit | Trials | Acceptance Target | Result | 
 |---|---|---:|---|---|---|
-| Open Challenge - clockwise | Final `clockWise.py` configuration | TODO | Complete 3 laps without navigation failure | TODO | TODO |
-| Open Challenge - Counterclockwise | Final `counterClockWise.py` configuration | TODO | Complete 3 laps without navigation failure | TODO | TODO |
-| Obstacle Challenge - Clockwise| Final `obs_clockwise.py` configuration | N/A | Complete obstacle avoidance and navigation | TODO | TODO |
-| Obstacle Challenge - Counterclockwise | Final `obs_counterclockwise.py` configuration | N/A | Complete obstacle avoidance and navigation | TODO | TODO |
-| Runtime / power | Final battery and power configuration | TODO | Complete the required run without power-related failure | TODO | TODO |
-| Emergency / fault response | Final safety configuration | TODO | Stop or enter a safe state when a critical fault occurs | TODO | TODO |
+| Open Challenge - clockwise | Final `clockWise.py` configuration | 3 | Complete 3 laps without navigation failure | 3 | 
+| Open Challenge - Counterclockwise | Final `counterClockWise.py` configuration | 3 | Complete 3 laps without navigation failure | 3 |
+| Obstacle Challenge - Clockwise| Final `obs_clockwise.py` configuration | 3 | Complete obstacle avoidance and navigation | 3 | 
+| Obstacle Challenge - Counterclockwise | Final `obs_counterclockwise.py` configuration | N/A | Complete obstacle avoidance and navigation | 3 | 
 
 ### Key decisions
 
