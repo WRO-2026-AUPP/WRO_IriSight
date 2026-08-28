@@ -269,7 +269,17 @@ Each finalized 3D-printed part has a full blueprint sheet (orthographic views, d
 
 IriSight uses a LEGO-based chassis so the team can change the geometry and component positions without manufacturing an entirely new frame. The Jetson is protected by a custom 3D-printed enclosure designed to connect directly to LEGO parts. The final dimensions, mass, mounting coordinates, rigidity checks, and center-of-mass measurements will be added after the mechanical configuration is frozen.
 
-[TODO: Dimensioned mechanical diagram]
+<!-- ### Torque and speed summary
+
+| Result | Final value | Evidence |
+| --- | ---: | --- |
+| Gear ratio | [TODO] | [TODO] |
+| Calculated no-load speed | [TODO] | [TODO] |
+| Measured vehicle speed | [TODO] | [TODO] |
+| Required wheel torque | [TODO] | [TODO] |
+| Available wheel torque | [TODO] | [TODO] |
+| Torque margin | [TODO] | [TODO] |
+| Stopping distance | [TODO] | [TODO] | -->
 
 ### Rear drive system
 
