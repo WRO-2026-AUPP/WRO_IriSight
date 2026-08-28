@@ -516,14 +516,13 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 
 ### Risk register
 
-| Risk/failure mode | Detection | Mitigation | Validation |
-| --- | --- | --- | --- |
-| Steering play or scrub | [TODO] | [TODO] | [TODO] |
-| Loose LEGO/printed mounting | [TODO] | [TODO] | [TODO] |
-| Missing or invalid depth | [TODO] | [TODO] | [TODO] |
-| IMU drift/interference | [TODO] | [TODO] | [TODO] |
-| Jetson–ESP32 communication loss | [TODO] | [TODO] | [TODO] |
-| Power sag or actuator stall | [TODO] | [TODO] | [TODO] |
+| Risk/failure mode | Detection | Mitigation |
+| --- | --- | --- |
+| Loose LEGO/printed mounting | Found through the print → test-fit → fix cycle on the real robot (e.g. Motor Mount V2's misalignment, see [Our engineering journey](#our-engineering-journey)) | Reoriented/added LEGO-pin mounting points across mount versions (Motor Mount V2→V4, Jetson & Battery Container V2→V3); rounded edges and extra pins added for a more rigid fit | 
+| Missing or invalid depth | `roi_distance()` rejects depth outside 0.15–4.00 m and requires ≥50 valid pixels per ROI, returning NaN otherwise; the obstacle-challenge builds additionally track a low-pixel-count flag to distinguish "no data" from "wall too close to resolve" | A NaN/invalid side-wall reading falls back to a gentle search steer (`SEARCH_LEFT_STEER`/`SEARCH_RIGHT_STEER`) instead of driving on a corrupted value; the obstacle builds add rate-limiting (`update_smoothed_left_distance`), EMA smoothing, and hold-last-good logic (`LastGoodHold`) on top | 
+| IMU drift/interference | `get_calibration_status()` reports system/gyroscope/accelerometer/magnetometer calibration state at startup; the BNO055 is mounted near chassis center, away from motors and power wiring | Saved calibration offsets are loaded from `bno055_calibration.json` at startup (`bno055_yaw.py`), and heading is zeroed relative to the robot's own start orientation each run rather than assuming a fixed absolute heading | 
+| Jetson–ESP32 communication loss | The `ResilientSerial` wrapper (obstacle-challenge code) catches `SerialException`/`OSError` on every serial write and read | On any serial failure, `ResilientSerial` automatically closes and reopens the port in a retry loop until the connection succeeds again, instead of letting the control loop crash | 
+| Power sag or actuator stall | Motor/actuator and Jetson/logic loads are supplied from two isolated LiPo + regulator domains (see [Power architecture](#power-architecture)), so a motor-side voltage sag under load cannot brown out the Jetson | Separate power paths prevent actuator current demand from affecting the Jetson/ESP32 logic supply. The servo uses **3S Battery (~11.1V) → XL4015 Buck → 5V → Servo**, while the motors use **3S Battery → XL4016 Buck-Boost → ~11V → TB6612 → DC Motors**. The buck-boost converter maintains approximately 11V, reducing motor-speed variation as battery voltage drops and making PWM-to-speed behavior more predictable. | 
 
 **Detailed evidence:** [Engineering Journal, raw and processed tests, decisions, risks, and final regression results](other/)
 
