@@ -215,7 +215,7 @@ IriSight is a self-driving LEGO/3D-printed chassis robot built for WRO Future En
 ### System architecture
 
 <div align="center">
-<img src="./schemes/photos/system_architecture.png" width="700" alt="System architecture">
+<img src="./schemes/photos/system_architecture.drawio.png" width="700" alt="System architecture">
 </div>
 
 | Flow | Summary |
