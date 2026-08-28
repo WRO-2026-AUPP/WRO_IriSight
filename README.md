@@ -584,18 +584,6 @@ python3 src/obs_counterclockWise.py
 | Steering geometry | The current prototype uses parallel steering, which can reduce turning accuracy and stability during sharp turns. | Replace the current mechanism with Ackermann steering. | Achieve more accurate and stable cornering with reduced path deviation. |
 | Wheel friction | Differences in friction between the wheels and track surface can cause the robot to deviate from its intended path. Changes in surface conditions can also affect turning, acceleration, and stopping performance. | Improve wheel alignment, weight distribution, and mechanical design, and tune control parameters for different track conditions. | Reduce path deviation and achieve consistent movement across repeated runs. |
 
-## Repository structure
-
-| Path | Contents |
-| --- | --- |
-| [`src/`](src/) | Control software, firmware, configuration, and software documentation |
-| [`schemes/`](schemes/) | Wiring, power, sensor-placement, and system diagrams |
-| [`models/`](models/) | Mechanical documentation, CAD, and printable files |
-| [`other/`](other/) | Engineering Journal, tests, calibration, risks, and decision records |
-| [`v-photos/`](v-photos/) | Front, back, left, right, top, and bottom vehicle photographs |
-| [`t-photos/`](t-photos/) | Official and informal team photographs |
-| [`video/`](video/) | Challenge and project video links |
-
 ## Acknowledgements
 
 [TODO]
