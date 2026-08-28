@@ -531,16 +531,28 @@ For the current Open Challenge, the D455 depth and BNO055 yaw enter the Jetson c
 
 ### Required files and tools
 
-[TODO: Requirements summary and links]
+**Hardware** — the full bill of materials with exact models and purchase links is in [Component and interface map](#component-and-interface-map); the three structural 3D-printed parts (STL for printing, STEP for editing) are in [`models/`](models/).
+
+**Software/tools:**
+- NVIDIA Jetson Orin Nano flashed with JetPack (Ubuntu 22.04 LTS) and Python 3
+- Intel RealSense SDK (`librealsense`) so `pyrealsense2` can talk to the D455
+- Arduino IDE (or `arduino-cli`) with the `ESP32Servo` library, to flash [`src/helper_function/ultrasonic_arduino_v2.ino`](src/helper_function/ultrasonic_arduino_v2.ino) onto the ESP32
+- The Python packages listed in [Software Installation](#software-installation) below
+- `git`, to clone this repository
 
 ### Mechanical assembly
 
-[TODO: Assembly summary and link]
+1. Build the LEGO Technic chassis with the parallel front-steering linkage and rear drive shaft described in [Mobility and mechanical design](#mobility-and-mechanical-design).
+2. Print the three finalized structural parts from [`models/`](models/) at the settings in [`models/README.md`](models/README.md#-print-settings) (PLA, 0.2 mm layers, 20–30% infill): the **Jetson & Battery Container (V3)**, **Rear Motor Mount (V4)**, and **RealSense Camera Mount (V2)**.
+3. Pin all three onto the chassis using their LEGO-compatible mounting arms — no screws or brackets are needed for the printed parts themselves.
+4. Mount the rear DC motor in the Motor Mount V4 cradle, and use its flat top plate as the shelf for the ESP32 board and buck converter.
+5. Mount the two HC-SR04 ultrasonics facing outward on the left/right sides, and the BNO055 near chassis center, away from the motor and high-current wiring — see [Sensor placement and calibration](#sensor-placement-and-calibration).
 
 ### Wiring and power-on
 
-[TODO: Wiring, validation, and first-power-on summary and link]
+Wire every component exactly as shown in the diagram embedded in [Power architecture](#power-architecture) (full source in [`schemes/`](schemes/)), keeping the Jetson/logic battery and the motor/actuator battery on their own separate circuits — do not tie their grounds/rails together except where the diagram shows a shared reference. Double-check the TB6612FNG (IN1=D26, IN2=D25, PWM=D33), servo (D17), and ultrasonic pins (left TRIG=D13/ECHO=D39, right TRIG=D4/ECHO=D16) against the ESP32 firmware before powering on.
 
+Recommended first power-on order: (1) connect the Jetson's battery and confirm the Jetson boots normally with the D455 and BNO055 enumerated; (2) flash and power the ESP32 on its own USB link first and confirm it prints `ESP32 ready` over serial without the motor battery connected; (3) only then connect the motor/actuator battery, and immediately confirm the wheels are off the ground or the vehicle is on a stand before sending any `DRIVE` command.
 
 ### Software Installation
 
