@@ -215,7 +215,7 @@ IriSight is a self-driving LEGO/3D-printed chassis robot built for WRO Future En
 ### System architecture
 
 <div align="center">
-<img src="./schemes/photos/WRO_electrical_diagram_2.png" width="700" alt="System architecture">
+<img src="./schemes/photos/system_architecture.png" width="700" alt="System architecture">
 </div>
 
 | Flow | Summary |
@@ -223,7 +223,7 @@ IriSight is a self-driving LEGO/3D-printed chassis robot built for WRO Future En
 | Power | Two isolated LiPo domains (TCB 1100mAh 3S each). One battery powers the Jetson directly. Its 9–20V DC input accepts raw 3S voltage with no regulation needed. The second battery splits into a 5V buck converter (servo power, TB6612 logic) and an 11V buck-boost converter (TB6612 motor supply), keeping motor-driver noise off the Jetson's rail. |
 | Perception | RealSense D455 feeds 640×480 depth+color at 30 FPS to the Jetson over USB for wall distance, corner detection, and (planned) obstacle/pillar recognition via YOLOv8. BNO055 reports relative yaw to the Jetson over I2C for heading and lap-checkpoint tracking. Two HC-SR04 ultrasonics report to the ESP32 for side-facing close-range backup. |
 | Decision | The Jetson runs a PD controller holding a 0.60 m side-wall target from depth ROIs, switches into a fixed-steering corner state using front-distance hysteresis (0.60 m entry / 0.80 m exit), and tracks laps via 90°±10° yaw checkpoints. Obstacle Challenge logic (YOLOv8-based) is in development. |
-| Actuation | JThe Jetson sends DRIVE <steerDeg> <speed> over USB serial to the ESP32. The ESP32 converts this into PWM/enable signals for the TB6612FNG (driving the rear DC motor) and PWM for the LD-1501MG steering servo, limited to ±35°. |
+| Actuation | The Jetson sends DRIVE <steerDeg> <speed> over USB serial to the ESP32. The ESP32 converts this into PWM/enable signals for the TB6612FNG (driving the rear DC motor) and PWM for the LD-1501MG steering servo, limited to ±35°. |
 | Feedback and safety | Depth readings outside 0.15–4.00 m or below a minimum valid-pixel count are rejected to avoid noisy control input. Corner-state hysteresis prevents mode flapping near threshold. A Flask diagnostic stream on port 5000 gives live visibility into control state for tuning and fault-spotting. |
 
 ## Our engineering journey
