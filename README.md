@@ -563,7 +563,7 @@ RealSense D455
                              ▼
                            ESP32
 
-
+```
 ### Obstacle Challenge
 
 **Status:** Implemented for both directions.
