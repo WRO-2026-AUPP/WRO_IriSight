@@ -495,51 +495,27 @@ IriSight's perception stack combines depth-based geometric sensing with a traine
 The perception system uses two complementary approaches:
 
 - **Depth processing** for wall following and distance measurement
-- **YOLOv8 object detection** for pillar and parking-lot recognition
+- **YOLOv8n object detection** for pillar and parking-lot recognition
 
 #### Detection Model
 
-- **Model:** YOLOv8
+- **Model:** YOLOv8n (nano) — chosen for its speed/accuracy tradeoff, allowing it to run in real time on the Jetson alongside the depth-processing pipeline.
 - **Classes:** `greenbox`, `redbox`, `xparking`
-- **Inference:** Runs on the Jetson Orin Nano using `ultralytics`
-- **Input:** RealSense D455 color stream
-- **Depth integration:** YOLO bounding boxes are combined with the aligned depth frame to estimate the real-world distance to detected objects.
-- **Performance:** The current dataset achieved approximately **0.987 mAP50** after correcting a label-ordering issue that previously caused class assignments to be shuffled during training.
-
-#### Segmentation Model (Earlier Iteration)
-
-An earlier version of the perception pipeline used a **U-Net segmentation model** with a **ResNet34 encoder**.
-
-The model was trained to segment six classes:
-
-| Class | Description |
-|---|---|
-| `background` | Background region |
-| `green_box` | Green obstacle pillar |
-| `red_box` | Red obstacle pillar |
-| `parking` | Parking-lot marker |
-| `floor` | Drivable floor area |
-| `wall` | Wall boundaries |
-
-The segmentation model was responsible for identifying drivable floor areas and wall boundaries, while YOLO was used for pillar detection.
-
-Both **ResNet34** and **EfficientNet-B0** encoders were evaluated to balance segmentation accuracy and inference speed on the Jetson's edge hardware.
+- **Input size:** 640 × 640
+- **Inference:** Runs on the Jetson Orin Nano using `ultralytics`, consuming the RealSense D455 color stream.
+- **Depth integration:** YOLO bounding boxes are combined with the aligned depth frame to estimate the real-world distance and lateral offset to each detected object, rather than relying only on its position in the 2D image.
+- **Training run:** 100 epochs, batch size 8, auto optimizer, `lr0 = 0.01`.
+- **Validation performance:** Precision ≈ 0.997, recall ≈ 0.985, mAP@50 ≈ 0.995, mAP@50–95 ≈ 0.928.
+- **Weights file:** `best1.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
 
 ### Dataset and Training Workflow
 
 The training dataset was developed using a **semi-supervised annotation workflow**:
 
-1. **Manual annotation**  
-   Approximately 300 images were manually annotated using **CVAT** to create the initial training set.
-
-2. **Pseudo-labeling**  
-   The trained model was used to automatically generate labels for additional unlabeled images.
-
-3. **Manual correction**  
-   The predicted labels were reviewed and corrected in CVAT.
-
-4. **Dataset expansion**  
-   The corrected annotations were added back into the training dataset, and the process was repeated to improve the model without manually annotating every frame.
+1. **Manual annotation** — Approximately 300 images were manually annotated using **CVAT** to create the initial training set.
+2. **Pseudo-labeling** — The trained model was used to automatically generate labels for additional unlabeled images.
+3. **Manual correction** — The predicted labels were reviewed and corrected in CVAT.
+4. **Dataset expansion** — The corrected annotations were added back into the training dataset, and the process was repeated to improve the model without manually annotating every frame from scratch.
 
 Supporting scripts are used to:
 
@@ -558,16 +534,17 @@ The vision model does **not directly control the robot**. Instead, its output is
 The main uses of the model output are:
 
 - **Pillar distance:** The depth distance to a detected pillar determines when the robot should begin avoidance and how aggressively it should react.
-- **Obstacle avoidance:** Separate control gains for green and red pillars allow the robot to apply different steering responses depending on the detected obstacle.
+- **Obstacle avoidance:** Separate control gains for green and red pillars allow the robot to apply different steering responses depending on the detected obstacle. Green pillars are passed on one side, while red pillars are passed on the other.
 - **Error clamping:** Steering errors are constrained to prevent excessive corrections and reduce oversteering.
-- **Parking detection:** Detection of the `xparking` marker is used to trigger the final parking maneuver.
+- **Parking maneuver:** Once `xparking` is detected and the required laps are complete, detections of this class are used to align the robot with the parking space and trigger the final parking sequence.
+- **Ultrasonic backup:** Ultrasonic sensors provide redundant close-range confirmation so a missed or late detection does not immediately result in a collision.
 
 The system therefore separates **perception** from **control**:
 
 ```text
 RealSense D455
       │
-      ├── Color Frame ──► YOLOv8
+      ├── Color Frame ──► YOLOv8n
       │                     │
       │                     ├── Object Class
       │                     └── Bounding Box
@@ -585,7 +562,6 @@ RealSense D455
                              │
                              ▼
                            ESP32
-```
 
 
 ### Obstacle Challenge
