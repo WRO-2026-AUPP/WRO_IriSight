@@ -488,6 +488,106 @@ The BNO055 heading is zeroed at startup. Each program accepts the next expected 
 | Success rate | 93.33% | 90%|
 | Best/average completion time | 44s| 44s| 
 
+### AI Model and Computer Vision Pipeline
+
+IriSight's perception stack combines depth-based geometric sensing with a trained computer vision pipeline running on the **Jetson Orin Nano**. The **Intel RealSense D455** provides aligned depth and color frames at **640 × 480 resolution and 30 FPS**.
+
+The perception system uses two complementary approaches:
+
+- **Depth processing** for wall following and distance measurement
+- **YOLOv8 object detection** for pillar and parking-lot recognition
+
+#### Detection Model
+
+- **Model:** YOLOv8
+- **Classes:** `greenbox`, `redbox`, `xparking`
+- **Inference:** Runs on the Jetson Orin Nano using `ultralytics`
+- **Input:** RealSense D455 color stream
+- **Depth integration:** YOLO bounding boxes are combined with the aligned depth frame to estimate the real-world distance to detected objects.
+- **Performance:** The current dataset achieved approximately **0.987 mAP50** after correcting a label-ordering issue that previously caused class assignments to be shuffled during training.
+
+#### Segmentation Model (Earlier Iteration)
+
+An earlier version of the perception pipeline used a **U-Net segmentation model** with a **ResNet34 encoder**.
+
+The model was trained to segment six classes:
+
+| Class | Description |
+|---|---|
+| `background` | Background region |
+| `green_box` | Green obstacle pillar |
+| `red_box` | Red obstacle pillar |
+| `parking` | Parking-lot marker |
+| `floor` | Drivable floor area |
+| `wall` | Wall boundaries |
+
+The segmentation model was responsible for identifying drivable floor areas and wall boundaries, while YOLO was used for pillar detection.
+
+Both **ResNet34** and **EfficientNet-B0** encoders were evaluated to balance segmentation accuracy and inference speed on the Jetson's edge hardware.
+
+### Dataset and Training Workflow
+
+The training dataset was developed using a **semi-supervised annotation workflow**:
+
+1. **Manual annotation**  
+   Approximately 300 images were manually annotated using **CVAT** to create the initial training set.
+
+2. **Pseudo-labeling**  
+   The trained model was used to automatically generate labels for additional unlabeled images.
+
+3. **Manual correction**  
+   The predicted labels were reviewed and corrected in CVAT.
+
+4. **Dataset expansion**  
+   The corrected annotations were added back into the training dataset, and the process was repeated to improve the model without manually annotating every frame.
+
+Supporting scripts are used to:
+
+- Organize images and labels
+- Split the dataset into training and validation sets
+- Test trained model checkpoints
+- Run inference using a webcam
+- Run inference directly on the Jetson Orin Nano
+
+This workflow allows new model checkpoints to be validated before deployment into the competition control programs.
+
+### How the Model Output Is Used in Control
+
+The vision model does **not directly control the robot**. Instead, its output is passed to the existing **PD wall-following and checkpoint state machine**.
+
+The main uses of the model output are:
+
+- **Pillar distance:** The depth distance to a detected pillar determines when the robot should begin avoidance and how aggressively it should react.
+- **Obstacle avoidance:** Separate control gains for green and red pillars allow the robot to apply different steering responses depending on the detected obstacle.
+- **Error clamping:** Steering errors are constrained to prevent excessive corrections and reduce oversteering.
+- **Parking detection:** Detection of the `xparking` marker is used to trigger the final parking maneuver.
+
+The system therefore separates **perception** from **control**:
+
+```text
+RealSense D455
+      │
+      ├── Color Frame ──► YOLOv8
+      │                     │
+      │                     ├── Object Class
+      │                     └── Bounding Box
+      │
+      └── Depth Frame ───────┐
+                             │
+                             ▼
+                    Object Distance
+                             │
+                             ▼
+                  PD / State Machine
+                             │
+                             ▼
+                     Steering + Speed
+                             │
+                             ▼
+                           ESP32
+```
+
+
 ### Obstacle Challenge
 
 **Status:** Implemented for both directions.
