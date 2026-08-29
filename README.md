@@ -508,7 +508,7 @@ The perception system uses two complementary approaches:
 - **Validation performance:** Precision ≈ 0.997, recall ≈ 0.985, mAP@50 ≈ 0.995, mAP@50–95 ≈ 0.928.
 - **Weights file:** `best1.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
 
-### Dataset and Training Workflow
+#### Dataset and Training Workflow
 
 The training dataset was developed using a **semi-supervised annotation workflow**:
 
@@ -527,7 +527,7 @@ Supporting scripts are used to:
 
 This workflow allows new model checkpoints to be validated before deployment into the competition control programs.
 
-### How the Model Output Is Used in Control
+#### How the Model Output Is Used in Control
 
 The vision model does **not directly control the robot**. Instead, its output is passed to the existing **PD wall-following and checkpoint state machine**.
 
