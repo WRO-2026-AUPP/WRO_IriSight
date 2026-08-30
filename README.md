@@ -105,6 +105,7 @@ _Repository of Team IriSight competing in the CRO 2026, Future Engineers categor
 
 This repository is organized as follows:
 
+```
 📦 WRO_IriSight
 ├── 📁 media                    # Project banner and progress photos
 │
@@ -132,6 +133,7 @@ This repository is organized as follows:
 │
 ├── 📄 LICENSE.txt              # MIT License
 └── 📄 README.md                # Main documentation for the project
+```
 
 ## Meet the team
 
