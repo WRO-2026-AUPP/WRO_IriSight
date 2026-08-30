@@ -78,6 +78,10 @@ _Repository of Team IriSight competing in the CRO 2026, Future Engineers categor
   - [Open Challenge](#open-challenge)
     - [Current Control Value](#current-control-value)
     - [Test Results](#test-results)
+  - [AI Model and Computer Vision Pipeline](#ai-model-and-computer-vision-pipeline)
+    - [Detection Model](#detection-model)
+    - [Dataset and Training Workflow](#dataset-and-training-workflow)
+    - [How the Model Output Is Used in Control](#how-the-model-output-is-used-in-control)
   - [Obstacle Challenge](#obstacle-challenge)
     - [Current Control Values](#current-control-values)
     - [Test Results](#test-results-1)
@@ -508,9 +512,29 @@ The perception system uses two complementary approaches:
 - **Validation performance:** Precision ≈ 0.997, recall ≈ 0.985, mAP@50 ≈ 0.995, mAP@50–95 ≈ 0.928.
 - **Weights file:** `best1.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
 
+### AI Model and Computer Vision Pipeline
+
+IriSight's perception stack combines depth-based geometric sensing with a trained computer vision pipeline running on the **Jetson Orin Nano**. The **Intel RealSense D455** provides aligned depth and color frames at **640 × 480 resolution and 30 FPS**.
+
+The perception system uses two complementary approaches:
+
+- **Depth processing** for wall following and distance measurement
+- **YOLOv8n object detection** for pillar and parking-lot recognition
+
+#### Detection Model
+
+- **Model:** YOLOv8n (nano) — chosen for its speed/accuracy tradeoff, allowing it to run in real time on the Jetson alongside the depth-processing pipeline.
+- **Classes:** `greenbox`, `redbox`, `xparking`
+- **Input size:** 640 × 640
+- **Inference:** Runs on the Jetson Orin Nano using `ultralytics`, consuming the RealSense D455 color stream.
+- **Depth integration:** YOLO bounding boxes are combined with the aligned depth frame to estimate the real-world distance and lateral offset to each detected object, rather than relying only on its position in the 2D image.
+- **Training run:** 100 epochs, batch size 8, auto optimizer, `lr0 = 0.01`.
+- **Validation performance:** Precision ≈ 0.997, recall ≈ 0.985, mAP@50 ≈ 0.995, mAP@50–95 ≈ 0.928.
+- **Weights file:** `best1.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
+
 #### Dataset and Training Workflow
 
-The training dataset was developed using a **semi-supervised annotation workflow**:
+The training dataset was developed using a **semi-supervised annotation workflow**. The full labeled dataset is browsable on [Roboflow](https://app.roboflow.com/join/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3Jrc3BhY2VJZCI6ImFaSVNnTTJTbE1jSkVhcUlBbzFTbHdnRERyTzIiLCJyb2xlIjoib3duZXIiLCJpbnZpdGVyIjoiY2hhbXJvZXVudmlyZWFrcGFuaGFAZ21haWwuY29tIiwiaWF0IjoxNzY1MTkyMDQ4fQ.lXhd1NW9soBeRpH6j9ojgWP6qgS9P-lTWvRfnBAHKKQ).
 
 1. **Manual annotation** — Approximately 300 images were manually annotated using **CVAT** to create the initial training set.
 2. **Pseudo-labeling** — The trained model was used to automatically generate labels for additional unlabeled images.
@@ -526,6 +550,8 @@ Supporting scripts are used to:
 - Run inference directly on the Jetson Orin Nano
 
 This workflow allows new model checkpoints to be validated before deployment into the competition control programs.
+
+> **Note:** [`src/ai_model/README.md`](src/ai_model/README.md) documents the model checkpoint itself (`conf=0.5`, `imgsz=640`) for standalone testing (e.g. `yolo detect predict`). The live Obstacle Challenge scripts (`obs_clockwise.py` / `obs_counterclockwise.py`) load the same `best1.pt` weights but call it with the tuned in-competition settings listed under [Current Control Values](#current-control-values) — `imgsz=416` and a colour-dependent `conf` range of 0.35–0.70 — for faster, more responsive inference on the Jetson during a run.
 
 #### How the Model Output Is Used in Control
 
@@ -562,7 +588,6 @@ RealSense D455
                              │
                              ▼
                            ESP32
-
 ```
 ### Obstacle Challenge
 
