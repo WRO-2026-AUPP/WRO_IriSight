@@ -105,29 +105,33 @@ _Repository of Team IriSight competing in the CRO 2026, Future Engineers categor
 
 This repository is organized as follows:
 
-```
 📦 WRO_IriSight
-├── 📁 media                    # Images and media assets
+├── 📁 media                    # Project banner and progress photos
 │
-├── 📁 models                   # Contains 3D design files for the robot's components
+├── 📁 models                   # 3D design files for the robot's printed components
+│   ├── 📁 STEP_file             # Editable CAD source files
+│   ├── 📁 STL_file              # Print-ready mesh files
+│   └── 📁 png                   # Renders and engineering blueprints
 │
 ├── 📁 schemes                  # Schematics and electrical documentation
-│   └── 📁 photos               # Photos related to the schematics
+│   ├── 📄 WRO_electrical_diagram.drawio  # Editable wiring/power diagram source
+│   └── 📁 photos                # Photos and exported diagrams
 │
 ├── 📁 src                      # Main source code for the robot
-│   ├── 📁 ai_model             # AI model and detection code
-│   ├── 📁 esp32_code           # ESP32 control and communication code
-│   ├── 📁 obs_challenge        # Obstacle challenge code
-│   └── 📁 open_challenge       # Open challenge code
+│   ├── 📁 ai_model              # YOLOv8n weights and object-detection docs
+│   ├── 📁 helper_function       # BNO055 IMU driver, calibration data, ultrasonic firmware
+│   ├── 📁 obs_challenge         # Obstacle Challenge control programs (CW/CCW)
+│   └── 📁 open_challenge        # Open Challenge control programs (CW/CCW)
 │
-├── 📁 t-photos                 # Team photos
+├── 📁 t-photos                 # Official and informal team photos
 │
-├── 📁 v-photos                 # Visual documentation
-│   ├── 📁 robot_photo          # Photos of the robot
-│   └── 📁 video                # Recorded robot testing videos
-│              
+├── 📁 v-photos                 # Vehicle photo/video documentation
+│   └── 📁 robot_photo           # Required six-side photos + 360° GIF
+│
+├── 📁 video                    # Link(s) to challenge demonstration videos
+│
+├── 📄 LICENSE.txt              # MIT License
 └── 📄 README.md                # Main documentation for the project
-```
 
 ## Meet the team
 
