@@ -111,8 +111,6 @@ This repository is organized as follows:
 │
 ├── 📁 models                   # Contains 3D design files for the robot's components
 │
-├── 📁 other                    # 
-│
 ├── 📁 schemes                  # Schematics and electrical documentation
 │   └── 📁 photos               # Photos related to the schematics
 │
