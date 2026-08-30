@@ -512,6 +512,12 @@ The perception system uses two complementary approaches:
 - **Validation performance:** Precision ≈ 0.997, recall ≈ 0.985, mAP@50 ≈ 0.995, mAP@50–95 ≈ 0.928.
 - **Weights file:** `best1.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
 
+<div align="center">
+  <img src="./src/ai_model/photos/red_detect.png" width="600" alt="red pillar">
+  <p><em>Live detection output — bounding boxes and confidence scores for <code>redbox</code> on the RealSense color stream.</em></p>
+</div>
+
+
 ### AI Model and Computer Vision Pipeline
 
 IriSight's perception stack combines depth-based geometric sensing with a trained computer vision pipeline running on the **Jetson Orin Nano**. The **Intel RealSense D455** provides aligned depth and color frames at **640 × 480 resolution and 30 FPS**.
