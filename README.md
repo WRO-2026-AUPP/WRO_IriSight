@@ -364,7 +364,7 @@ The vehicle uses two battery domains: one battery supplies the Jetson and its lo
 | --- | --- | ---: | ---: | --- |
 | Jetson Orin Nano | Main Computing | 19V | 0.8A  | 15W | 
 | Intel RealSense D4555 | Vision and depth-sensing | 5V | 0.4A | 2W |
-| BMU BNO055 | Relative yaw | 3.3V | 0.02A | 0.2W |
+| IMU BNO055 | Relative yaw | 3.3V | 0.02A | 0.2W |
 | DC Motors | Driving the rear axle of the vehicle | 11.1V | 2.5A | 27.75W |
 | LD-1501MG Servo | Control the steering mechanism | 6V | 0.3A | 1.85W |
 | Miscellaneous | For miscalculation | 6V | 0.6A | 3W |
