@@ -193,8 +193,6 @@ This repository is organized as follows:
   <p><em>Vehicle 360º view (GIF)</em></p>
 </div>
 
-![Vehicle Overview](./v-photos/vehicle-overview.png)
-
 ### Final Vehicle Gallery
 
 | <img src="./v-photos/robot_photo/top.JPG" alt="Top photo" width="100%"> | <img src="./v-photos/robot_photo/bottom.JPG" alt="Bottom photo" width="100%"> |
