@@ -5,7 +5,7 @@ Official photographic documentation of Team IriSight from the American Universit
 ## About Our Team
 ![Team Photo](team-photo-ft-coach.png)
 
-_Team Photo - From left to right: Kimchour, Panha (Coach), Nita, and Muyleang._
+_Team Photo - From left to right: Nita, Panha (Coach), and Muyleang._
 
 ## Team Members
 ![Team Members](formal-team-pic.JPG)
