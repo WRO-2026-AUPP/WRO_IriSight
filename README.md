@@ -107,8 +107,6 @@ This repository is organized as follows:
 │           ├── t-photos/
 │           ├── v-photos/
 │           └── video/
-│
-
 ├── schemes/
 ├── src/
 │   ├── ai_model/               # AI and computer vision
