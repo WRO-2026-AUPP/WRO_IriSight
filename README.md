@@ -328,28 +328,29 @@ This repository is organized as follows:
 
 Document every major electronic component used in the robot.
 
-| Component | Exact Model | Interface | Purpose | Documentation / Reference |
-|---|---|---|---|---|
-| Main Computer | [Model] | [Interface] | [Purpose] | [Link] |
-| Microcontroller | [Model] | [Interface] | [Purpose] | [Link] |
-| Motor Driver | [Model] | [Interface] | [Purpose] | [Link] |
-| Steering Servo | [Model] | [Interface] | [Purpose] | [Link] |
-| Camera | [Model] | [Interface] | [Purpose] | [Link] |
-| IMU | [Model] | [Interface] | [Purpose] | [Link] |
-| Additional Sensors | [Model] | [Interface] | [Purpose] | [Link] |
-| Battery | [Model] | [Interface] | [Purpose] | [Link] |
-| Voltage Converter | [Model] | [Interface] | [Purpose] | [Link] |
+### Component and interface map
 
-### Sensor Placement and Calibration
+| Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
+| :--- | :--- | :--- | :--- | :--- |
+| <p align="center"><img src="./schemes/photos/jetson.png" width="130"></p> | NVIDIA Jetson Orin Nano | NaN | Main processing | [LINK](https://www.amazon.com/dp/B0BZJTQ5YP) |
+| <p align="center"><img src="./schemes/photos/custom_esp32_board.png" width="130"></p> | ESP32 WROOM Chip | Serial | Actuator control | [LINK](https://www.amazon.com/DORHEA-ESP-WROOM-32D-Bluetooth-integrates-ESP32-D0WD/dp/B08XXH9RMT?th=1) |
+| <p align="center"><img src="./schemes/photos/TB6612FNG.png" width="130"></p> | TB6612FNG | PWM | Drive-motor control | [LINK](https://www.amazon.com/Sparkfun-PID-14451-Motor-Driver/dp/B01MF67DX6) |
+| <p align="center"><img src="./schemes/photos/servo.jpg" width="130"></p> | LD-1501MG Servo | PWM | Front steering | [LINK](https://www.ebay.com/itm/362680017196) |
+| <p align="center"><img src="./schemes/photos/lidar.png" width="130"></p> | Hokuyo LiDAR (add model number) | (add interface) | Distance measurement, wall and obstacle detection | [LINK](add link) |
+| <p align="center"><img src="./schemes/photos/IMU.png" width="130"></p> | BNO055 | I²C | Relative yaw | [LINK](https://bdelectronics.xyz/product/bno055-intelligent-9axis-attitude-sensor-module) |
+| <p align="center"><img src="./schemes/photos/battery.jpg" width="130"></p> | TCB 1100mAh 3S 25C battery (Jetson battery) | Power | Logic power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
+| <p align="center"><img src="./schemes/photos/battery.jpg" width="130"></p> | TCB 1100mAh 3S 25C battery (motor battery) | Power | Actuator power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
+| <p align="center"><img src="./schemes/photos/converter_11V.jpg" width="130"></p> | XL4016 300W buck-boost converter (11V) | Power | Actuator power | [LINK](https://ampere-electronics.com/product/xl4016-dc-dc-step-down-converter-module-12a-300w/) |
+| <p align="center"><img src="./schemes/photos/converter_5V.jpg" width="130"></p> | XL4015 50W buck converter (5V) | Power | Actuator power | [LINK](https://www.jacobsparts.com/items/DCMOD-B) |
 
-| Sensor | Placement | Purpose | Calibration Method | Limitations |
-|---|---|---|---|---|
-| [Sensor 1] | [Location] | [Purpose] | [Method] | [Limitations] |
-| [Sensor 2] | [Location] | [Purpose] | [Method] | [Limitations] |
+### Sensor placement and calibration
 
-**Detailed evidence:** [Add wiring diagrams, component documentation, power calculations, and calibration results.]
+| Sensor | Placement | Selection reason | Calibration | Limitation and mitigation |
+| --- | --- | --- | --- | --- |
+| Hokuyo LiDAR | Mounted at the front of the robot on a 3D-printed angled base, with a clear view of the track | Provides accurate distance data for wall following, obstacle detection, and distance measurement | Mounted level and securely; distance readings are tested at known distances and filtered | Readings can be noisy on reflective or very close surfaces. Filtering and fallback control logic are used |
+| BNO055 | Mounted on the upper section of the robot chassis, near the center and away from motors and power wiring as much as possible | Provides orientation and heading data for more stable navigation and turning | Calibrated according to the sensor's required motion/orientation procedure before operation | Magnetic interference and vibration can affect accuracy. The sensor is mounted securely, kept away from high-current components where possible, and readings are validated |
 
----
+**Detailed evidence:** [electrical architecture, wiring, power budget, sensor placement, calibration, and safety](schemes/)
 
 ## Software and Challenge Strategy
 
