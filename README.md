@@ -11,17 +11,38 @@
 <p><em>"[Add team slogan here]"</em></p>
 </div>
 
-## Quick Links — Explore the Project
+## Quick Link - Explore the project
 
-| Code | Schematics | CAD Models & Mechanics |
-|---|---|---|
-| [💻 Code](src/) | [🔌 Schematics](schemes/) | [🧩 CAD Models](models/) |
-| [Add description] | [Add description] | [Add description] |
-
-| Vehicle Photos | Team Photos | Videos |
-|---|---|---|
-| [🚗 Vehicle Photos](v-photos/) | [👥 Team Photos](t-photos/) | [🎥 Videos](video/) |
-| [Add description] | [Add description] | [Add description] |
+<table width="100%">
+  <tr>
+    <td width="33.33%" align="center" valign="top">
+      <a href="src/"><strong>💻 Code</strong></a><br>
+      <sub>Jetson and ESP32 control code</sub>
+    </td>
+    <td width="33.33%" align="center" valign="top">
+      <a href="schemes/"><strong>🔌 Schematics</strong></a><br>
+      <sub>Wiring, power, and electronics</sub>
+    </td>
+    <td width="33.33%" align="center" valign="top">
+      <a href="models/"><strong>🧩 CAD models &amp; Mechanics</strong></a><br>
+      <sub>Mechanical design and printable files</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="33.33%" align="center" valign="top">
+      <a href="v-photos/"><strong>🚗 Vehicle Photos</strong></a><br>
+      <sub>Required views of the final robot</sub>
+    </td>
+    <td width="33.33%" align="center" valign="top">
+      <a href="t-photos/"><strong>👥 Team Photos</strong></a><br>
+      <sub>Official and informal team photos</sub>
+    </td>
+    <td width="33.33%" align="center" valign="top">
+      <a href="video/"><strong>🎥 Videos</strong></a><br>
+      <sub>Autonomous challenge demonstrations</sub>
+    </td>
+  </tr>
+</table>
 
 ## Contents
 
