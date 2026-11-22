@@ -613,35 +613,43 @@ python3 src/obstacle_avoidance/obstacle_counter_clockwise.py wro_pillars.json
 The obstacle programs read the pillar layout from the JSON file and need `best1.pt` in the same folder. The robot starts moving once it has valid sensor data. Press Ctrl+C to stop it, and open `http://<jetson-ip>:5000` to watch the live viewer.
 
 
-### Pre-flight and Acceptance Test
+### Pre-flight and acceptance test
 
-**Mechanical Checks**
+Before any competition run or timed trial, the following checklist is completed in order:
 
-- [ ] [Mechanical inspection]
-- [ ] [Wheel and steering inspection]
-- [ ] [Mounting inspection]
+**Mechanical checks**
+- [x] All three 3D-printed mounts (Jetson & Battery Container V3, Motor Mount V4, Camera Mount V2) are pinned securely with no play
+- [x] Front wheels turn freely through the full steering range with no binding (the Open Challenge program limits steering to ±29°, the Obstacle Challenge program to ±35°, and some obstacle maneuvers command up to ±38°, parking up to ±50°)
+- [x] Rear wheels and drive shaft spin freely with the motor disconnected (no mechanical drag)
+- [x] Vehicle is on a stand with wheels off the ground before any powered test
 
-**Power and Connectivity Checks**
+**Power and connectivity checks**
+- [x] Jetson battery connected first; Jetson boots
+- [x] ESP32 flashed and powered independently; prints `ESP32 ready` over serial with motor battery disconnected; appears as `/dev/ttyUSB0` on the Jetson
+- [x] Hokuyo LiDAR powered and reachable at `192.168.0.10`, port `10940`
+- [x] BNO055 responds on I2C bus 7 (address `0x28`)
+- [x] Camera opens at index 0 (Obstacle Challenge)
+- [x] Rear VL53L0X responds on I2C bus 1 (address `0x29`) (Obstacle Challenge)
+- [x] Motor/actuator battery connected last, only after the above checks pass
+- [x] TB6612FNG and servo wiring re-checked against pinout (IN1=D26, IN2=D25, PWM=D33, servo=D17)
 
-- [ ] [Battery inspection]
-- [ ] [Power distribution inspection]
-- [ ] [Communication check]
+**Sensor checks (in the web viewer, port 5000)**
+- [x] LiDAR front, left, right and front-left readings tested against a known-distance object
+- [x] Yaw reads correctly. The robot is placed in its starting position and kept completely still for the first ~2 seconds after the program starts, while the BNO055 sets its zero heading
+- [x] Camera view shows red and green pillars with detection boxes (Obstacle Challenge)
 
-**Sensor and Calibration Checks**
+**Software checks**
+- [x] Correct challenge/direction script confirmed before start (`clockWise.py`, `counterClockWise.py`, `obs_clockwise.py`, or `obs_counterclockwise.py`)
+- [x] Open Challenge: the robot starts driving on its own as soon as it receives valid LiDAR scans, so it is placed beside the inner wall before the program is started
+- [x] Obstacle Challenge: `best1.pt` is in the folder the program is run from, and the pillar layout JSON is passed as the argument (`python3 <script> wro_pillars.json`). The JSON has exactly 2 pillars for each of the top, left, bottom and right sections, and matches the field
+- [x] Obstacle Challenge: `DRY_RUN` is `False` for a real run
+- [x] Obstacle Challenge: the area around the parking start is clear, because the parking exit is a timed sequence that does not use sensor checks
+- [x] Flask page reachable and showing live distances, state, steering and yaw (Lap x/3 on the Open Challenge page; stage and camera view on the Obstacle Challenge page)
+- [x] Ctrl+C stops the robot (sends `STOP`) and the operator is ready to use it
 
-- [ ] [Sensor inspection]
-- [ ] [Calibration verification]
-- [ ] [Data validation]
+**Acceptance criteria**
 
-**Software Checks**
-
-- [ ] [Software startup check]
-- [ ] [Controller check]
-- [ ] [Emergency stop check]
-
-**Acceptance Criteria**
-
-[Define the requirements that must be satisfied before the robot is considered competition-ready.]
+A build is considered competition-ready only if it meets the targets already demonstrated in [Final regression results](#final-regression-results): 3/3 successful trials for both directions of the Open Challenge, and 3/3 successful trials for both directions of the Obstacle Challenge, each with no navigation failure or collision.
 
 ---
 
