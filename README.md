@@ -169,7 +169,7 @@ IriSight/
 
 | Challenge / Test | Video |
 |---|---|
-| Open_Challenge | (https://youtu.be/8kb7vfMW33Q) |
+| Open_Challenge | https://youtu.be/8kb7vfMW33Q |
 | Obstacle Avoidance | [Add video link] |
 
 ---
