@@ -14,4 +14,4 @@ The Obstacle Challenge demonstrates the robot's ability to complete 3 laps aroun
 | Challenge Type | YouTube Link |
 |---|---|
 | **Open Challenge** | [Watch on YouTube](https://youtu.be/8kb7vfMW33Q) |
-| **Obstacle Challenge** | [Watch on YouTube]() |
+| **Obstacle Challenge** | [Watch on YouTube](https://youtu.be/Gv9RtIQvm2Q) |
