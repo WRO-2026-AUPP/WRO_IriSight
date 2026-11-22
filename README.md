@@ -8,7 +8,7 @@
 
 <img src="./media/banner.png" width="420" alt="IriSight project banner">
 
-<p><em>"[Add team slogan here]"</em></p>
+<p><em>"Break, Fix, Repeat"</em></p>
 </div>
 
 ## Quick Link - Explore the project
