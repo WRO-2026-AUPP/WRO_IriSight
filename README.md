@@ -514,6 +514,8 @@ Document every major electronic component used in the robot.
 
 [Explain the wiring process, pin configurations, power connections, and safe startup sequence.]
 
+## Software Installation
+
 #### 1. Clone the repository
 
 ```bash
