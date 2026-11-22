@@ -132,13 +132,10 @@ IriSight/
 
 <table style="border: 1px solid #ccc; width: 100%; border-collapse: collapse; margin-bottom: 20px;">
   <tr>
-    <!-- Photo on the left -->
     <td width="30%" align="center" valign="top" style="padding: 15px; border-right: 1px solid #ccc;">
       <strong>Chamroeun Vireakpanha</strong><br><br>
       <img src="t-photos/panha(coach).png" width="170" alt="Team coach">
     </td>
-
-    <!-- Information on the right -->
     <td width="70%" valign="top" style="padding: 15px;">
       <strong>Role:</strong> Team Coach<br><br>
       <strong>Origin:</strong> Battambang<br><br>
