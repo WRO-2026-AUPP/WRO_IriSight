@@ -203,14 +203,16 @@ This repository is organized as follows:
 | Specification | Final Value |
 |---|---|
 | Length × Width × Height | [Fill in dimensions] |
-| Mass | [Fill in mass] |
+| Mass | 1.28 KG |
 | Wheelbase | [Fill in value] |
 | Ground Clearance | [Fill in value] |
 | Drive Layout | [Fill in configuration] |
 | Steering Layout | [Fill in configuration] |
-| Main Computer | [Fill in model] |
-| Microcontroller | [Fill in model] |
+| Main Computer | NVIDIA Jetson Orin Nano, Ubuntu 22.04 LTS |
+| Microcontroller | ESP32 |
 | Camera | [Fill in model] |
+| Front/Back wheels | 	LEGO SPIKE blue wheels, part 39367 |
+|Chassis Type | 	Custom chassis |
 | IMU | [Fill in model] |
 | Additional Sensors | [Fill in sensors] |
 | Battery Configuration | [Fill in configuration] |
