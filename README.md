@@ -514,43 +514,73 @@ Document every major electronic component used in the robot.
 
 [Explain the wiring process, pin configurations, power connections, and safe startup sequence.]
 
-### Software Installation
-
-#### 1. Clone the Repository
+#### 1. Clone the repository
 
 ```bash
 git clone https://github.com/WRO-2026-AUPP/WRO_IriSight.git
 ```
 
-#### 2. Navigate to the Project Directory
+#### 2. Navigate to the project directory
 
 ```bash
 cd WRO_IriSight
 ```
 
-#### 3. Install Dependencies
+#### 3. Install the required Python packages 
+
+The following packages are required for numerical processing, computer vision, RealSense D455 depth sensing, YOLOv8 object detection, and Jetson-to-ESP32 serial communication.
 
 ```bash
-# Add installation commands here
+pip install numpy
 ```
-
-#### 4. Verify Installation
+```bash
+pip install opencv-python
+```
+```bash
+pip install pyrealsense2
+```
+```bash
+pip install ultralytics
+```
+```bash
+pip install pyserial
+```
+#### 4. Verify the installation
 
 ```bash
-# Add verification commands here
+python3 -c "import cv2, numpy, pyrealsense2, ultralytics, serial; print('All required packages installed successfully.')"
 ```
 
-### Calibration
+### Start an Autonomous Run
 
-[Explain sensor calibration, camera configuration, motor calibration, and other required setup procedures.]
+Select the control program for the challenge and driving direction. Before starting, make sure the Jetson Orin Nano, Hokuyo LiDAR, BNO055 IMU, camera and ESP32 are connected (the obstacle run also uses the rear VL53L0X distance sensor). Keep the robot still for the first few seconds so the IMU can set its starting heading.
 
-### Starting an Autonomous Run
-
-[Explain how to launch the robot's software and start an autonomous run.]
+#### 1. Open Challenge — Clockwise
 
 ```bash
-# Add execution commands here
+python3 src/open_challenge/open_clockwise.py
 ```
+
+#### 2. Open Challenge — Counter Clockwise
+
+```bash
+python3 src/open_challenge/open_counter_clockwise.py
+```
+
+#### 3. Obstacle Challenge — Clockwise
+
+```bash
+python3 src/obstacle_avoidance/obstacle_clockwise.py wro_pillars.json
+```
+
+#### 4. Obstacle Challenge — Counter Clockwise
+
+```bash
+python3 src/obstacle_avoidance/obstacle_counter_clockwise.py wro_pillars.json
+```
+
+The obstacle programs read the pillar layout from the JSON file and need `best1.pt` in the same folder. The robot starts moving once it has valid sensor data. Press Ctrl+C to stop it, and open `http://<jetson-ip>:5000` to watch the live viewer.
+
 
 ### Pre-flight and Acceptance Test
 
