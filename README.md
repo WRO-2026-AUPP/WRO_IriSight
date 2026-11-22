@@ -119,13 +119,6 @@ IriSight/
 - **Introduction:** [Write short biography]
 - **Photo:** [Add member photo]
 
-#### [Team Member 3 Name]
-
-- **Role:** [Fill in role]
-- **Responsibilities:** [Describe responsibilities]
-- **Introduction:** [Write short biography]
-- **Photo:** [Add member photo]
-
 #### Coach
 
 - **Name:** [Fill in coach name]
