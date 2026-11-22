@@ -639,7 +639,7 @@ Before any competition run or timed trial, the following checklist is completed 
 - [x] Camera view shows red and green pillars with detection boxes (Obstacle Challenge)
 
 **Software checks**
-- [x] Correct challenge/direction script confirmed before start (`clockWise.py`, `counterClockWise.py`, `obs_clockwise.py`, or `obs_counterclockwise.py`)
+- [x] Correct challenge/direction script confirmed before start (`open_clockwise.py`, `open_counter_clockWise.py`, `obstacle_clockwise.py`, or `obstacle_counter_clockwise.py`)
 - [x] Open Challenge: the robot starts driving on its own as soon as it receives valid LiDAR scans, so it is placed beside the inner wall before the program is started
 - [x] Obstacle Challenge: `best1.pt` is in the folder the program is run from, and the pillar layout JSON is passed as the argument (`python3 <script> wro_pillars.json`). The JSON has exactly 2 pillars for each of the top, left, bottom and right sections, and matches the field
 - [x] Obstacle Challenge: `DRY_RUN` is `False` for a real run
