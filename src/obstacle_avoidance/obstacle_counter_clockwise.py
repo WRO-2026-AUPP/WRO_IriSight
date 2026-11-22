@@ -136,17 +136,6 @@ LEFT_GREEN_FIRST_TURN_STEER_DEG = 38  # Special LEFT section first GREEN turn (d
 # Keep dry-run enabled until the steering direction, JSON and clearance are verified.
 DRY_RUN = False  # Command-only validation of changed post-corner transitions
 TEST_PWM = 160  # Default driving PWM for normal movement
-# SPEED PROFILE: NORMAL keeps original commands; FAST maps routine navigation
-# from its original ~85..170 PWM range into the requested 150..220 PWM range.
-# PWM is NOT proportional to physical speed. Re-test turns at higher speeds.
-SPEED_PROFILE = "FAST"          # "NORMAL" restores original navigation speeds
-FAST_MIN_PWM = 150               # floor for routine navigation ONLY
-FAST_MAX_PWM = 220               # ceiling for routine navigation ONLY
-FAST_ORIGINAL_MIN_PWM = 85       # original nominal navigation speed range
-FAST_ORIGINAL_MAX_PWM = 170
-FAST_TURN_MAX_PWM = 190          # turns capped lower than long straights
-# Precision offsets, emergency recovery, parking and timed parking exit keep
-# their original low PWM. Do NOT force a 150 floor onto those maneuvers.
 TURN_PWM = 120  # Default TURN_1 corner PWM when no route-specific turn PWM is set
 # Only TOP RED-RED -> LEFT RED-RED, physical yaw 270 -> 180.
 RRRR_LEFT_CORNER_PWM = 140       # Independent motor PWM for this corner; tune separately
@@ -157,25 +146,14 @@ FIRST_RED_TURN_SECONDS = 1.1
 FIRST_GREEN_TURN_SECONDS = 1.2
 FIRST_HEADING_MAX_ERROR = 35.0  # hard bound after initial turn, not completion tolerance
 FIRST_TURN_TARGET = 270.0
-FIRST_TURN_REACHED_TOLERANCE = 8.0
+FIRST_TURN_REACHED_TOLERANCE = 15.0
 FIRST_TURN_MAX_SECONDS = 3.5  # fail-stop, not an instruction to keep turning
-TURN_SETTLE_SECONDS = 0.35  # stop and let momentum settle
+TURN_SETTLE_SECONDS = 0.25  # stop and let momentum settle
 TURN_FINE_TIMEOUT = 1.6
 TURN_FINE_STEER = 12
-TURN_FINE_PWM = 105
+TURN_FINE_PWM = 170
 TURN_FINE_MIN_FRONT = 0.55
 TURN_FINE_SIDE_MIN = 0.20
-# Proportional corner-speed reduction as the IMU approaches the 270-degree target.
-# PWM values below 150 are intentional for controlled cornering, not long straights.
-TURN_SLOW_START_ERROR_DEG = 60.0
-TURN_CRAWL_START_ERROR_DEG = 30.0
-TURN_APPROACH_PWM = 145
-TURN_CRAWL_PWM = 110
-# Custom parking-to-TOP entry also needs speed reduction near target.
-TOP_ENTRY_SLOW_START_ERROR_DEG = TURN_SLOW_START_ERROR_DEG
-TOP_ENTRY_CRAWL_START_ERROR_DEG = TURN_CRAWL_START_ERROR_DEG
-TOP_ENTRY_APPROACH_PWM = TURN_APPROACH_PWM
-TOP_ENTRY_CRAWL_PWM = TURN_CRAWL_PWM
 HEADING_KP = 0.8  # steering deg per yaw-error deg; heading hold, NOT wall following
 HEADING_STEERING_LIMIT = 12
 # A short straight segment AFTER the green corner and BEFORE red avoidance.
@@ -284,22 +262,20 @@ TOP_GG_GREEN_TURN_RIGHT_HARD_MIN_M = 0.05  # STOP on observed near-right intrusi
 RED_RED_STOP_FRONT_M = 0.50
 # TOP Red-Red -> LEFT Green: hand of35ver at the GREEN corner turn distance.
 # Hand off before LEFT_GREEN_TURN_DISTANCE to allow a straight approach.
-TOP_RR_LEFT_GREEN_HANDOFF_FRONT_M = 1.4
+TOP_RR_LEFT_GREEN_HANDOFF_FRONT_M = 1.35
 # Independent distances for each first-pillar turn (LiDFAR metres).
 # The TOP handoff occurs slightly earlier, allowing LEFT to trigger at 0.55 m.
 # Handoff is not a turning command. These are LiDAR-to-obstacle distances.
-TOP_GREEN_TURN_DISTANCE = 1.33
-LEFT_GREEN_TURN_DISTANCE = 1.33
-TOP_RED_TURN_DISTANCE = 0.60
-LEFT_RED_TURN_DISTANCE = 0.60
-# Special transition: previous section RG, next section first RED.
-RG_TO_NEXT_RED_TURN_DISTANCE_M = 0.75
+TOP_GREEN_TURN_DISTANCE = 1.1
+LEFT_GREEN_TURN_DISTANCE = 1.08
+TOP_RED_TURN_DISTANCE = 0.6
+LEFT_RED_TURN_DISTANCE = 0.6
 TOP_RR_LEFT_RED_HANDOFF_FRONT_M = 0.7
 # RED -> RED ONLY: follow RIGHT wall where a consistent right-side return exists.
 # Ranges are measured from the LiDAR, NOT the robot outer body.
-RR_RIGHT_TARGET_M = 0.17
+RR_RIGHT_TARGET_M = 0.20
 # RIGHT section RED-RED only: track the outer RIGHT wall at 0.40 m.
-RIGHT_RR_RIGHT_TARGET_M = 0.35
+RIGHT_RR_RIGHT_TARGET_M = 0.33
 RIGHT_RR_RIGHT_MAX_TRACK_M = 0.65  # must exceed target to allow correction above 0.40 m
 RR_RIGHT_DEADBAND_M = 0.025   # tolerate 0.125 .. 0.175 m
 RR_RIGHT_KP = 62.0           # steering degrees per metre of range error
@@ -342,7 +318,7 @@ RED_GREEN_MAX_FOLLOW_SECONDS = 8.0
 # TOP RED -> GREEN: LiDAR-ended LEFT swerve and LEFT-wall tracking.
 # Steering commands are requested servo angles; physical response must be verified.
 TOP_RG_LEFT_STEER_DEG = 40
-TOP_RG_LEFT_SWITCH_FRONT_M = 0.52 # swit    ch LEFT -> RIGHT when front <= 25 cm
+TOP_RG_LEFT_SWITCH_FRONT_M = 0.45 # switch LEFT -> RIGHT when front <= 25 cm
 TOP_RG_LEFT_MIN_FRONT_M = 0.05  # below this, refuse the recovery turn
 TOP_RG_LEFT_MAX_SECONDS = 2.0  # fail-stop only; NOT a switching trigger
 TOP_RG_RIGHT_STEER_DEG = 37
@@ -379,8 +355,8 @@ TOP_RG_CORNER_HEADING_TOL_DEG = 15.0
 TOP_RG_MAX_LEFT_DEVIATION_DEG = 90.0  # stop if the timed swerve turns unexpectedly far
 # TOP GREEN -> RED only: RIGHT swerve, LEFT recovery, OUTER (RIGHT) wall follow.
 # These are trial parameters, independent of all TOP RG / GG routes.
-TOP_GR_RIGHT_START_FRONT_M = 1.80
-TOP_GR_RIGHT_SWITCH_FRONT_M = 0.55
+TOP_GR_RIGHT_START_FRONT_M = 1.70
+TOP_GR_RIGHT_SWITCH_FRONT_M = 0.45
 TOP_GR_RIGHT_STEER_DEG = 40
 TOP_GR_LEFT_RECOVER_STEER_DEG = -37
 TOP_GR_MANEUVER_PWM = 110
@@ -415,15 +391,15 @@ LEFT_GG_END_FRONT_M = 0.50
 # LEFT GG -> BOTTOM RED and RIGHT GG -> TOP RED (on nonfinal laps):
 # wait for a verified inner-wall opening, then make a bounded RIGHT yaw bias.
 # These are LiDAR-to-object ranges, not robot-body clearances.
-GG_LR_RED_RIGHT_OFFSET_DEG = 16.0
-GG_LR_RED_RIGHT_STEER_DEG = 16.0
+GG_LR_RED_RIGHT_OFFSET_DEG = 18.0
+GG_LR_RED_RIGHT_STEER_DEG = 18.0
 GG_LR_RED_RIGHT_PWM = 100
 GG_LR_RED_RIGHT_TIMEOUT_S = 8
 GG_LR_RED_RIGHT_TOL_DEG = 5.0
 GG_LR_RED_OPEN_M = 1.30
 GG_LR_RED_OPEN_SCANS = 2
 GG_LR_RED_OPEN_MIN_FRONT_M = 0.05
-GG_LR_RED_BIAS_START_FRONT_M = 1.50
+GG_LR_RED_BIAS_START_FRONT_M = 1.40
 GG_LR_RED_MIN_RIGHT_M = 0.22
 GG_LR_RED_MIN_FRONT_LEFT_M = 0.05
 GG_LR_RED_MIN_LEFT_M = 0.05
@@ -509,13 +485,6 @@ RIGHT_GR_MIN_STRAIGHT_S = 0.0  # allow first downward crossing after initial pos
 RIGHT_GR_TRIGGER_ANGLE_HALF_WIDTH_DEG = 0.75
 RIGHT_GR_RIGHT_MIN_SIDE_M = 0.10  # LiDAR distance, not body clearance
 
-# Special cautious transition: current section's second pillar RED, next first GREEN.
-# Separate from already-working GREEN -> GREEN transitions.
-# LiDAR-to-object distances are NOT physical body clearances.
-RED2_NEXT_GREEN_RIGHT_TARGET_M = 0.28  # wider outer-right tracking in GR/RR
-RED2_NEXT_GREEN_TURN_RIGHT_MIN_M = 0.23  # fail closed if right sector is nearer
-
-
 TARGET_LAPS = 3  # Complete TOP -> LEFT -> BOTTOM -> RIGHT three times.
 # On laps 2 and 3 there is NO parking exit. RIGHT hands over early to TOP,
 # then TOP uses its normal first-pillar LiDAR threshold (GREEN 1.10m / RED 0.53m).
@@ -531,8 +500,8 @@ FINAL_APPROACH_MAX_YAW_ERROR_DEG = 20.0
 FINAL_APPROACH_TIMEOUT_S = 8.0
 
 # Return-to-parking sequence: VL53L0X faces backward, on /dev/i2c-1.
-FINAL_REVERSE_PWM = 90
-FINAL_FORWARD_PWM = 90
+FINAL_REVERSE_PWM = 80
+FINAL_FORWARD_PWM = 80
 FINAL_REVERSE_RIGHT_STEER = 50
 FINAL_REVERSE_LEFT_STEER = -50
 FINAL_FORWARD_RIGHT_STEER = 10
@@ -1170,40 +1139,16 @@ class TwoCornerController:
         self.gg_lr_open_confirmed = False
         self.gg_lr_offset_done = False
         self.gg_lr_handoff_front = None
-        self.red2_next_green = False
-        self.prev_red2_next_green = False
-
 
     def stop(self, reason):
         self.last_command = ("STOP", 0, 0, reason)
         return self.last_command
 
-    def drive(self, steering, reason, speed=None, steering_limit=None, pwm_ceiling=None):
+    def drive(self, steering, reason, speed=None, steering_limit=None):
         # Only a specifically authorized maneuver may exceed the default 30-degree limit.
         limit = MAX_STEERING_DEG if steering_limit is None else float(steering_limit)
         steering = int(round(max(-limit, min(limit, steering))))
         pwm = TEST_PWM if speed is None else int(speed)
-        # Map routine driving into FAST_MIN_PWM..FAST_MAX_PWM while preserving
-        # distinctions between the different route-specific original speeds.
-        # Do not accelerate delicate correction or obstacle-recovery phases.
-        if SPEED_PROFILE == "FAST" and pwm > 0:
-            stage = self.state.upper()
-            precision = any(token in stage for token in (
-                "RECOVER", "OFFSET", "ACQUIRE", "FINE", "SETTLE", "RED_EXIT"
-            ))
-            straight = any(token in stage for token in (
-                "APPROACH", "STRAIGHT", "FOLLOW", "CLEAR", "RR_STRAIGHT"
-            ))
-            if not precision:
-                fraction = (pwm - FAST_ORIGINAL_MIN_PWM) / (FAST_ORIGINAL_MAX_PWM - FAST_ORIGINAL_MIN_PWM)
-                fraction = max(0.0, min(1.0, fraction))
-                pwm = int(round(FAST_MIN_PWM + fraction * (FAST_MAX_PWM - FAST_MIN_PWM)))
-                if not straight:
-                    pwm = min(pwm, FAST_TURN_MAX_PWM)
-        # Apply corner deceleration AFTER FAST speed mapping, otherwise the
-        # mapping would re-accelerate the low-speed near-target command.
-        if pwm_ceiling is not None:
-            pwm = min(pwm, int(pwm_ceiling))
         self.last_command = (f"DRIVE {steering} {pwm}", steering, pwm, reason)
         return self.last_command
 
@@ -1702,9 +1647,7 @@ class TwoCornerController:
             err = angle_error(270, yaw)
             steer = LEFT_GR_RIGHT_WALL_HEADING_KP * err
             if right <= LEFT_GR_RIGHT_WALL_TRACK_MAX_M:
-                right_target = (RED2_NEXT_GREEN_RIGHT_TARGET_M if self.red2_next_green
-                                else LEFT_GR_RIGHT_WALL_TARGET_M)
-                steer += LEFT_GR_RIGHT_WALL_KP * (right - right_target)
+                steer += LEFT_GR_RIGHT_WALL_KP * (right - LEFT_GR_RIGHT_WALL_TARGET_M)
             steer = int(round(max(-LEFT_GR_RIGHT_WALL_STEER_MAX,
                                   min(LEFT_GR_RIGHT_WALL_STEER_MAX, steer))))
             if steer < 0 and left < RR_MIN_OPPOSITE_M:
@@ -1810,17 +1753,6 @@ class TwoCornerController:
                 return self.stop(self.fault)
             color = self.plan[0]
             distance = self.first_turn_distance()
-            # A previously passed second RED pillar can be alongside the car
-            # when the next GREEN corner starts. Do not turn LEFT while the
-            # observed right sector is too close; side LiDAR alone cannot
-            # prove rear-wheel clearance.
-            if (color == "green" and self.prev_red2_next_green
-                    and front <= distance and
-                    (not valid(right) or right < RED2_NEXT_GREEN_TURN_RIGHT_MIN_M)):
-                return self.stop(
-                    f"RED2->GREEN: RIGHT clearance not verified for corner "
-                    f"(right={right}, require >= {RED2_NEXT_GREEN_TURN_RIGHT_MIN_M:.2f}m). "
-                    "Inspect red pillar/rear sweep before proceeding")
             if front <= distance:
                 print(f"[TURN TRIGGER] section={self.section_label} "
                       f"color={color} front={front:.3f}m "
@@ -1935,11 +1867,6 @@ class TwoCornerController:
                         f"last verified {self.gg_turn_last_left:.2f}m; "
                         f"physical yaw={(yaw - 90.0) % 360.0:.1f}",
                         speed=TOP_GG_GREEN_TURN_PWM, steering_limit=turn_steer)
-            # IMU-relative deceleration applies to every section's TURN_1.
-            # Maintain original turn and safety checks; only cap the actual PWM.
-            turn_pwm_ceiling = (TURN_CRAWL_PWM if err <= TURN_CRAWL_START_ERROR_DEG
-                                else TURN_APPROACH_PWM if err <= TURN_SLOW_START_ERROR_DEG
-                                else None)
             return self.drive(-turn_steer,
                               f"First LEFT turn using IMU: virtual yaw={yaw:.1f}, target=270 "
                               f"(physical target=180), steer=-{turn_steer:.0f}, "
@@ -1949,8 +1876,7 @@ class TwoCornerController:
                                      else TOP_GG_LEFT_RED_TURN_PWM if (self.left_red_from_top_gg or self.left_red_from_top_gr)
                                      else self.turn_pwm_override if self.turn_pwm_override is not None
                                      else TURN_PWM),
-                              steering_limit=turn_steer,
-                              pwm_ceiling=turn_pwm_ceiling)
+                              steering_limit=turn_steer)
 
         if self.state == "TURN_SETTLE":
             if now - self.started < TURN_SETTLE_SECONDS:
@@ -2082,8 +2008,7 @@ class TwoCornerController:
                 steer = TOP_GR_RIGHT_WALL_HEADING_KP * heading_err
             else:
                 steer = (TOP_GR_RIGHT_WALL_HEADING_KP*heading_err
-                    + TOP_GR_RIGHT_WALL_KP*(right-(RED2_NEXT_GREEN_RIGHT_TARGET_M
-                        if self.red2_next_green else TOP_GR_RIGHT_WALL_TARGET_M)))
+                    + TOP_GR_RIGHT_WALL_KP*(right-TOP_GR_RIGHT_WALL_TARGET_M))
             steer = int(round(max(-TOP_GR_RIGHT_WALL_STEER_MAX,
                                   min(TOP_GR_RIGHT_WALL_STEER_MAX, steer))))
             if steer < 0 and left < 0.22:
@@ -2138,8 +2063,7 @@ class TwoCornerController:
             if not valid(left):
                 return self.stop("RED-RED: missing left LiDAR; opposite clearance unknown")
 
-            rr_target = (RED2_NEXT_GREEN_RIGHT_TARGET_M if self.red2_next_green
-                         else RIGHT_RR_RIGHT_TARGET_M if self.physical_section == "RIGHT"
+            rr_target = (RIGHT_RR_RIGHT_TARGET_M if self.physical_section == "RIGHT"
                          else RR_RIGHT_TARGET_M)
             rr_max_track = (RIGHT_RR_RIGHT_MAX_TRACK_M if self.physical_section == "RIGHT"
                             else RR_RIGHT_MAX_TRACK_M)
@@ -3027,22 +2951,6 @@ class FourSectionController:
             self.controller.turn_pwm_override = BOTTOM_TURN_PWM if section == "BOTTOM" else RIGHT_TURN_PWM
             self.controller.turn_timeout_override = (BOTTOM_FIRST_TURN_MAX_SECONDS if section == "BOTTOM"
                                                      else RIGHT_FIRST_TURN_MAX_SECONDS)
-        # Special case across any section boundary, including RIGHT -> TOP on laps 2/3.
-        # This changes the next section's FIRST RED turn trigger only, not the
-        # handoff threshold, yaw targets, safety checks or other routes.
-        if self.section_index == 0:
-            previous_section = "RIGHT" if self.lap_count > 0 else None
-        else:
-            previous_section = self.ORDER[self.section_index - 1]
-        rg_before_red = (
-            previous_section is not None
-            and self.plans[previous_section.lower()] == ["red", "green"]
-            and colors[0] == "red"
-        )
-        if rg_before_red:
-            self.controller.first_red_distance_override = RG_TO_NEXT_RED_TURN_DISTANCE_M
-            print(f"[RG -> RED] {previous_section} RG -> {section} first RED: "
-                  f"turn at {RG_TO_NEXT_RED_TURN_DISTANCE_M:.2f}m")
         # RIGHT also has a next section on laps 1/2: TOP of the next lap.
         # On the last lap, RIGHT is terminal and uses its original stop distance.
         if self.section_index < len(self.ORDER) - 1:
@@ -3051,15 +2959,7 @@ class FourSectionController:
             next_section = "TOP"
         else:
             next_section = None
-        next_first = (self.plans[next_section.lower()][0]
-                      if next_section is not None else None)
-        self.controller.red2_next_green = (colors[1] == "red" and next_first == "green")
-        self.controller.prev_red2_next_green = (previous_section is not None
-            and self.plans[previous_section.lower()][1] == "red" and colors[0] == "green")
-        if self.controller.red2_next_green:
-            print(f"[RED2->GREEN] {section} second RED -> {next_section} first GREEN: "
-                  f"outer RIGHT target={RED2_NEXT_GREEN_RIGHT_TARGET_M:.2f}m")
-
+        next_first = self.plans[next_section.lower()][0] if next_section else None
         if section in ("TOP", "BOTTOM"):
             self.controller.top_gr_special = colors == ["green", "red"]
             if self.controller.top_gr_special:
@@ -3452,14 +3352,8 @@ def perform_top_entry(esp, imu, plan):
         # Avoid continuing past 270 if the sensor skips the tolerance window.
         if 180.0 <= yaw < TOP_ENTRY_TARGET_YAW - TOP_ENTRY_TARGET_TOLERANCE:
             raise RuntimeError(f"TOP entry LEFT turn overshot target: yaw={yaw:.1f}")
-        remaining = abs(angle_error(TOP_ENTRY_TARGET_YAW, yaw))
-        entry_pwm = (min(TOP_ENTRY_TURN_PWM, TOP_ENTRY_CRAWL_PWM)
-                     if remaining <= TOP_ENTRY_CRAWL_START_ERROR_DEG
-                     else min(TOP_ENTRY_TURN_PWM, TOP_ENTRY_APPROACH_PWM)
-                     if remaining <= TOP_ENTRY_SLOW_START_ERROR_DEG
-                     else TOP_ENTRY_TURN_PWM)
-        entry_command(esp, f"DRIVE {TOP_ENTRY_LEFT_STEER} {entry_pwm}",
-                      f"TOP entry LEFT to yaw 270 (current {yaw:.1f}, pwm {entry_pwm})", imu)
+        entry_command(esp, f"DRIVE {TOP_ENTRY_LEFT_STEER} {TOP_ENTRY_TURN_PWM}",
+                      f"TOP entry LEFT to yaw 270 (current {yaw:.1f})", imu)
         stop_event.wait(PARKING_COMMAND_PERIOD_S)
     send_esp_command(esp, "STOP")
     return False
@@ -4428,9 +4322,6 @@ def main():
 if __name__ == "__main__":
 
     main()
-
-
-
 
 
 
