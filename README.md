@@ -95,32 +95,42 @@
 
 This repository is organized as follows:
 
-```text
-├── media/                     # Project banner and media
-├── models/                    # International Round CAD models
-├── other/legacy_national/     # Complete original National Round project
-│           ├── README.md
-│           ├── media/
-│           ├── models/
-│           ├── schemes/
-│           ├── src/
-│           ├── t-photos/
-│           ├── v-photos/
-│           └── video/
-├── schemes/
-├── src/
-│   ├── ai_model/               # AI and computer vision
-│   ├── main_controller/        # Main robot control software
-│   └── microcontroller/        # Microcontroller firmware
-│   └── obstacle_advoidance     # Obstacle Challenge Code
-│   └── open_challenge          # Open Challenge Code
-├── t-photos/                   # Team photos
-├── v-photos/                   # Vehicle photos
-├── video/
-├── gitignore
-├── CHANGELOG.md
-├── LICENSE.txt
-└── README.md
+```
+📦 WRO_IriSight
+├── 📁 media                    # Project banner and media
+│
+├── 📁 models                   # International Round CAD models
+│
+├── 📁 other                    # Additional documentation and archived projects
+│   └── 📁 legacy_national       # Complete original National Round project
+│       ├── 📄 README.md
+│       ├── 📁 media
+│       ├── 📁 models
+│       ├── 📁 schemes
+│       ├── 📁 src
+│       ├── 📁 t-photos
+│       ├── 📁 v-photos
+│       └── 📁 video
+│
+├── 📁 schemes                  # Electrical schematics and documentation
+│
+├── 📁 src                      # Main source code for the robot
+│   ├── 📁 ai_model              # AI and computer vision
+│   ├── 📁 main_controller      # Main robot control software
+│   ├── 📁 microcontroller      # Microcontroller firmware
+│   ├── 📁 obstacle_advoidance  # Obstacle Challenge code
+│   └── 📁 open_challenge       # Open Challenge code
+│
+├── 📁 t-photos                 # Team photos
+│
+├── 📁 v-photos                 # Vehicle photos and documentation
+│
+├── 📁 video                    # Challenge demonstration videos
+│
+├── 📄 .gitignore               # Git ignore configuration
+├── 📄 CHANGELOG.md             # National-to-International milestone changes
+├── 📄 LICENSE.txt              # MIT License
+└── 📄 README.md                # Main project documentation
 ```
 
 ## Meet the team
