@@ -128,7 +128,6 @@ This repository is organized as follows:
 ├── 📁 video                    # Challenge demonstration videos
 │
 ├── 📄 .gitignore               # Git ignore configuration
-├── 📄 CHANGELOG.md             # National-to-International milestone changes
 ├── 📄 LICENSE.txt              # MIT License
 └── 📄 README.md                # Main project documentation
 ```
