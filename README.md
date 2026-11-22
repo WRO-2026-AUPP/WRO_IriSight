@@ -132,50 +132,22 @@ IriSight/
 
 <table style="border: 1px solid #ccc; width: 100%; border-collapse: collapse; margin-bottom: 20px;">
   <tr>
-    <td width="70%" valign="top" style="padding: 15px; border-right: 1px solid #ccc;">
+    <!-- Photo on the left -->
+    <td width="30%" align="center" valign="top" style="padding: 15px; border-right: 1px solid #ccc;">
+      <strong>Chamroeun Vireakpanha</strong><br><br>
+      <img src="t-photos/panha(coach).png" width="170" alt="Team coach">
+    </td>
+
+    <!-- Information on the right -->
+    <td width="70%" valign="top" style="padding: 15px;">
       <strong>Role:</strong> Team Coach<br><br>
       <strong>Origin:</strong> Battambang<br><br>
       <strong>Email:</strong> 2024033chamroeun@aupp.edu.kh<br><br>
       <strong>Bio:</strong> A senior student majored in Information and Communication Technology at the American University of Phnom Penh, with experience in 3D modeling, CAD, vehicle design, and autonomous-vehicle software. In the previous season, he helped design and optimize the robot's custom parts and mechanical structure while also contributing to software, planning, coordination, and technical documentation. As IriSight's coach for the 2026 season, he uses that hands-on competition experience to guide the team through mechanical design, software development, system integration, testing, and documentation while keeping the engineering work student-led.
     </td>
-    <td width="30%" align="center" valign="top" style="padding: 15px;">
-      <strong>Chamroeun Vireakpanha</strong><br><br>
-      <img src="t-photos/panha(coach).png" width="170" alt="Team coach">
-    </td>
   </tr>
 </table>
 
-### Team Photo
-
-<!-- Add team photo here -->
-
-![Team Photo](./t-photos/team-photo.png)
-
-### Team Members
-
-#### [Team Member 1 Name]
-
-- **Role:** [Fill in role]
-- **Responsibilities:** [Describe responsibilities]
-- **Introduction:** [Write short biography]
-- **Photo:** [Add member photo]
-
-#### [Team Member 2 Name]
-
-- **Role:** [Fill in role]
-- **Responsibilities:** [Describe responsibilities]
-- **Introduction:** [Write short biography]
-- **Photo:** [Add member photo]
-
-#### Coach
-
-- **Name:** [Fill in coach name]
-- **Role:** Team Coach
-- **Responsibilities:** [Describe coaching responsibilities]
-- **Introduction:** [Write short biography]
-- **Photo:** [Add coach photo]
-
----
 
 ## Meet the Vehicle
 
