@@ -137,7 +137,7 @@ This repository is organized as follows:
 
 <div align="center">
   <img src="./t-photos/team-photo-ft-coach.png" width="700" alt="Meet the team">
-  <p><em>Team Photo - From left to right: Kimchour, Panha (Coach), Nita, and Muyleang.</em></p>
+  <p><em>Team Photo - From left to right: Nita, Panha (Coach), and Muyleang.</em></p>
 </div>
 
 <table style="border: 1px solid #ccc; width: 100%; border-collapse: collapse; margin-bottom: 20px;">
