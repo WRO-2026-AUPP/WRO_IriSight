@@ -93,9 +93,57 @@ IriSight/
 └── README.md
 ```
 
-## Meet the Team
+## Meet the team
 
-[Fill in team introduction and member information.]
+<div align="center">
+  <img src="./t-photos/team-photo-ft-coach.png" width="700" alt="Meet the team">
+  <p><em>Team Photo - From left to right: Kimchour, Panha (Coach), Nita, and Muyleang.</em></p>
+</div>
+
+<table style="border: 1px solid #ccc; width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+  <tr>
+    <td width="30%" align="center" valign="top" style="padding: 15px; border-right: 1px solid #ccc;">
+      <strong>Ponlork Ponita</strong><br><br>
+      <img src="t-photos/nita.png" width="170" alt="Team member 1">
+    </td>
+    <td width="70%" valign="top" style="padding: 15px;">
+      <strong>Role:</strong> 3D Design & Mechanical Engineer (CAD, Mounts, Blueprints)<br><br>
+      <strong>Origin:</strong> Phnom Penh<br><br>
+      <strong>Email:</strong> 2024352ponlork@aupp.edu.kh<br><br>
+      <strong>Bio:</strong> A junior student at the American University of Phnom Penh (AUPP), she led the CAD design of the team's 3D-printed structural parts. Including the Jetson & Battery Container, the rear Motor Mount, and the RealSense Camera Mount. She carried each component through multiple print-and-test-fit iterations to achieve a LEGO-compatible, chassis-mounted final version, meticulously documenting dimensions and material properties in her blueprint sheets.
+    </td>
+  </tr>
+</table>
+
+<table style="border: 1px solid #ccc; width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+  <tr>
+    <td width="70%" valign="top" style="padding: 15px; border-right: 1px solid #ccc;">
+      <strong>Role:</strong> Electrical & Sensor Engineer (Wiring, Power, Sensors)<br><br>
+      <strong>Origin:</strong> Phnom Penh<br><br>
+      <strong>Email:</strong> 2024355taing@aupp.edu.kh<br><br>
+      <strong>Bio:</strong> Serving as the hardware integration lead, she managed the vehicle's electrical infrastructure. She mapped the custom wiring schematics, engineered a stable power distribution system for the compute and motor payloads, and rigorously tested and calibrated sensor placements to guarantee accurate real-time data collection for the system's navigation stack.
+    </td>
+    <td width="30%" align="center" valign="top" style="padding: 15px;">
+      <strong>Taing Muyleang</strong><br><br>
+      <img src="t-photos/muyleang.png" width="170" alt="Team member 2">
+    </td>
+  </tr>
+</table>
+
+<table style="border: 1px solid #ccc; width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+  <tr>
+    <td width="70%" valign="top" style="padding: 15px; border-right: 1px solid #ccc;">
+      <strong>Role:</strong> Team Coach<br><br>
+      <strong>Origin:</strong> Battambang<br><br>
+      <strong>Email:</strong> 2024033chamroeun@aupp.edu.kh<br><br>
+      <strong>Bio:</strong> A senior student majored in Information and Communication Technology at the American University of Phnom Penh, with experience in 3D modeling, CAD, vehicle design, and autonomous-vehicle software. In the previous season, he helped design and optimize the robot's custom parts and mechanical structure while also contributing to software, planning, coordination, and technical documentation. As IriSight's coach for the 2026 season, he uses that hands-on competition experience to guide the team through mechanical design, software development, system integration, testing, and documentation while keeping the engineering work student-led.
+    </td>
+    <td width="30%" align="center" valign="top" style="padding: 15px;">
+      <strong>Chamroeun Vireakpanha</strong><br><br>
+      <img src="t-photos/panha(coach).png" width="170" alt="Team coach">
+    </td>
+  </tr>
+</table>
 
 ### Team Photo
 
