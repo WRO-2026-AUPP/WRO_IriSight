@@ -186,14 +186,17 @@ This repository is organized as follows:
 
 ### Final Vehicle Gallery
 
-| View | Image |
-|---|---|
-| Top | [Add top-view photo] |
-| Bottom | [Add bottom-view photo] |
-| Left | [Add left-view photo] |
-| Right | [Add right-view photo] |
-| Front | [Add front-view photo] |
-| Back | [Add back-view photo] |
+| <img src="./v-photos/robot_photo/top.JPG" alt="Top photo" width="100%"> | <img src="./v-photos/robot_photo/bottom.JPG" alt="Bottom photo" width="100%"> |
+| :---: | :---: |
+| **Top** | **Bottom** |
+
+| <img src="./v-photos/robot_photo/left.JPG" alt="Left photo" width="100%"> | <img src="./v-photos/robot_photo/right.JPG" alt="Right photo" width="100%"> |
+| :---: | :---: |
+| **Left** | **Right** |
+
+| <img src="./v-photos/robot_photo/front.JPG" alt="Front photo" width="100%"> | <img src="./v-photos/robot_photo/back.JPG" alt="Back photo" width="100%"> |
+| :---: | :---: |
+| **Front** | **Back** |
 
 ### Key Specifications
 
