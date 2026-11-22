@@ -354,13 +354,25 @@ Document every major electronic component used in the robot.
 
 ### Software Architecture and Communication
 
-[Describe the software architecture, programming languages, libraries, communication protocols, and responsibilities of each software module.]
+The robot's software is written in **Python 3** and runs on the **NVIDIA Jetson Orin Nano**. A separate **ESP32** runs the motor and steering firmware. The Jetson program runs several threads at once: one reads the LiDAR, one runs the YOLO camera model, one runs the main controller, and one serves a live web viewer (Flask, port 5000).
+
+**Libraries:** `numpy`, `opencv-python`, `ultralytics` (YOLOv8), `pyserial`, `flask`, `hokuyolx`, `smbus2`, `adafruit-extended-bus`, `adafruit-circuitpython-vl53l0x`.
+
+**Communication:**
+
+| Link | Connection | Details |
+|---|---|---|
+| Jetson ↔ ESP32 | USB serial (`/dev/ttyUSB0`) | 115200 baud, text commands such as `DRIVE <steering> <pwm>`, `BACK <steering> <pwm>` and `STOP` |
+| Jetson ↔ Hokuyo LiDAR | Ethernet | `192.168.0.10`, port `10940` |
+| Jetson ↔ BNO055 IMU | I2C bus 7 | Address `0x28`, yaw read from the Euler heading registers |
+| Jetson ↔ rear VL53L0X | I2C bus 1 | Rear distance during parking |
+| Jetson ↔ camera | USB | Read with OpenCV (V4L2) |
 
 | Module | Responsibility | Inputs | Outputs |
 |---|---|---|---|
-| AI Model | [Fill in] | [Fill in] | [Fill in] |
-| Main Controller | [Fill in] | [Fill in] | [Fill in] |
-| Microcontroller Firmware | [Fill in] | [Fill in] | [Fill in] |
+| AI Model | Detects red and green pillars in the camera image with YOLOv8n (`best1.pt`) and converts each detection into an angle range, so the controller can tell a pillar from a wall | Camera frames | Pillar color, confidence and angle range, plus an annotated preview image for the web viewer |
+| Main Controller | Runs the wall-following and pillar-avoidance state machine, holds and recovers heading from the IMU, counts laps, applies the safety checks, and runs the parking sequence | LiDAR front, side and front-left distances, IMU yaw, pillar detections, pillar layout JSON, rear VL53L0X distance (parking) | A steering angle and PWM command sent to the ESP32 every 0.05 s, and status data for the web viewer |
+| Microcontroller Firmware | Turns the commands from the Jetson into steering servo and motor output, and stops the vehicle on a `STOP` command or if commands stop arriving | Serial commands from the Jetson (steering angle, PWM, direction) | Servo position and motor PWM |
 
 
 ### AI Model and Computer Vision Pipeline
