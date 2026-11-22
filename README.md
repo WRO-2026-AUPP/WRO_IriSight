@@ -188,9 +188,10 @@ This repository is organized as follows:
 
 ## Meet the Vehicle
 
-[Describe the International Round robot and its main features.]
-
-<!-- Add vehicle overview image or GIF here -->
+<div>
+  <img src="./v-photos/robot_photo/360_view.gif" alt="Meet the vehicle" width="600">
+  <p><em>Vehicle 360º view (GIF)</em></p>
+</div>
 
 ![Vehicle Overview](./v-photos/vehicle-overview.png)
 
