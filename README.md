@@ -362,58 +362,78 @@ Document every major electronic component used in the robot.
 | Main Controller | [Fill in] | [Fill in] | [Fill in] |
 | Microcontroller Firmware | [Fill in] | [Fill in] | [Fill in] |
 
+
 ### AI Model and Computer Vision Pipeline
 
-[Describe the computer vision system and how it contributes to autonomous navigation.]
+IriSight's perception stack combines LiDAR-based geometric sensing with a trained computer vision pipeline running on the **Jetson Orin Nano**. The camera provides the color stream used for pillar detection, and the **Hokuyo LiDAR** provides the distances used for navigation.
+
+The perception system uses two complementary approaches:
+
+- **LiDAR processing** for wall following and distance measurement
+- **YOLOv8n object detection** for red and green pillar recognition
 
 #### Detection Model
 
-- **Model:** [Fill in model]
-- **Framework:** [Fill in framework]
-- **Detection Classes:** [Fill in classes]
-- **Input Resolution:** [Fill in resolution]
-- **Inference Platform:** [Fill in hardware]
-- **Training Configuration:** [Fill in configuration]
-- **Validation Metrics:** [Fill in results]
-- **Model Weights:** [Add model file location]
-
-<!-- Add sample detection images here -->
-
-![Detection Example](./src/ai_model/detection-example.png)
+- **Model:** YOLOv8n (nano) — chosen for its speed/accuracy tradeoff, allowing it to run in real time on the Jetson alongside the LiDAR-processing pipeline.
+- **Classes:** `greenbox`, `redbox`, `xparking` (the current control programs use only the red and green pillar classes)
+- **Input size:** 640 × 640
+- **Inference:** Runs on the Jetson Orin Nano using `ultralytics`, consuming the camera stream at a confidence threshold of 0.65.
+- **LiDAR integration:** Each YOLO bounding box is converted into an estimated angle range, using the camera's field of view and mounting offset. That range is compared with the LiDAR sectors to decide whether a LiDAR return belongs to a pillar or a wall, rather than relying on position in the 2D image alone.
+- **Training run:** 100 epochs, batch size 8, auto optimizer, `lr0 = 0.01`.
+- **Validation performance:** Precision ≈ 0.997, recall ≈ 0.985, mAP@50 ≈ 0.995, mAP@50–95 ≈ 0.928.
+- **Weights file:** `best1.pt` — the best checkpoint by validation fitness, used directly for inference on the robot.
 
 #### Dataset and Training Workflow
 
-[Describe the dataset source, collection process, annotation, preprocessing, training, validation, and testing.]
+The training dataset was developed using a **semi-supervised annotation workflow**. The full labeled dataset is browsable on [Roboflow](ADD-PUBLIC-DATASET-LINK).
 
-1. **Dataset Collection:** [Fill in details]
-2. **Annotation:** [Fill in details]
-3. **Preprocessing:** [Fill in details]
-4. **Model Training:** [Fill in details]
-5. **Validation:** [Fill in details]
-6. **Deployment:** [Fill in details]
+1. **Manual annotation** — Approximately 300 images were manually annotated using **CVAT** to create the initial training set.
+2. **Pseudo-labeling** — The trained model was used to automatically generate labels for additional unlabeled images.
+3. **Manual correction** — The predicted labels were reviewed and corrected in CVAT.
+4. **Dataset expansion** — The corrected annotations were added back into the training dataset, and the process was repeated to improve the model without manually annotating every frame from scratch.
+
+Supporting scripts are used to:
+
+- Organize images and labels
+- Split the dataset into training and validation sets
+- Test trained model checkpoints
+- Run inference using a webcam
+- Run inference directly on the Jetson Orin Nano
+
+This workflow allows new model checkpoints to be validated before deployment into the competition control programs.
+
+> **Note:** [`src/ai_model/README.md`](src/ai_model/README.md) documents the model checkpoint itself (`conf=0.5`, `imgsz=640`) for standalone testing (e.g. `yolo detect predict`). The live Obstacle Challenge scripts load the same `best1.pt` weights but call it with `conf=0.65` and the default 640 input size.
 
 #### How the Model Output Is Used in Control
 
-[Explain how model predictions are converted into useful navigation or control decisions.]
+The vision model does **not directly control the robot**. Instead, its output is passed to the existing **wall-following and pillar-avoidance state machine**.
+
+The main uses of the model output are:
+
+- **Pillar layout scan:** Before the run, the servo-mounted camera scans the field, detects the pillar colors and positions, and stores the layout in a JSON file. The control program reads this file to know the color and order of the pillars on each side.
+- **Pillar vs wall check:** During the run, a detected pillar at a LiDAR angle stops the robot from treating that return as a wall or a wall opening, so it does not follow or turn against a pillar by mistake.
+- **Pillar distance:** The LiDAR distance to the front obstacle determines when the robot should begin avoidance and how aggressively it should react.
+- **Obstacle avoidance:** Separate control parameters for green and red pillars allow the robot to apply different steering responses depending on the pillar color. Green pillars are passed on one side, while red pillars are passed on the other.
+- **Error clamping:** Steering commands and heading errors are constrained to prevent excessive corrections and reduce oversteering.
+- **Parking maneuver:** Once the required laps are complete, the robot reverses into the parking space using the rear VL53L0X distance sensor and the front LiDAR.
+- **Safety backup:** Emergency-stop checks on every LiDAR sector, a stale-scan timeout, and per-maneuver timeouts stop the robot if a detection is missed or a reading is lost. A pillar detection never overrides these checks.
+
+The system therefore separates **perception** from **control**:
 
 ```text
-[Sensor Input]
-      |
-      v
-[Perception / AI Model]
-      |
-      v
-[Object or Environment Information]
-      |
-      v
-[Decision-Making / Controller]
-      |
-      v
-[Motor and Steering Commands]
-      |
-      v
-[Robot Movement]
+Camera ──► YOLOv8n ──► Pillar Color + Angle Range ──┐
+                                                    │
+Hokuyo LiDAR ──► Front / Side Distances ────────────┤
+                                                    ▼
+BNO055 IMU ──► Yaw ─────────────────────► State Machine
+                                                    │
+                                                    ▼
+                                           Steering + Speed
+                                                    │
+                                                    ▼
+                                                  ESP32
 ```
+
 
 ### Navigation and Control Strategy
 
