@@ -169,8 +169,8 @@ IriSight/
 
 | Challenge / Test | Video |
 |---|---|
-| Open_Challenge | [Watch on YouTube](https://youtu.be/8kb7vfMW33Q) |
-| Obstacle Avoidance | [Watch on YouTube](https://youtu.be/Gv9RtIQvm2Q) |
+| Open Challenge | [Watch on YouTube](https://youtu.be/8kb7vfMW33Q) |
+| Obstacle Avoidance Challenge | [Watch on YouTube](https://youtu.be/Gv9RtIQvm2Q) |
 
 ---
 
