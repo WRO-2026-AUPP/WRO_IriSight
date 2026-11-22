@@ -328,8 +328,6 @@ This repository is organized as follows:
 
 Document every major electronic component used in the robot.
 
-### Component and interface map
-
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/jetson.png" width="130"></p> | NVIDIA Jetson Orin Nano | NaN | Main processing | [LINK](https://www.amazon.com/dp/B0BZJTQ5YP) |
