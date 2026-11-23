@@ -463,7 +463,7 @@ Document every major electronic component used in the robot.
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/jetson.png" width="130"></p> | NVIDIA Jetson Orin Nano | NaN | Main processing | [LINK](https://www.amazon.com/dp/B0BZJTQ5YP) |
-| <p align="center"><img src="./schemes/photos/custom_esp32_board.png" width="130"></p> | ESP32 WROOM Chip | Serial | Actuator control | [LINK](https://www.amazon.com/DORHEA-ESP-WROOM-32D-Bluetooth-integrates-ESP32-D0WD/dp/B08XXH9RMT?th=1) |
+| <p align="center"><img src="./schemes/photos/PCBESP32.jpeg" width="130"></p> | ESP32 WROOM Chip | Serial | Actuator control | NO LINK |
 | <p align="center"><img src="./schemes/photos/TB6612FNG.png" width="130"></p> | TB6612FNG | PWM | Drive-motor control | [LINK](https://www.amazon.com/Sparkfun-PID-14451-Motor-Driver/dp/B01MF67DX6) |
 | <p align="center"><img src="./schemes/photos/servo.jpg" width="130"></p> | LD-1501MG Servo | PWM | Front steering | [LINK](https://www.ebay.com/itm/362680017196) |
 | <p align="center"><img src="./schemes/photos/hokuyo-ust-05ln-lidar.jpg" width="130"></p> | Hokuyo UST-05LN LiDAR | Ethernet (100BASE-TX) | Distance measurement, wall and obstacle detection | [LINK](https://www.generationrobots.com/en/403397-hokuyo-ust-05ln-lidar.html) |
@@ -472,6 +472,7 @@ Document every major electronic component used in the robot.
 | <p align="center"><img src="./schemes/photos/battery.jpg" width="130"></p> | TCB 1100mAh 3S 25C battery (motor battery) | Power | Actuator power | [LINK](https://rcdrone.top/products/tcb-2s-3s-4s-5s-6s-7s-8s-1100mah-25c-lipo-battery-with-xt60-plug-for-rc-planes-fpv-drones-helicopters-cars) |
 | <p align="center"><img src="./schemes/photos/converter_11V.jpg" width="130"></p> | XL4016 300W buck-boost converter (11V) | Power | Actuator power | [LINK](https://ampere-electronics.com/product/xl4016-dc-dc-step-down-converter-module-12a-300w/) |
 | <p align="center"><img src="./schemes/photos/converter_5V.jpg" width="130"></p> | XL4015 50W buck converter (5V) | Power | Actuator power | [LINK](https://www.jacobsparts.com/items/DCMOD-B) |
+| <p align="center"><img src="./schemes/photos/servo_270.jpg" width="130"></p> | 270° Servo Motor | Actuator | Steering control | [LINK](https://www.robotshop.com/products/dfrobot-9g-270metal-servo-w-analog-feedback-15kg?srsltid=AYCX9vKwMUjuMalmhNaUifvoxJB40ZVc4YlXLCpqEJC7qc9iaZxd4toI) |
 
 ### Sensor placement and calibration
 
