@@ -529,7 +529,7 @@ The perception system uses two complementary approaches:
 
 #### Dataset and Training Workflow
 
-The training dataset was developed using a **semi-supervised annotation workflow**. The full labeled dataset is browsable on [Roboflow](ADD-PUBLIC-DATASET-LINK).
+The training dataset was developed using a **semi-supervised annotation workflow**. The full labeled dataset is browsable on [Roboflow](https://universe.roboflow.com/damian-igwmf/wro-detection-47xs2-ahmqb).
 
 1. **Manual annotation** — Approximately 300 images were manually annotated using **CVAT** to create the initial training set.
 2. **Pseudo-labeling** — The trained model was used to automatically generate labels for additional unlabeled images.
