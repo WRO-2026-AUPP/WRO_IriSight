@@ -577,7 +577,33 @@ BNO055 IMU ──► Yaw ──────────────────�
                                                     ▼
                                                   ESP32
 ```
+### Modelling with MATLAB
 
+For the MathWorks Modeling Award, [`matlab_simulink/`](matlab_simulink/)
+holds MATLAB scripts that model two parts of the robot. They need only base
+MATLAB (desktop or MATLAB Online), and every robot value lives in one file,
+[`robot_parameters.m`](matlab_simulink/scripts/robot_parameters.m), labelled
+with its source (CAD, measured, program or estimate).
+
+- **Steering linkage.** [`steering_geometry.m`](matlab_simulink/scripts/steering_geometry.m)
+  treats the knuckles and steering link as a four-bar linkage and solves it
+  with `fzero` at every angle, using the CAD dimensions. The steering-arm lines
+  meet 165.1 mm behind the kingpins, 97.7 % of the 169.0 mm wheelbase, so the
+  textbook design rule is almost met. The full model shows that the real
+  linkage still gives **56–70 % of ideal Ackermann**: the inner wheel always
+  turns more than the outer wheel, but less than ideal. A hand-derived
+  small-angle formula gives 56.7 %, which matches MATLAB's 55.7 % at 5°.
+- **Open Challenge.** [`simulate_open_challenge.m`](matlab_simulink/scripts/simulate_open_challenge.m)
+  drives a kinematic bicycle model of the robot around the WRO track, with a
+  simulated 1,081-beam Hokuyo scan and a line-by-line MATLAB copy of the Open
+  Challenge controller. [`sweep_open_challenge.m`](matlab_simulink/scripts/sweep_open_challenge.m)
+  tries every combination of top speed and steering ratio on 1.0 m and 0.6 m
+  corridors. The first runs use the estimated speed and steering ratio and
+  show that the program's 2.0 s corner limit needs a top speed of about
+  0.8 m/s, and that a 0.6 m corridor can end a corner early at about 60°.
+
+The models, results, validation plan and run commands are in
+[`matlab_simulink/README.md`](matlab_simulink/README.md).
 
 ### Navigation and Control Strategy
 
@@ -585,21 +611,53 @@ BNO055 IMU ──► Yaw ──────────────────�
 
 ### Challenge Implementation
 
-#### Challenge 1: [Fill in challenge name]
+```text
+LiDAR ─────────────┐
+BNO055 ────────────┤
+USB camera + YOLO ─┼──> Jetson navigation ──USB serial──> ESP32 ──> motor + steering
+Rear VL53L0X ──────┘              │
+                                  └──> testing dashboard on port 5000
+```
 
-- **Status:** [Not Started / In Progress / Completed]
-- **Objective:** [Describe objective]
-- **Approach:** [Describe strategy]
-- **Control Parameters:** [Add values]
-- **Implementation:** [Link relevant source files]
+### Open Challenge
 
-#### Challenge 2: [Fill in challenge name]
+Separate clockwise and counter-clockwise programs use LiDAR wall following,
+corner detection and BNO055 heading for turn completion and lap counting.
+Both directions have been tested successfully by the team. Formal trials on
+the final mechanical configuration still need dated logs.
 
-- **Status:** [Not Started / In Progress / Completed]
-- **Objective:** [Describe objective]
-- **Approach:** [Describe strategy]
-- **Control Parameters:** [Add values]
-- **Implementation:** [Link relevant source files]
+- [`open_clockwise.py`](src/main_controller/open_challenge/open_clockwise.py)
+- [`open_counter_clockwise.py`](src/main_controller/open_challenge/open_counter_clockwise.py)
+
+### Obstacle Challenge
+
+The obstacle programs combine LiDAR geometry, BNO055 heading, YOLO pillar
+classification, a direction-aware pillar map and the rear ToF sensor for final
+parking. Counter-clockwise is the current calibration baseline. The clockwise
+program mirrors the same direction-aware architecture; its final physical
+regression results remain to be recorded. Final-parking logic exists for both
+directions, with one minor counter-clockwise parking-entry refinement in
+progress.
+
+The planned perception flow is designed around the limitations of the small
+camera:
+
+1. Before driving, pan the camera to three angles while the robot is stationary.
+2. Use dynamic HSV color checks together with YOLO detections to classify the
+   visible pillars.
+3. Fuse the three views and write a frozen JSON pillar map.
+4. During the run, read that map and use LiDAR/IMU feedback for deterministic
+   navigation instead of relying on continuous camera decisions while the
+   robot vibrates and changes pose.
+
+The current challenge programs consume the JSON map, but camera-servo control,
+multi-view fusion and automatic JSON generation are not yet integrated. This
+is the intended architecture, not a claim that the complete mapping generator
+already exists.
+
+- [`obstacle_clockwise.py`](src/main_controller/obstacle_challenge/obstacle_clockwise.py)
+- [`obstacle_counter_clockwise.py`](src/main_controller/obstacle_challenge/obstacle_counter_clockwise.py)
+- [Obstacle strategy and current implementation boundary](src/main_controller/obstacle_challenge/)
 
 ### Test Results
 
@@ -805,30 +863,9 @@ It is retained as a reference for the International Round development.
 
 ## License
 
-```
-Copyright (c) 2026 Team IriSight
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
----
+The source code and documentation are released under the [MIT License](LICENSE.txt).
 
 **Team IriSight — AUPP, Cambodia**
 
 *World Robot Olympiad 2026 — International Final*
+
