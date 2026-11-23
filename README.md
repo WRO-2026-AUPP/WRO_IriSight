@@ -97,12 +97,14 @@ This repository is organized as follows:
 
 ```
 📦 WRO_IriSight
-├── 📁 media                    # Project banner and media
+├── 📁 matlab_simulink          # MATLAB/Simulink models and steering simulations
 │
-├── 📁 models                   # International Round CAD models
+├── 📁 media                    # Project banner and general media assets
+│
+├── 📁 models                   # International Round CAD models and mechanical designs
 │
 ├── 📁 other                    # Additional documentation and archived projects
-│   └── 📁 legacy_national       # Complete original National Round project
+│   └── 📁 legacy_national      # Complete National Round project archive
 │       ├── 📄 README.md
 │       ├── 📁 media
 │       ├── 📁 models
@@ -112,20 +114,20 @@ This repository is organized as follows:
 │       ├── 📁 v-photos
 │       └── 📁 video
 │
-├── 📁 schemes                  # Electrical schematics and documentation
+├── 📁 schemes                  # Electrical schematics, wiring, and power documentation
 │
-├── 📁 src                      # Main source code for the robot
-│   ├── 📁 ai_model              # AI and computer vision
-│   ├── 📁 main_controller      # Main robot control software
-│   ├── 📁 microcontroller      # Microcontroller firmware
-│   ├── 📁 obstacle_advoidance  # Obstacle Challenge code
-│   └── 📁 open_challenge       # Open Challenge code
+├── 📁 src                      # Main source code for the International robot
+│   ├── 📁 ai_model             # AI model and computer vision
+│   ├── 📁 main_controller      # Main autonomous control software
+│   ├── 📁 microcontroller      # ESP32 firmware and actuator control
+│   ├── 📁 obstacle_advoidance  # Obstacle Avoidance Challenge implementation
+│   └── 📁 open_challenge       # Open Challenge implementation
 │
-├── 📁 t-photos                 # Team photos
+├── 📁 t-photos                 # Team photographs
 │
-├── 📁 v-photos                 # Vehicle photos and documentation
+├── 📁 v-photos                 # Vehicle photographs and documentation
 │
-├── 📁 video                    # Challenge demonstration videos
+├── 📁 video                    # Autonomous driving and challenge demonstration videos
 │
 ├── 📄 .gitignore               # Git ignore configuration
 ├── 📄 LICENSE.txt              # MIT License
@@ -858,4 +860,5 @@ The source code and documentation are released under the [MIT License](LICENSE.t
 **Team IriSight — AUPP, Cambodia**
 
 *World Robot Olympiad 2026 — International Final*
+
 
