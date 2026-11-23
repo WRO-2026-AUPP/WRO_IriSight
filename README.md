@@ -316,19 +316,95 @@ instead of extending the old frame.
 
 ## Mobility and Mechanical Design
 
-[Explain the overall mechanical design and how the robot moves.]
+### Rear Drivetrain Module
+
+One JGB37-520 motor drives both rear wheels through a mechanical LEGO
+differential. A custom **JGB-to-LEGO Axle Coupler** converts the motor's
+D-shaped shaft to the LEGO drivetrain input. The **Integrated
+Motor–Differential Mount V2** holds the motor, coupler and differential in one
+aligned structure.
+
+The first approach used separate motor and differential supports. Testing
+showed vibration at the coupler, so the mounts were integrated. A later
+refinement added room for another Technic bush after the right rear axle could
+slide outward at high speed. Turning one unpowered rear wheel by hand makes the
+other turn in the opposite direction, confirming differential action.
+
+<div align="center">
+  <img src="./models/rear_drivetrain/renders/integrated_motor_differential_mount_v2.png" width="720" alt="Integrated Motor–Differential Mount V2">
+</div>
+
+The 20-tooth motor-input gear drives the differential's 28-tooth ring gear,
+adding a `28/20 = 1.40:1` reduction after the 100 RPM motor gearbox. The
+estimated no-load wheel speed is therefore 71.43 RPM. With the nominal 56 mm
+wheels, this corresponds to approximately `0.209 m/s`. Ideally, the same gear
+pair multiplies motor-output torque by 1.40 before drivetrain losses. This
+trades theoretical speed for additional wheel torque; the complete derivation
+and its limitations are in the [mechanical documentation](models/#drivetrain-speed-and-torque-reasoning).
 
 ### Chassis and Component Mounting
 
-[Describe the chassis structure, mounting system, materials, and component positioning.]
+The **Main Chassis Plate V2** carries the drivetrain and steering. Six 42 mm
+**Electronics Deck Standoffs V2** connect it to the one-piece **Integrated
+Electronics Mounting Deck V1**. The upper deck holds two batteries, supports
+the Jetson, and provides reusable holes for sensors and test electronics.
+
+The LiDAR is mounted at the front with a dedicated deck mount and impact guard.
+The guard has already protected the sensor during contact without obstructing
+its scan. A three-part camera mount stabilizes the camera pan servo while the
+camera carrier alone rotates. At the rear, one platform supports the Jetson
+and the rear-facing VL53L0X.
+
+Complete part names, quantities, assembly order, STEP/STL files, drawings and
+print settings are in [`models/`](models/). The dated print–test–refine story is
+in the [Engineering Journal](other/engineering_journal/).
 
 ### Drive System
 
-[Explain the drivetrain, motors, transmission, wheels, and relevant calculations.]
+### Ackermann front steering
 
-### Steering System
+The front mechanism combines the **Front Steering Crossmember V2**, left and
+right **Steering Knuckles V2**, **Servo-Driven Steering Link V1**, **Steering
+Servo Mount** and MG996R servo. Unlike the National parallel linkage, the
+steering-arm pins are inset so their projected axes approach the rear-axle
+center. This creates different inner- and outer-wheel angles while turning.
 
-[Explain the steering mechanism, servo configuration, steering angles, and turning performance.]
+<div align="center">
+  <img src="./models/front_steering/analysis/ackermann_geometry_calculation.png" width="900" alt="Ackermann steering CAD geometry calculation">
+  <p><em>Ackermann geometry calculated from the current CAD. Full-resolution <a href="models/front_steering/analysis/ackermann_geometry_calculation.png">PNG</a> and editable <a href="models/front_steering/analysis/ackermann_geometry_calculation.svg">SVG</a>.</em></p>
+</div>
+
+| CAD quantity | Value |
+| --- | ---: |
+| Wheelbase, `L` | 169.03 mm |
+| Front kingpin spacing, `T` | 106.30 mm |
+| Steering-link pin spacing | 96.00 mm |
+| Arm-pin rearward offset | 16.00 mm |
+| Actual arm-pin inset | 5.15 mm |
+| Calculated steering-arm angle | 17.84° |
+| Projected convergence behind front axle | 165.13 mm |
+| Offset from rear-axle center | 3.90 mm, or 2.31% of wheelbase |
+
+For ideal Ackermann geometry, the steering-arm projections intersect the rear
+axle and the wheel angles satisfy:
+
+```text
+cot(outer wheel angle) - cot(inner wheel angle) = T / L
+```
+
+For this CAD, the ideal arm-pin inset is 5.03 mm; the actual inset is 5.15 mm,
+a 0.12 mm difference. We therefore describe the mechanism as a **close
+Ackermann construction**. The calculation is CAD evidence. The full linkage
+model in [`matlab_simulink/`](matlab_simulink/) solves the mechanism at every
+steering angle and shows that it gives 56–70 % of the ideal inner–outer wheel
+difference (see [Modelling with MATLAB](#modelling-with-matlab)).
+
+Early printed pivot pins could break and later drift upward after repeated
+testing. Stronger print settings reduced breakage but did not solve the drift.
+Knuckles V2 use filled, extended pivots retained horizontally with M2.5
+screws. The failure photograph and both revisions are preserved in
+[`models/front_steering/`](models/front_steering/).
+
 
 ### Mechanical Iterations
 
@@ -343,18 +419,42 @@ instead of extending the old frame.
 
 ## Power and Sensor Architecture
 
-### Power Architecture
+<div align="center">
+  <img src="./schemes/signal_wiring_diagram.png" width="850" alt="International robot signal wiring diagram">
+</div>
 
-[Describe the battery configuration, voltage regulation, power distribution, and protection mechanisms.]
+The Jetson performs perception and navigation. It reads the Hokuyo LiDAR over
+Ethernet, the camera over USB, and the BNO055 and VL53L0X over I2C. It then
+sends text commands over USB serial to the ESP32, which controls the rear motor
+and steering servo.
 
-<!-- Add power architecture diagram here -->
+| Device | Interface |
+| --- | --- |
+| Hokuyo UST-30LX | Ethernet, `192.168.0.10:10940` |
+| ESP32 controller | USB serial, `/dev/ttyUSB0`, 115200 baud |
+| 1 MP camera | Linux video device 0 |
+| BNO055 IMU | I2C bus 7, address `0x28` |
+| Rear VL53L0X | I2C bus 1, address `0x29` |
+| MG996R steering servo | ESP32 GPIO 18 |
+| TB6612FNG motor inputs | ESP32 GPIO 25, 26 and 33 |
 
-![Power Architecture](./schemes/power-architecture.png)
+The ESP32 accepts three newline-terminated commands:
 
-| Power Domain | Component | Voltage | Current | Power Consumption |
-|---|---|---|---|---|
-| [Domain 1] | [Component] | [Value] | [Value] | [Value] |
-| [Domain 2] | [Component] | [Value] | [Value] | [Value] |
+```text
+DRIVE <steering> <pwm>
+BACK <steering> <pwm>
+STOP
+```
+
+Two batteries isolate the computer supply from actuator current changes:
+
+- **Battery A** connects directly to the Jetson through its barrel-power cable.
+- **Battery B** supplies the control and actuator side. An XL4016 rail at
+  approximately 11 V serves the ESP32/motor/LiDAR path, while an XL4015 at 5 V
+  supplies the MG996R servo.
+
+The current power diagram, signal diagram, datasheet-based power budget and
+known electrical limitations are documented in [`schemes/`](schemes/).
 
 ### Component and Interface Map
 
