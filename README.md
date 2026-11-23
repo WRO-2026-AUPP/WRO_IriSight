@@ -577,7 +577,7 @@ BNO055 IMU ──► Yaw ──────────────────�
                                                     ▼
                                                   ESP32
 ```
-## Modelling with MATLAB
+### Modelling with MATLAB
 
 For the MathWorks Modeling Award, [`matlab_simulink/`](matlab_simulink/)
 holds MATLAB scripts that model two parts of the robot. They need only base
@@ -868,3 +868,4 @@ The source code and documentation are released under the [MIT License](LICENSE.t
 **Team IriSight — AUPP, Cambodia**
 
 *World Robot Olympiad 2026 — International Final*
+
