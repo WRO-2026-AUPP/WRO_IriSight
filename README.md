@@ -235,6 +235,27 @@ Measurements include the installed sensors and batteries.
 The 2 mm length margin is the most restrictive packaging constraint and drove
 the cantilevered LiDAR mount design.
 
+## National-to-International redesign
+
+The International vehicle is a ground-up mechanical rebuild, not a cosmetic
+revision of the National platform.
+
+| Area | National robot | International robot | Engineering reason |
+| --- | --- | --- | --- |
+| Steering | Parallel front steering | Printed close-Ackermann linkage | Reduce tire scrub and improve the relationship between inner- and outer-wheel paths |
+| Main ranging sensor | Intel RealSense D455 | Hokuyo UST-30LX 2D LiDAR | The D455 produced noisy detection on its left side; the LiDAR provides direct planar range data |
+| Camera role | Depth and color perception centered on the RealSense | Small 1 MP camera for pillar classification and planned stationary mapping | Separates geometric ranging from color recognition and reduces camera dependence while driving |
+| Rear motor | JGA25-370 (team recollection) | JGB37-520, 12 V, 100 RPM | More suitable drivetrain for the rebuilt platform |
+| Rear transmission | Non-LEGO wheels with steel axles/gears from another kit | Custom coupler, LEGO differential and LEGO axles | Creates a replaceable, documented and mechanically integrated drivetrain |
+| Wheels | Mixed front and rear wheel systems | Four matching LEGO `39367pb01` wheels | Removes the previous sticky rear-wheel behavior and standardizes wheel geometry |
+| Structure | Primarily LEGO with several printed equipment mounts | Custom PLA lower chassis, six standoffs and an integrated electronics deck | Provides rigid alignment for the heavier sensor and computer package |
+| Documentation | National files distributed across root subsystems | Self-contained archive under `other/legacy_national/` | Prevents historical code and hardware from being mistaken for the current robot |
+
+The former rear wheels could remain stuck on the field below approximately
+100/255 motor command even while the motor and wheels rotated normally when
+the rear was lifted. Together with the sensor noise, parallel-steering limits
+and shortage of reliable LEGO spares, this led the team to rebuild the robot
+instead of extending the old frame.
 
 ## Performance Videos
 
