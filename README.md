@@ -208,22 +208,33 @@ This repository is organized as follows:
 
 ### Key Specifications
 
-| Specification | Final Value |
-|---|---|
-| Length × Width × Height | [Fill in dimensions] |
-| Mass | 1.28 KG |
-| Wheelbase | [Fill in value] |
-| Ground Clearance | [Fill in value] |
-| Drive Layout | [Fill in configuration] |
-| Steering Layout | [Fill in configuration] |
-| Main Computer | NVIDIA Jetson Orin Nano, Ubuntu 22.04 LTS |
-| Microcontroller | ESP32 |
-| Camera | [Fill in model] |
-| Front/Back wheels | 	LEGO SPIKE blue wheels, part 39367 |
-|Chassis Type | 	Custom chassis |
-| IMU | [Fill in model] |
-| Additional Sensors | [Fill in sensors] |
-| Battery Configuration | [Fill in configuration] |
+Measurements include the installed sensors and batteries.
+
+| Property | Current robot | Rule limit | Remaining margin |
+| --- | ---: | ---: | ---: |
+| Length | 298 mm | 300 mm | 2 mm |
+| Width | 159 mm | 200 mm | 41 mm |
+| Height | 223 mm | 300 mm | 77 mm |
+| Mass | 1.28 kg | 1.50 kg | 0.22 kg |
+
+| Subsystem | Current configuration |
+| --- | --- |
+| Main computer | NVIDIA Jetson Orin Nano running JetPack SDK in 15 W mode |
+| Microcontroller | ESP32-based controller board |
+| Drive | One JGB37-520 geared DC motor, 12 V, 100 RPM |
+| Rear transmission | JGB-to-LEGO coupler and one LEGO mechanical differential |
+| Steering | MG996R servo and custom close-Ackermann front linkage |
+| Wheels | Four LEGO 56 × 14 Technic wheels, part `39367pb01` |
+| Primary ranging | Hokuyo UST-30LX 2D LiDAR |
+| Vision | 1 MP Yahboom/Raspbot USB camera on a DMS-MG90-A 270° pan servo |
+| Orientation | Adafruit BNO055 IMU |
+| Rear distance | One rear-facing VL53L0X ToF sensor |
+| Structure | Custom PLA chassis, electronics deck and subsystem mounts |
+| Batteries | Two TCB 3S 1100 mAh 25C LiPo packs |
+
+The 2 mm length margin is the most restrictive packaging constraint and drove
+the cantilevered LiDAR mount design.
+
 
 ## Performance Videos
 
