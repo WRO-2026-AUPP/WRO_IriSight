@@ -463,7 +463,7 @@ Document every major electronic component used in the robot.
 | Component <img width=150 height=0> | Exact model <img width=250 height=0> | Interface <img width=100 height=0> | Purpose <img width=150 height=0> | Details <img width=100 height=0> |
 | :--- | :--- | :--- | :--- | :--- |
 | <p align="center"><img src="./schemes/photos/jetson.png" width="130"></p> | NVIDIA Jetson Orin Nano | NaN | Main processing | [LINK](https://www.amazon.com/dp/B0BZJTQ5YP) |
-| <p align="center"><img src="./schemes/photos/PCBESP32.jpeg" width="130"></p> | ESP32 WROOM Chip | Serial | Actuator control | NO LINK |
+| <p align="center"><img src="./schemes/photos/PCBESP32.jpeg" width="130"></p> | ECustom ESP32-WROOM-Based PCB | Serial | Actuator control | NO LINK |
 | <p align="center"><img src="./schemes/photos/TB6612FNG.png" width="130"></p> | TB6612FNG | PWM | Drive-motor control | [LINK](https://www.amazon.com/Sparkfun-PID-14451-Motor-Driver/dp/B01MF67DX6) |
 | <p align="center"><img src="./schemes/photos/servo.jpg" width="130"></p> | LD-1501MG Servo | PWM | Front steering | [LINK](https://www.ebay.com/itm/362680017196) |
 | <p align="center"><img src="./schemes/photos/hokuyo-ust-05ln-lidar.jpg" width="130"></p> | Hokuyo UST-05LN LiDAR | Ethernet (100BASE-TX) | Distance measurement, wall and obstacle detection | [LINK](https://www.generationrobots.com/en/403397-hokuyo-ust-05ln-lidar.html) |
