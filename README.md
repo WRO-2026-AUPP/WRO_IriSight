@@ -672,35 +672,24 @@ already exists.
 
 ---
 
-## System Integration, Testing, and Risk
+## Engineering decisions, constraints and risk controls
 
-### Subsystem Interaction
+| Constraint or observed failure | Decision and evidence | Trade-off or remaining risk |
+| --- | --- | --- |
+| National RealSense produced noisy readings on its left side | Separate geometry and color sensing: Hokuyo LiDAR for range, small USB camera for classification | LiDAR cannot identify color; camera calibration and a reliable cable remain important |
+| National parallel steering scrubbed during turns | Build the close-Ackermann linkage documented by the CAD calculation | More printed joints and retention points than the parallel mechanism |
+| Separate motor/differential supports vibrated | Integrate both supports into one mount; vibration became almost imperceptible in team testing | The combined part is larger and must be reprinted as one piece if damaged |
+| Right rear axle moved outward at higher speed | Add space for another Technic bush in the 13 October mount refinement | The bush position is checked in every pre-run inspection |
+| Printed steering pins broke or migrated vertically | Use solid extended pivots with transverse M2.5 retention screws | Adds screws to the printed joint; the M2.5 pivot screws are checked in every pre-run inspection |
+| Complete robot length is 298 mm against a 300 mm limit | Cantilever the LiDAR mount and integrate the front guard below the scan plane | Only 2 mm margin remains, so any cable or mount change requires remeasurement |
+| Camera detection became unstable while the robot vibrated and changed pose | Plan a stationary three-angle scan followed by frozen-map navigation | The scan must classify the complete field correctly before movement; incomplete maps must stop rather than guess |
+| Motor and servo current changes could disturb the Jetson | Use separate controller and actuator batteries with a shared signal ground | Adds mass and wiring; no fuse is installed and converter voltages need physical remeasurement |
+| Lost Jetson–ESP32 commands could leave the last motor command active | Jetson controllers issue `STOP` on faults and exit | ESP32 command timeout is not yet implemented, so link loss remains an explicit safety risk |
 
-[Explain how the mechanical, electrical, sensing, computing, and software subsystems work together.]
-
-### Final Regression Results
-
-| Test | Configuration | Trials | Acceptance Criteria | Result |
-|---|---|---:|---|---|
-| [Test 1] | [Configuration] | [Number] | [Criteria] | [Result] |
-| [Test 2] | [Configuration] | [Number] | [Criteria] | [Result] |
-
-### Key Engineering Decisions
-
-| Decision | Alternatives Considered | Reason for Selection | Trade-offs |
-|---|---|---|---|
-| [Decision 1] | [Alternatives] | [Reason] | [Trade-offs] |
-| [Decision 2] | [Alternatives] | [Reason] | [Trade-offs] |
-
-### Risk Register
-
-| Risk / Failure Mode | Detection Method | Mitigation |
-|---|---|---|
-| [Risk 1] | [How it is detected] | [How it is mitigated] |
-| [Risk 2] | [How it is detected] | [How it is mitigated] |
-| [Risk 3] | [How it is detected] | [How it is mitigated] |
-
-**Detailed evidence:** [Add engineering journal, testing records, risk analysis, and validation documentation.]
+The detailed failure → change → retest chains are preserved in the
+[Engineering Journal](other/engineering_journal/), electrical failure points
+in [`schemes/`](schemes/), and repeatable acceptance procedures in
+[`other/testing/`](other/testing/).
 
 ---
 
