@@ -1,0 +1,18 @@
+# Python packages imported by the Jetson programs in this folder.
+# Versions have not been recorded from the robot yet, so none are pinned.
+#
+# On the Jetson, install NVIDIA's JetPack build of PyTorch BEFORE ultralytics
+# (see ../ai_model/README.md). OpenCV may already be installed with JetPack.
+
+# All programs
+numpy
+pyserial
+flask
+smbus2
+hokuyolx
+
+# Obstacle Challenge programs only
+opencv-python
+ultralytics
+adafruit-extended-bus
+adafruit-circuitpython-vl53l0x

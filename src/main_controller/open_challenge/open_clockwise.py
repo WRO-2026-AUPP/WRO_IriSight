@@ -2,26 +2,35 @@
 
 
 
-"""Inner-right wall follower with front-right opening detection.
+"""Open Challenge controller for clockwise driving.
 
+Engineering approach
+--------------------
+The robot follows the inner RIGHT wall with the Hokuyo LiDAR. A proportional
+controller corrects the side distance, while a front-right sector detects the
+opening at each corner. The BNO055 heading provides an independent three-lap
+counter; after the third lap the controller sends STOP.
 
+Why this design was selected
+----------------------------
+LiDAR sector medians are used instead of a camera or single range ray because
+they are less sensitive to lighting and reject isolated noisy returns. Corner
+entry and wall reacquisition are separate states so a temporary gap does not
+immediately trigger a full steering command.
 
-Starts driving automatically with valid scans. Ctrl+C requests STOP.
+Validation status (team report, 2026-11-23)
+-------------------------------------------
+This clockwise program has been tested on the rebuilt robot. Formal trial
+counts, layouts and timing logs still need to be recorded in ``other/testing``.
 
-
-
-Requires ESP32 command watchdog for process/USB failure protection.
-
-
-
-No lap counter; stop manually. Validate steering and angles with wheels lifted.
-
-
-
-Corner timing and 0.30 m offset are approximate, not guaranteed geometry.
-
-
-
+Safety and current limitations
+------------------------------
+The program starts after valid scans are available and does not yet wait for
+the competition Start button. Ctrl+C requests STOP, but protection against a
+Jetson crash or broken USB connection also requires an ESP32 command watchdog,
+which is not implemented in the current firmware. Test steering direction and
+sensor angles with the drive wheels lifted after any hardware or calibration
+change.
 """
 
 

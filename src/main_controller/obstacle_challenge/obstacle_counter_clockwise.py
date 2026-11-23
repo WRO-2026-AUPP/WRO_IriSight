@@ -1,9 +1,36 @@
 #!/usr/bin/env python3
 
-"""Two-pillar JSON obstacle test. Straight approach (no wall following).
+"""Map-driven Obstacle Challenge controller for counter-clockwise driving.
 
-Requires ESP32 command watchdog and independent emergency stop.
-Test with wheels lifted before enabling motors.
+Current controller
+------------------
+This file loads a validated JSON pillar map, exits the parking area, completes
+three laps and attempts final reverse parking with the rear VL53L0X. LiDAR
+decides when manoeuvres begin, the BNO055 controls heading, and the camera's
+red/green detections help distinguish pillars from walls.
+
+Planned perception-to-map stage -- NOT implemented in this file
+---------------------------------------------------------------
+Before the driving controller starts, the stationary robot is intended to pan
+its camera through three calibrated servo positions in the parking lot. YOLO
+detections from those views will be merged into the same JSON schema consumed
+by ``load_test_plan``. The map is then frozen for the run, decoupling perception
+from navigation. This decision responds to observed camera vibration, changing
+robot pose and intermittent camera-cable disconnections during real-time use.
+
+Validation status (team report, 2026-11-23)
+-------------------------------------------
+This is the team's actively tested Obstacle Challenge direction. Testing is
+progressively improving, but an end-to-end three-lap-and-parking result and
+repeatable trial statistics have not yet been recorded.
+
+Safety and current limitations
+------------------------------
+The program presently accepts a JSON file supplied on the command line and
+starts without waiting for the competition Start button. The camera-pan map
+generator, autonomous launch and ESP32 command watchdog are not implemented.
+Final parking is still under development. Test with the wheels lifted before
+allowing movement, and use DRY_RUN during command-only validation.
 """
 
 
@@ -60,7 +87,7 @@ WEB_PORT = 5000
 # OPTIONAL YOLO camera fusion. Existing navigation parameters are unchanged.
 # Set camera index to the device that works on this robot.
 CAMERA_INDEX = 0
-CAMERA_MODEL_PATH = "best1.pt"
+CAMERA_MODEL_PATH = "traffic_sign_detector.pt"
 CAMERA_CONFIDENCE = 0.65
 CAMERA_FRAME_WIDTH = 640
 CAMERA_FOV_DEG = 70.0        # CALIBRATE using a known target; not a measured specification
@@ -546,7 +573,13 @@ camera_preview_jpeg = None
 
 
 def camera_worker():
-    """YOLO pillar detections; no motion commands and no collision-check overrides."""
+    """Run live red/green pillar detection during driving.
+
+    This worker is NOT the planned three-angle parking-lot scan. It neither
+    moves the camera servo nor writes the JSON route map. Its limited current
+    role is to help the LiDAR controller distinguish a coloured pillar from a
+    wall; it never sends motion commands or overrides emergency distance data.
+    """
     global camera_data, camera_preview_jpeg
     try:
         from ultralytics import YOLO
@@ -1037,7 +1070,13 @@ def lidar_worker():
 
 
 def load_test_plan(filename):
-    """Load two pillars for each of TOP, LEFT, BOTTOM and RIGHT.
+    """Validate and load the perception/navigation interface file.
+
+    The planned camera-pan mapper will write this same schema. Keeping a strict
+    loader here allows the mapping stage and driving stage to be developed and
+    tested separately without changing the motion controller.
+
+    Load two pillars for each of TOP, LEFT, BOTTOM and RIGHT.
 
     TOP: right-to-left; LEFT: top-to-bottom; BOTTOM: left-to-right; RIGHT: bottom-to-top.
     Pixel coordinates determine ORDER, not physical clearance.
@@ -4144,7 +4183,7 @@ update();
 </script>
 
 <section style="margin:20px auto;max-width:960px;padding:16px;background:#18222c;color:white;border-radius:12px">
-  <h2 style="margin-top:0">YOLO Camera Debug — best1.pt</h2>
+  <h2 style="margin-top:0">YOLO Camera Debug — traffic_sign_detector.pt</h2>
   <img src="/camera" alt="Annotated camera with live YOLO pillar detections"
        style="display:block;width:100%;max-width:800px;aspect-ratio:4/3;object-fit:contain;background:#050505" />
   <div id="camDebug" style="margin-top:12px;white-space:pre-wrap;font-family:monospace">Waiting for camera…</div>
@@ -4249,6 +4288,10 @@ def main():
     global TEST_PLAN
     if len(sys.argv) != 2:
         raise SystemExit("Usage: python3 wro_four_sections.py wro_pillars.json")
+    # Current development interface: the map is supplied on the command line.
+    # Competition workflow: replace this manual input with the JSON produced by
+    # the stationary three-angle camera scan, then keep the map immutable while
+    # the robot drives.
     TEST_PLAN = load_test_plan(sys.argv[1])
     print("TEST PLAN:", TEST_PLAN, "DRY_RUN:", DRY_RUN)
 
