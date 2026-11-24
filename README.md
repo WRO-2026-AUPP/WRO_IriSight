@@ -296,12 +296,22 @@ After the National Round we found that the robot had hit its limits. The RealSen
 
 ### Engineering Design and Iterations
 
-| Version / Date | Problem or Goal | Design Change | Testing / Evidence | Result |
-|---|---|---|---|---|
-| National to International rebuild [date] | Noisy D455, steering scrub, stuck rear wheels, not enough LEGO spares | New PLA chassis, Hokuyo LiDAR, close-Ackermann steering, JGB37-520 motor with LEGO differential, four matching LEGO wheels | Wheel-stuck test at low PWM, old vs new comparison | Rebuilt platform with standard wheel geometry and no sticky rear wheels |
-| Drivetrain mount V1 to V2 [date] | Vibration at the motor-to-differential coupler | Merged the separate motor and differential supports into one Integrated Motor–Differential Mount | Team testing at speed | Vibration became almost imperceptible |
-| Mount refinement, 13 October | Right rear axle slid outward at high speed | Added room for another Technic bush | High-speed run after the change | Axle stays in place; bush is checked in every pre-run inspection |
-| Steering knuckles V1 to V2 [date] | Printed pivot pins broke, then drifted upward | Filled, extended pivots held by horizontal M2.5 screws | Repeated steering tests, failure photo kept in `models/front_steering/` | No more breakage or drift |
+| Date | Mechanical change | Reason and result |
+|---|---|---|
+| September 7–Present, 2026 | Separate Differential Carrier, motor mount and axle coupler developed | Fit corrections were required; the separately supported drivetrain vibrated during operation |
+| September 17, 2026 | Integrated Motor–Differential Mount V2 created | Combining the supports made vibration almost imperceptible and reduced unnecessary material |
+| September 18–22, 2026 | Initial steering knuckles, crossmember and link developed | Established the first Ackermann steering assembly |
+| September 20–October 6, 2026 | Main Chassis Plate refined to V2 | Repositioned drivetrain mounting holes increased ground clearance |
+| September 21 and October 6, 2026 | Standoffs changed from the longer V1 to the current 42 mm V2 | Matched the corrected chassis height while retaining the same support function |
+| September 22, 2026 | Steering Servo Mount completed | Reduced MG996R movement and vibration |
+| September 24, 2026 | Integrated Electronics Mounting Deck completed | Combined battery, Jetson and sensor support in one print; its servo opening was enlarged manually during installation |
+| October 6, 2026 | Hokuyo LiDAR Impact Guard completed | Protected the forward LiDAR during accidental contact without blocking its scan |
+| October 13, 2026 | Rear drivetrain V2 refined | Added space for an extra bush after the right rear axle slid outward at high speed |
+| October 30, 2026 | Front Steering Crossmember V2 completed | A stronger, bulkier body replaced the V1 crossmember after vehicle loading caused bending |
+| November 2–10, 2026 | LiDAR deck mount and three-part panning camera mount completed | Kept the robot within the length limit and added camera panning for parking-area mapping |
+| November 3–12, 2026 | Stronger steering-pin print and temporary screw tests | Stronger pins resisted breakage but migrated vertically; the temporary screw approach did not solve it permanently |
+| November 14, 2026 | Jetson Support and Rear ToF Sensor Platform completed | Added Jetson support and three possible rear-sensor positions; the center position is currently used |
+| November 21, 2026 | Steering Knuckles V2 completed | Integrated longer solid pivots with transverse M2.5 retention to prevent vertical drift |
 
 ### Final Engineering Blueprints
 
