@@ -984,6 +984,20 @@ This archive contains the original source code, AI model, CAD designs, electrica
 
 It is retained as a reference for the International Round development.
 
+## Documentation map
+
+| Need | Start here |
+| --- | --- |
+| Understand the entire International build | [Engineering Journal](other/engineering_journal/) |
+| Print or edit a part | [Mechanical models](models/) |
+| Wire and power the robot | [Electrical schemes](schemes/) |
+| Install and run the software | [Main controller](src/main_controller/) |
+| Inspect ESP32 pins and commands | [Microcontroller](src/microcontroller/) |
+| Reproduce a physical test | [Testing procedures](other/testing/procedures.md) |
+| Check the steering and Open Challenge models | [MATLAB modelling](matlab_simulink/) |
+| Review major repository changes | [Changelog](CHANGELOG.md) |
+| Inspect the former National robot | [National archive](other/legacy_national/) |
+
 ## License
 
 The source code and documentation are released under the [MIT License](LICENSE.txt).
