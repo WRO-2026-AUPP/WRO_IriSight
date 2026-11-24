@@ -270,23 +270,23 @@ instead of extending the old frame.
 
 ## How IriSight Works
 
-[Explain how the robot operates, including perception, decision-making, navigation, and actuation.]
+IriSight is a small autonomous car built around a Jetson Orin Nano. It sees the track with a Hokuyo LiDAR (distances to walls) and a USB camera (red and green pillars), and it knows which way it is facing from a BNO055 IMU. The Jetson combines all of that in a state machine, decides on a steering angle and a speed, and sends them to an ESP32 over USB serial. The ESP32 drives the rear motor and the steering servo.
+
+We keep perception and control separate on purpose. YOLO only tells the controller what color a pillar is and roughly where it is. It never steers the car directly. The LiDAR and IMU do the actual driving, so a missed camera detection can't make the robot do something wild.
 
 ### System Architecture
-
-<!-- Add system architecture diagram here -->
 
 ![System Architecture](./schemes/system-architecture.png)
 
 | Subsystem | Description |
 |---|---|
-| Power | [Explain the power distribution system] |
-| Perception | [Explain cameras and sensor inputs] |
-| Processing | [Explain the main computing system] |
-| Decision | [Explain navigation and decision-making] |
-| Actuation | [Explain motor and steering control] |
-| Communication | [Explain communication between components] |
-| Safety | [Explain safety and failure-handling mechanisms] |
+| Power | Two 3S 1100 mAh LiPo packs. Battery A powers only the Jetson. Battery B powers the ESP32, motor driver and LiDAR through an XL4016 rail (about 11 V), and the MG996R steering servo through an XL4015 (5 V). Keeping them separate stops motor and servo current spikes from resetting the Jetson. |
+| Perception | Hokuyo UST-30LX LiDAR (walls, obstacles, distances), BNO055 IMU (yaw), 1 MP USB camera with YOLOv8n (pillar color), rear VL53L0X (distance while parking). |
+| Processing | Jetson Orin Nano in 15 W mode, running Python 3 with threads for LiDAR, YOLO, the main controller and the Flask web viewer. |
+| Decision | A state machine for wall following, corner detection, pillar avoidance, lap counting and parking. It uses LiDAR geometry, IMU heading and the pillar layout JSON. |
+| Actuation | ESP32 turns `DRIVE`, `BACK` and `STOP` commands into servo position and motor PWM through the TB6612FNG. The motor drives the rear wheels through a LEGO differential, and an MG996R steers the front wheels through the close-Ackermann linkage. |
+| Communication | Jetson to ESP32: USB serial, 115200 baud. LiDAR: Ethernet. IMU and rear ToF: I2C. Camera: USB. A command is sent every 0.05 s. |
+| Safety | Emergency-stop checks on every LiDAR sector, a stale-scan timeout, per-maneuver timeouts, steering and heading error clamping, and `STOP` on any fault or Ctrl+C. Known gap: the ESP32 has no command timeout yet (see Limitations). |
 
 ---
 
