@@ -856,74 +856,77 @@ Power-on order:
 3. Check the LiDAR, IMU, camera and rear ToF in the web viewer.
 4. Connect Battery B last, with the wheels off the ground for the first powered test.
 
-## Software Installation
+## Software Setup
 
-#### 1. Clone the repository
+### 1. Flash the Jetson Orin Nano
+Flash the Jetson Orin Nano with its JetPack SDK image.
 
+### 2. Clone the repository
 ```bash
-git clone https://github.com/WRO-2026-AUPP/WRO_IriSight.git
+git clone https://github.com/WRO-2026-AUPP/IriSight_draft.git
+cd IriSight_draft
 ```
 
-#### 2. Navigate to the project directory
+### 3. Install PyTorch
+Install NVIDIA's JetPack-compatible PyTorch build as described in `src/ai_model/README.md`.
+
+### 4. Install the remaining Python packages
+These cover numerical processing, computer vision, RealSense D455 depth sensing, YOLOv8 object detection, and Jetson-to-ESP32 serial communication.
 
 ```bash
-cd WRO_IriSight
+pip install -r src/main_controller/requirements.txt
 ```
 
-#### 3. Install the required Python packages 
-
-The following packages are required for numerical processing, computer vision, RealSense D455 depth sensing, YOLOv8 object detection, and Jetson-to-ESP32 serial communication.
-
-```bash
-pip install numpy
-```
-```bash
-pip install opencv-python
-```
-```bash
-pip install pyrealsense2
-```
-```bash
-pip install ultralytics
-```
-```bash
-pip install pyserial
-```
-#### 4. Verify the installation
-
+### 5. Verify the installation
 ```bash
 python3 -c "import cv2, numpy, pyrealsense2, ultralytics, serial; print('All required packages installed successfully.')"
 ```
 
-### Start an Autonomous Run
+### 6. Flash the ESP32
+Flash `src/microcontroller/firmware/firmware.ino` to the ESP32 with the `ESP32Servo` library installed.
 
-Select the control program for the challenge and driving direction. Before starting, make sure the Jetson Orin Nano, Hokuyo LiDAR, BNO055 IMU, camera and ESP32 are connected (the obstacle run also uses the rear VL53L0X distance sensor). Keep the robot still for the first few seconds so the IMU can set its starting heading.
+### 7. Check the connections
+Follow the network, I2C and serial checks in `src/main_controller/README.md`.
 
-#### 1. Open Challenge — Clockwise
+## Start an Autonomous Run
 
+Before starting, make sure the Jetson Orin Nano, Hokuyo LiDAR, BNO055 IMU, camera and ESP32 are connected (the obstacle run also uses the rear VL53L0X distance sensor). Keep the robot still for the first few seconds so the IMU can set its starting heading.
+
+### Open Challenge
 ```bash
-python3 src/open_challenge/open_clockwise.py
+# Clockwise
+python3 src/main_controller/open_challenge/open_clockwise.py
+
+# Counter clockwise
+python3 src/main_controller/open_challenge/open_counter_clockwise.py
 ```
 
-#### 2. Open Challenge — Counter Clockwise
-
+### Obstacle Challenge
 ```bash
-python3 src/open_challenge/open_counter_clockwise.py
+cd src/main_controller/obstacle_challenge
+
+# Clockwise
+python3 obstacle_clockwise.py ../config/pillar_clockwise.json
+
+# Counter clockwise
+python3 obstacle_counter_clockwise.py ../config/wro_pillar_0_270_180_90.json
 ```
 
-#### 3. Obstacle Challenge — Clockwise
+The obstacle programs read the pillar layout from the JSON file and expect `traffic_sign_detector.pt` in their working directory (see the [main-controller setup](https://github.com/WRO-2026-AUPP/IriSight_draft/blob/main/src/main_controller/README.md) for the download link). The robot starts moving once it has valid sensor data.
 
-```bash
-python3 src/obstacle_avoidance/obstacle_clockwise.py wro_pillars.json
-```
+Use `DRY_RUN = True` while checking decisions with the wheels lifted. Press Ctrl+C to stop the robot, and open `http://<jetson-ip>:5000` to watch the live viewer.
 
-#### 4. Obstacle Challenge — Counter Clockwise
+## Competition-Operation Boundary
 
-```bash
-python3 src/obstacle_avoidance/obstacle_counter_clockwise.py wro_pillars.json
-```
+The current code is development software. Before it is described as fully competition-ready, the team still needs to implement and physically verify:
 
-The obstacle programs read the pillar layout from the JSON file and need `best1.pt` in the same folder. The robot starts moving once it has valid sensor data. Press Ctrl+C to stop it, and open `http://<jetson-ip>:5000` to watch the live viewer.
+* automatic startup without a laptop or wireless connection;
+* waiting for the permitted single Start action;
+* automatic three-angle pillar-map generation;
+* an ESP32 command-timeout safety stop; and
+* final-configuration regression trials in both directions.
+
+These limitations are recorded so future code and testing can close them without overstating the present implementation.
 
 
 ### Pre-flight and acceptance test
@@ -965,14 +968,6 @@ Before any competition run or timed trial, the following checklist is completed 
 A build is considered competition-ready only if it meets the targets already demonstrated in [Final regression results](#final-regression-results): 3/3 successful trials for both directions of the Open Challenge, and 3/3 successful trials for both directions of the Obstacle Challenge, each with no navigation failure or collision.
 
 ---
-
-## Current Limitations and Future Improvements
-
-| Limitation | Current Effect | Planned Improvement | Validation Target |
-|---|---|---|---|
-| [Limitation 1] | [Effect] | [Improvement] | [Target] |
-| [Limitation 2] | [Effect] | [Improvement] | [Target] |
-| [Limitation 3] | [Effect] | [Improvement] | [Target] |
 
 ## National Round Archive
 
