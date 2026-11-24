@@ -292,19 +292,25 @@ We keep perception and control separate on purpose. YOLO only tells the controll
 
 ## Our Engineering Journey
 
-[Describe the development process for the International Round, including the problems encountered and solutions implemented.]
+After the National Round we found that the robot had hit its limits. The RealSense D455 gave noisy readings on the left side, the parallel steering scrubbed the tires in turns, and the rear wheels could get stuck on the field below roughly 100/255 motor command. We also had few reliable LEGO spares left. Instead of patching the old frame, we rebuilt the robot from the chassis up, switched to LiDAR for ranging, and then spent the rest of the season in print, test and refine loops on each mechanical part.
 
 ### Engineering Design and Iterations
 
 | Version / Date | Problem or Goal | Design Change | Testing / Evidence | Result |
 |---|---|---|---|---|
-| [Version 1] | [Describe problem] | [Describe change] | [Add evidence] | [Describe result] |
-| [Version 2] | [Describe problem] | [Describe change] | [Add evidence] | [Describe result] |
-| [Version 3] | [Describe problem] | [Describe change] | [Add evidence] | [Describe result] |
+| National to International rebuild [date] | Noisy D455, steering scrub, stuck rear wheels, not enough LEGO spares | New PLA chassis, Hokuyo LiDAR, close-Ackermann steering, JGB37-520 motor with LEGO differential, four matching LEGO wheels | Wheel-stuck test at low PWM, old vs new comparison | Rebuilt platform with standard wheel geometry and no sticky rear wheels |
+| Drivetrain mount V1 to V2 [date] | Vibration at the motor-to-differential coupler | Merged the separate motor and differential supports into one Integrated Motor–Differential Mount | Team testing at speed | Vibration became almost imperceptible |
+| Mount refinement, 13 October | Right rear axle slid outward at high speed | Added room for another Technic bush | High-speed run after the change | Axle stays in place; bush is checked in every pre-run inspection |
+| Steering knuckles V1 to V2 [date] | Printed pivot pins broke, then drifted upward | Filled, extended pivots held by horizontal M2.5 screws | Repeated steering tests, failure photo kept in `models/front_steering/` | No more breakage or drift |
 
 ### Final Engineering Blueprints
 
-[Add descriptions of the finalized mechanical components and their engineering specifications.]
+The final design has four main mechanical groups:
+
+- **Rear drivetrain:** JGB-to-LEGO axle coupler plus the Integrated Motor–Differential Mount V2. The 20-tooth input gear driving the 28-tooth ring gear gives a 1.40:1 extra reduction.
+- **Chassis:** Main Chassis Plate V2, six 42 mm Electronics Deck Standoffs V2 and the one-piece Integrated Electronics Mounting Deck V1.
+- **Front steering:** Front Steering Crossmember V2, Steering Knuckles V2, Servo-Driven Steering Link V1 and the Steering Servo Mount.
+- **Sensor mounts:** cantilevered LiDAR mount with impact guard (needed to stay inside the 300 mm length limit), a three-part camera mount where only the carrier rotates, and a rear platform for the Jetson and VL53L0X.
 
 <!-- Add engineering blueprint images here -->
 
@@ -312,7 +318,7 @@ We keep perception and control separate on purpose. YOLO only tells the controll
 
 ![Blueprint 2](./models/blueprint-2.png)
 
-**Detailed documentation:** [Add link to models documentation.]
+**Detailed documentation:** [`models/`](models/) (part names, quantities, assembly order, STEP/STL files, drawings, print settings) and the [Engineering Journal](other/engineering_journal/).
 
 ---
 
