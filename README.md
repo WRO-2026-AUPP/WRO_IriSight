@@ -502,12 +502,23 @@ screws. The failure photograph and both revisions are preserved in
 
 ### Mechanical Iterations
 
-| Version | Design / Modification | Reason for Change | Testing Results |
-|---|---|---|---|
-| [Version 1] | [Fill in details] | [Fill in reason] | [Fill in results] |
-| [Version 2] | [Fill in details] | [Fill in reason] | [Fill in results] |
+| Part | Version | Design / Modification | Reason for Change | Testing Results |
+|---|---|---|---|---|
+| Rear drivetrain mount | V1 | Separate Differential Carrier, motor mount and axle coupler | First working drivetrain layout | Fit corrections were required and the drivetrain vibrated during operation |
+| Rear drivetrain mount | V2 | Integrated Motor–Differential Mount | Remove vibration from the separate supports and reduce material | Vibration almost imperceptible |
+| Rear drivetrain mount | V2 refined | Added space for an extra Technic bush | Right rear axle slid outward at high speed | Axle stays in place |
+| Main chassis plate | V1 to V2 | Repositioned the drivetrain mounting holes | Increase ground clearance | Ground clearance increased |
+| Electronics deck standoffs | V1 to V2 | Longer V1 replaced by 42 mm V2 | Match the corrected chassis height | Same support function kept |
+| Steering servo mount | V1 | Dedicated mount for the MG996R | Reduce servo movement and vibration | MG996R movement and vibration reduced |
+| Electronics mounting deck | V1 | One print holding batteries, Jetson and sensors | Combine all supports in one part | Servo opening had to be enlarged by hand during installation |
+| Front steering crossmember | V1 to V2 | Stronger, bulkier body | V1 bent under vehicle loading | No bending after the change |
+| Steering knuckles | V1 | Printed pivot pins | First close-Ackermann build | Pins broke, then a stronger print resisted breakage but the pins migrated vertically; temporary screw tests did not fix it |
+| Steering knuckles | V2 | Longer solid pivots with transverse M2.5 retention screws | Stop the vertical drift | Pins stay in place |
+| LiDAR impact guard | V1 | Guard below the scan plane at the front | Protect the LiDAR in accidental contact | Protected the sensor without blocking its scan |
+| LiDAR deck mount and camera mount | V1 | Cantilevered LiDAR mount and three-part panning camera mount | Stay inside the 300 mm length limit and allow camera panning | Robot is 298 mm long |
+| Jetson support and rear ToF platform | V1 | Jetson support with three possible rear-sensor positions | Support the Jetson and allow different ToF placements | Center position is currently used |
 
-**Detailed evidence:** [Add CAD files, calculations, renders, and assembly documentation.]
+**Detailed evidence:** CAD files, STEP/STL files, renders and print settings are in [`models/`](models/). The Ackermann geometry calculation is in [`models/front_steering/analysis/`](models/front_steering/analysis/), and the dated print–test–refine history is in the [Engineering Journal](other/engineering_journal/).
 
 ---
 
