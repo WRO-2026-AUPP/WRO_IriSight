@@ -315,26 +315,74 @@ After the National Round we found that the robot had hit its limits. The RealSen
 
 ### Final Engineering Blueprints
 
-The final design has four main mechanical groups:
+These are the latest available drawing PNGs for the installed parts. Some
+components remain at V1 because no later revision exists. Click a sheet for the
+full-resolution image; matching PDFs, STEP files and STL files are in
+[`models/`](models/).
 
-- **Rear drivetrain:** JGB-to-LEGO axle coupler plus the Integrated Motor–Differential Mount V2. The 20-tooth input gear driving the 28-tooth ring gear gives a 1.40:1 extra reduction.
-- **Chassis:** Main Chassis Plate V2, six 42 mm Electronics Deck Standoffs V2 and the one-piece Integrated Electronics Mounting Deck V1.
-- **Front steering:** Front Steering Crossmember V2, Steering Knuckles V2, Servo-Driven Steering Link V1 and the Steering Servo Mount.
-- **Sensor mounts:** cantilevered LiDAR mount with impact guard (needed to stay inside the 300 mm length limit), a three-part camera mount where only the carrier rotates, and a rear platform for the Jetson and VL53L0X.
+#### Rear Drivetrain Module
 
-<!-- Add engineering blueprint images here -->
+| [<img src="./models/rear_drivetrain/drawings/integrated_motor_differential_mount_v2_sheet1.png" alt="Integrated Motor–Differential Mount V2 blueprint, sheet 1" width="100%">](models/rear_drivetrain/drawings/integrated_motor_differential_mount_v2_sheet1.png) | [<img src="./models/rear_drivetrain/drawings/integrated_motor_differential_mount_v2_sheet2.png" alt="Integrated Motor–Differential Mount V2 blueprint, sheet 2" width="100%">](models/rear_drivetrain/drawings/integrated_motor_differential_mount_v2_sheet2.png) |
+| :---: | :---: |
+| **Integrated Motor–Differential Mount V2 — Sheet 1** | **Integrated Motor–Differential Mount V2 — Sheet 2** |
 
-![Blueprint 1](./models/blueprint-1.png)
+<div align="center">
+  <a href="models/rear_drivetrain/drawings/jgb_to_lego_axle_coupler_v1_sheet.png"><img src="./models/rear_drivetrain/drawings/jgb_to_lego_axle_coupler_v1_sheet.png" width="720" alt="JGB-to-LEGO Axle Coupler V1 blueprint"></a>
+  <p><strong>JGB-to-LEGO Axle Coupler V1 — current revision</strong></p>
+</div>
 
-![Blueprint 2](./models/blueprint-2.png)
+#### Main chassis and upper-deck supports
 
-**Detailed documentation:** [`models/`](models/) (part names, quantities, assembly order, STEP/STL files, drawings, print settings) and the [Engineering Journal](other/engineering_journal/).
+| [<img src="./models/main_chassis/drawings/main_chassis_plate_v2_sheet1.png" alt="Main Chassis Plate V2 blueprint, sheet 1" width="100%">](models/main_chassis/drawings/main_chassis_plate_v2_sheet1.png) | [<img src="./models/main_chassis/drawings/main_chassis_plate_v2_sheet2.png" alt="Main Chassis Plate V2 blueprint, sheet 2" width="100%">](models/main_chassis/drawings/main_chassis_plate_v2_sheet2.png) |
+| :---: | :---: |
+| **Main Chassis Plate V2 — Sheet 1** | **Main Chassis Plate V2 — Sheet 2** |
+
+| [<img src="./models/main_chassis/drawings/electronics_deck_standoff_v2_sheet.png" alt="Electronics Deck Standoff V2 blueprint" width="100%">](models/main_chassis/drawings/electronics_deck_standoff_v2_sheet.png) | [<img src="./models/electronics_deck/drawings/integrated_electronics_mounting_deck_v1_sheet.png" alt="Integrated Electronics Mounting Deck V1 blueprint" width="100%">](models/electronics_deck/drawings/integrated_electronics_mounting_deck_v1_sheet.png) |
+| :---: | :---: |
+| **Electronics Deck Standoff V2** | **Integrated Electronics Mounting Deck V1 — current revision** |
+
+#### Ackermann front steering
+
+| [<img src="./models/front_steering/drawings/front_steering_assembly_v2_sheet.png" alt="Ackermann Front Steering Assembly V2 blueprint" width="100%">](models/front_steering/drawings/front_steering_assembly_v2_sheet.png) | [<img src="./models/front_steering/drawings/front_steering_crossmember_v2_sheet.png" alt="Front Steering Crossmember V2 blueprint" width="100%">](models/front_steering/drawings/front_steering_crossmember_v2_sheet.png) |
+| :---: | :---: |
+| **Ackermann Front Steering Assembly V2** | **Front Steering Crossmember V2** |
+
+| [<img src="./models/front_steering/drawings/left_steering_knuckle_v2_sheet.png" alt="Left Steering Knuckle V2 blueprint" width="100%">](models/front_steering/drawings/left_steering_knuckle_v2_sheet.png) | [<img src="./models/front_steering/drawings/right_steering_knuckle_v2_sheet.png" alt="Right Steering Knuckle V2 blueprint" width="100%">](models/front_steering/drawings/right_steering_knuckle_v2_sheet.png) |
+| :---: | :---: |
+| **Left Steering Knuckle V2** | **Right Steering Knuckle V2** |
+
+| [<img src="./models/front_steering/drawings/servo_driven_steering_link_v1_sheet.png" alt="Servo-Driven Steering Link V1 blueprint" width="100%">](models/front_steering/drawings/servo_driven_steering_link_v1_sheet.png) | [<img src="./models/front_steering/drawings/steering_servo_mount_sheet.png" alt="Steering Servo Mount blueprint" width="100%">](models/front_steering/drawings/steering_servo_mount_sheet.png) |
+| :---: | :---: |
+| **Servo-Driven Steering Link V1 — current revision** | **Steering Servo Mount** |
+
+#### Hokuyo LiDAR system
+
+| [<img src="./models/lidar_system/drawings/hokuyo_ust30lx_deck_mount_sheet.png" alt="Hokuyo UST-30LX Deck Mount blueprint" width="100%">](models/lidar_system/drawings/hokuyo_ust30lx_deck_mount_sheet.png) | [<img src="./models/lidar_system/drawings/hokuyo_lidar_impact_guard_sheet.png" alt="Hokuyo LiDAR Impact Guard blueprint" width="100%">](models/lidar_system/drawings/hokuyo_lidar_impact_guard_sheet.png) |
+| :---: | :---: |
+| **Hokuyo UST-30LX Deck Mount** | **Hokuyo LiDAR Impact Guard** |
+
+#### Servo-panned camera system
+
+| [<img src="./models/camera_system/drawings/servo_panned_camera_mount_assembly_sheet.png" alt="Servo-Panned Camera Mount assembly blueprint" width="100%">](models/camera_system/drawings/servo_panned_camera_mount_assembly_sheet.png) | [<img src="./models/camera_system/drawings/camera_pan_servo_tower_sheet.png" alt="Camera Pan-Servo Tower blueprint" width="100%">](models/camera_system/drawings/camera_pan_servo_tower_sheet.png) |
+| :---: | :---: |
+| **Servo-Panned Camera Mount Assembly** | **Camera Pan-Servo Tower** |
+
+| [<img src="./models/camera_system/drawings/camera_servo_retaining_cover_sheet.png" alt="Camera Servo Retaining Cover blueprint" width="100%">](models/camera_system/drawings/camera_servo_retaining_cover_sheet.png) | [<img src="./models/camera_system/drawings/usb_camera_carrier_sheet.png" alt="USB Camera Carrier blueprint" width="100%">](models/camera_system/drawings/usb_camera_carrier_sheet.png) |
+| :---: | :---: |
+| **Camera Servo Retaining Cover** | **USB Camera Carrier** |
+
+#### Rear ToF and Jetson support
+
+<div align="center">
+  <a href="models/rear_tof_jetson_support/drawings/jetson_support_rear_tof_sensor_platform_sheet.png"><img src="./models/rear_tof_jetson_support/drawings/jetson_support_rear_tof_sensor_platform_sheet.png" width="760" alt="Jetson Support and Rear ToF Sensor Platform blueprint"></a>
+  <p><strong>Jetson Support and Rear ToF Sensor Platform</strong></p>
+</div>
 
 ---
 
-## Mobility and Mechanical Design
+### Mobility and Mechanical Design
 
-### Rear Drivetrain Module
+#### Rear Drivetrain Module
 
 One JGB37-520 motor drives both rear wheels through a mechanical LEGO
 differential. A custom **JGB-to-LEGO Axle Coupler** converts the motor's
