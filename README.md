@@ -196,17 +196,45 @@ This repository is organized as follows:
 
 ### Final Vehicle Gallery
 
-| <img src="./v-photos/robot_photo/top.JPG" alt="Top photo" width="100%"> | <img src="./v-photos/robot_photo/bottom.JPG" alt="Bottom photo" width="100%"> |
-| :---: | :---: |
-| **Top** | **Bottom** |
 
-| <img src="./v-photos/robot_photo/left.JPG" alt="Left photo" width="100%"> | <img src="./v-photos/robot_photo/right.JPG" alt="Right photo" width="100%"> |
-| :---: | :---: |
-| **Left** | **Right** |
-
-| <img src="./v-photos/robot_photo/front.JPG" alt="Front photo" width="100%"> | <img src="./v-photos/robot_photo/back.JPG" alt="Back photo" width="100%"> |
-| :---: | :---: |
-| **Front** | **Back** |
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="./v-photos/robot_photo/top.JPG" alt="Top view" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <img src="./v-photos/robot_photo/bottom.JPG" alt="Bottom view" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><b>Top</b></td>
+    <td align="center"><b>Bottom</b></td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="./v-photos/robot_photo/left.JPG" alt="Left view" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <img src="./v-photos/robot_photo/right.JPG" alt="Right view" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><b>Left</b></td>
+    <td align="center"><b>Right</b></td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="./v-photos/robot_photo/front.JPG" alt="Front view" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <img src="./v-photos/robot_photo/back.JPG" alt="Back view" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><b>Front</b></td>
+    <td align="center"><b>Back</b></td>
+  </tr>
+</table>
 
 ### Key Specifications
 
