@@ -276,7 +276,7 @@ We keep perception and control separate on purpose. YOLO only tells the controll
 
 ### System Architecture
 
-![System Architecture](./schemes/system_architecture.jpg)
+![System Architecture](./schemes/photos/system_architecture.jpg)
 
 | Subsystem | Description |
 |---|---|
