@@ -995,7 +995,6 @@ It is retained as a reference for the International Round development.
 | Inspect ESP32 pins and commands | [Microcontroller](src/microcontroller/) |
 | Reproduce a physical test | [Testing procedures](other/testing/procedures.md) |
 | Check the steering and Open Challenge models | [MATLAB modelling](matlab_simulink/) |
-| Review major repository changes | [Changelog](CHANGELOG.md) |
 | Inspect the former National robot | [National archive](other/legacy_national/) |
 
 ## License
