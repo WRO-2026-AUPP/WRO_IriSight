@@ -610,7 +610,15 @@ The models, results, validation plan and run commands are in
 
 ### Navigation and Control Strategy
 
-[Explain the navigation algorithm, control method, path planning, obstacle handling, and decision logic.]
+**Open Challenge.** The robot follows the inner wall using the LiDAR side distance. When the front distance drops and a side opens up, it detects a corner and turns. The BNO055 tells it when the turn is finished and counts laps, and after 3 laps it stops. There are separate clockwise and counter-clockwise programs.
+
+**Obstacle Challenge.** The same wall-following base, plus pillar handling. The pillar layout comes from a JSON file listing 2 pillars for each of the four sections of the field. When the robot reaches a pillar, it uses the LiDAR front distance to decide when to start avoiding, and passes green and red pillars on opposite sides with separate steering parameters for each color. YOLO detections are converted to an angle range so a LiDAR return that belongs to a pillar isn't mistaken for a wall or a wall opening.
+
+**Heading and steering.** The IMU yaw is the reference for turns and for recovering the heading after avoiding a pillar. Steering and heading errors are clamped (±29° Open, ±35° Obstacle, up to ±38° in some maneuvers, ±50° in parking) to avoid oversteering.
+
+**Parking.** After the last lap the robot reverses into the parking space using the rear VL53L0X and the front LiDAR.
+
+**Safety.** Every cycle (0.05 s) checks all LiDAR sectors for an emergency stop and checks that the scan is fresh. Each maneuver has a timeout, and any fault sends `STOP`.
 
 ### Challenge Implementation
 
