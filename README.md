@@ -701,29 +701,49 @@ in [`schemes/`](schemes/), and repeatable acceptance procedures in
 
 **Hardware:**
 
-- [List required hardware]
-- [List electronic components]
-- [List mechanical components]
+- NVIDIA Jetson Orin Nano, custom ESP32-WROOM PCB
+- Hokuyo UST-30LX LiDAR (Ethernet), 1 MP USB camera on a DMS-MG90-A 270° pan servo, BNO055 IMU, VL53L0X ToF sensor
+- JGB37-520 12 V 100 RPM motor, TB6612FNG driver, MG996R steering servo
+- Two TCB 3S 1100 mAh 25C LiPo packs, XL4016 buck converter (about 11 V), XL4015 buck converter (5 V)
+- LEGO mechanical differential, LEGO axles and Technic bushes, four LEGO 39367pb01 wheels
+- 3D-printed PLA parts from `models/` (chassis plate, standoffs, electronics deck, mounts, steering parts), M2.5 screws
 
 **Software and Tools:**
 
-- [Operating system]
-- [Development environment]
-- [Required libraries and frameworks]
-- [Additional software]
+- Jetson with JetPack SDK, Python 3
+- Libraries: `numpy`, `opencv-python`, `ultralytics`, `pyserial`, `flask`, `hokuyolx`, `smbus2`, `adafruit-extended-bus`, `adafruit-circuitpython-vl53l0x`
+- Arduino IDE or PlatformIO for the ESP32 firmware
+- CVAT (only if retraining the model)
 
 ### Mechanical Assembly
 
-[Provide step-by-step instructions for assembling the robot.]
-
-1. [Assembly step 1]
-2. [Assembly step 2]
-3. [Assembly step 3]
-4. [Assembly step 4]
+1. Print the parts in `models/` in PLA (see the print settings there).
+2. Fit the rear drivetrain: couple the JGB37-520 to the LEGO differential with the JGB-to-LEGO coupler, then mount them in the Integrated Motor–Differential Mount V2. Add the extra Technic bush on the right rear axle.
+3. Mount the drivetrain module on the Main Chassis Plate V2 and fit the four LEGO wheels.
+4. Assemble the front steering: knuckles, crossmember, steering link and servo mount with the MG996R. Secure the pivots with the M2.5 screws and check the wheels move through the full range without binding.
+5. Attach the six 42 mm standoffs and the Integrated Electronics Mounting Deck V1.
+6. Mount the LiDAR with its impact guard at the front, the camera mount and pan servo, the Jetson platform with the rear VL53L0X, and the two batteries on the deck.
+7. Measure the finished robot. The length margin is only 2 mm (298 mm of 300 mm), so remeasure after any cable or mount change.
 
 ### Wiring and Power-On
 
-[Explain the wiring process, pin configurations, power connections, and safe startup sequence.]
+Follow the wiring diagrams in [`schemes/`](schemes/).
+
+| Connection | Pin / Interface |
+|---|---|
+| Jetson to ESP32 | USB serial `/dev/ttyUSB0`, 115200 baud |
+| LiDAR | Ethernet, `192.168.0.10:10940` |
+| BNO055 | I2C bus 7, `0x28` |
+| Rear VL53L0X | I2C bus 1, `0x29` |
+| Steering servo | ESP32 GPIO 18 |
+| TB6612FNG inputs | ESP32 GPIO 25, 26, 33 |
+
+Power-on order:
+
+1. Connect Battery A to the Jetson and let it boot.
+2. Check that the ESP32 prints `ESP32 ready` and shows up as `/dev/ttyUSB0` with Battery B still disconnected.
+3. Check the LiDAR, IMU, camera and rear ToF in the web viewer.
+4. Connect Battery B last, with the wheels off the ground for the first powered test.
 
 ## Software Installation
 
